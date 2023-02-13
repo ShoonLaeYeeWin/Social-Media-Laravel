@@ -1,0 +1,92 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    margin: 0 auto;
+}
+a{
+    text-decoration: none;
+    color: #fff;
+}
+.main-ttl{
+    text-align: center;
+    font-size: 50px;
+    font-weight: 700;
+    padding-top: 35px;
+}
+.auth{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button{
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid #0373a6;
+    background-color: #0bcfe8;
+    color: #fff;
+    margin: 45px 30px 50px;
+    font-size: 16px;
+}
+.register{
+    background-color: #00ab1d;
+    border: 2px solid #258c0b;
+}
+.dashboard-img{
+    display: block;
+    margin: 0 auto;
+}
+
+/* Login */
+.container{
+    display: block;
+    margin: 10% auto;
+    width: 27%;
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 4px 4px 13px rgb(96 125 139 / 35%);
+    padding: 30px 35px;
+}
+.ttl{
+    font-size: 30px;
+    text-align: center;
+}
+.input-gp{
+    margin-bottom: 30px;
+}
+label{
+    margin-bottom: 5px;
+}
+input{
+    width: 100%;
+    padding: 8px 20px;
+    border-radius: 10px;
+    border: 2px solid #dddddd;
+    box-shadow: 4px 4px 10px rgb(0 0 0 / 28%);
+}
+.login,.reg-btn{
+    margin: 0 auto;
+    display: block;
+    padding: 8px 50px;
+    background-color: #92bff3;
+    border: 3px solid #357eee;
+}
+.register-link{
+    text-align: center;
+    margin: 10px 0;
+}
+.reg-route{
+    color: #258c0b;
+}
+
+/* Register */
+.con-reg{
+    margin: 5% auto;
+    width: 30%;
+}
+.reg-btn{
+    background-color: #02c924;
+    border: 3px solid #258c0b;
+}
