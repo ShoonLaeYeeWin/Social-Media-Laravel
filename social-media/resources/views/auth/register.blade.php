@@ -1,10 +1,10 @@
-@extends('layouts')
-<title>Register | Social Media</title>
+@extends('auth.layouts')
+<title>Register | User |Social Media</title>
 @section('header')
 <div class="container con-reg">
-    <i class="fa-solid fa-arrow-left"></i>
+    <a href="{{url('/login')}}"><i class="fa-solid fa-arrow-left"></i></a>
     <h2 class="ttl">Register</h2>
-    <form action="">
+    <form action="{{ url('/post/register')}}" method="POST">
         <div class="input-gp">
             <label for="">Name:</label>
             <input type="text" name="" id="">

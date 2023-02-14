@@ -38,7 +38,13 @@ button{
     display: block;
     margin: 0 auto;
 }
-
+.modal{
+    display: none;
+    --bs-modal-width: 400px;
+}
+.modal-footer{
+    justify-content: center !important;
+}
 /* Login */
 .container{
     display: block;
@@ -89,4 +95,7 @@ input{
 .reg-btn{
     background-color: #02c924;
     border: 3px solid #258c0b;
+}
+.fa-arrow-left{
+    color: #8b8b8b;
 }

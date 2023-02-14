@@ -1,8 +1,9 @@
-@extends('layouts')
-<title>Login | Social Media</title>
+@extends('auth.layouts')
+<title>Login | Admin |Social Media</title>
 @section('header')
 <div class="container">
-    <h2 class="ttl">Login</h2>
+    <a href="{{url('/')}}"><i class="fa-solid fa-arrow-left"></i></a>
+    <h2 class="ttl">Admin Login</h2>
     <form action="">
         <div class="input-gp">
             <label for="">Email:</label>
@@ -14,6 +15,5 @@
         </div>
         <button type="submit" class="login">Login</button>
     </form>
-    <p class="register-link">Don't have an account?<a href="{{ url('/register')}}" class="reg-route"> Register Here!</a></p>
 </div>
 @endsection
