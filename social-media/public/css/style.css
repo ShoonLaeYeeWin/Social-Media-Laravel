@@ -65,7 +65,7 @@ button{
 label{
     margin-bottom: 5px;
 }
-input{
+input,textarea{
     width: 100%;
     padding: 8px 20px;
     border-radius: 10px;
@@ -99,3 +99,47 @@ input{
 .fa-arrow-left{
     color: #8b8b8b;
 }
+
+textarea{
+    resize: none;
+}
+
+/* Custom File */
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+  .custom-file-input::before {
+    content: 'Select some files';
+    display: inline-block;
+    background: linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #5d5d5d;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+  }
+  .custom-file-input:hover::before {
+    border-color: #605f5f;
+  }
+  .custom-file-input:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+  }
+
+  /* Profile */
+  .alert-dismissible {
+    padding-right: 1rem;
+}
+  .close{
+    padding-right: 0;
+    border-radius: 0;
+    border: none;
+    background-color: transparent;
+    color: #000;
+    margin: 0;
+    font-weight: bold;
+    font-size: 16px;
+  }

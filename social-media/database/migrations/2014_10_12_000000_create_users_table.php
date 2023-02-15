@@ -17,18 +17,16 @@ return new class extends Migration
             $table->id();
             $table->string('name',50);
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('cpassword');
-            $table->string('photo');
-            $table->date('dob');
-            $table->integer('phone');
-            $table->text('address');
-            $table->integer('type')->default('0');
+            $table->longText('address')->nullable();
+            $table->string('photo')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('phone')->nullable();
+            $table->integer('type')->default('1');
             $table->rememberToken();
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-            $table->dateTime('deleted_at');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
