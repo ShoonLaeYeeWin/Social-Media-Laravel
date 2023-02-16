@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,20 +20,25 @@ use App\Http\Controllers\UserController;
 /* Admin Auth */
 Route::get('/', function () { return view('auth.dashboard'); });
 Route::prefix('auth')->group(function () {
-    Route::get('/login',function(){ return view('auth.login');});
-    Route::post('/create/login',[AuthController::class,'create']);
+    Route::get('/login',[AuthController::class,'login']);
+    Route::post('/create/login',[AuthController::class,'save']);
     Route::get('/register',[AuthController::class,'index']);
     Route::post('/create/register',[AuthController::class,'create']);
 });
 
-/* Admin */
-Route::get('/admin/login',function(){ return view('admin.login');});
-Route::get('/admin/dashboard',function(){ return view('admin.dashboard');});
-Route::get('/admin/home',function(){ return view('admin.home'); });
+// /* Admin */
+Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function(){
+    Route::get('/dashboard',[AdminController::class,'view']);
+});
+Route::get('/login',[AdminController::class,'index']);
+Route::post('/create/login',[AdminController::class,'login']);
+Route::get('/logout',[AdminController::class,'logout']);
 
-/* User */
+// /* User */
 Route::prefix('user')->group(function () {
     Route::get('/profile',[UserController::class,'index']);
-    Route::post('/create/profile',[UserController::class,'create']);
-    Route::get('/show/profile',[UserController::class,'show']);
+    Route::get('/post',[PostController::class,'index']);
+    Route::post('/create/post',[PostController::class,'create']);
+    Route::get('/list/post',[PostController::class,'list']);
+    Route::get('/show/post',[PostController::class,'show']);
 });

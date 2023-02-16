@@ -1,10 +1,18 @@
-@extends('auth.layouts')
+@extends('layouts')
 <title>Register | User |Social Media</title>
-@section('header')
+@section('head')
 <div class="container con-reg">
-    <a href="{{url('/login')}}"><i class="fa-solid fa-arrow-left"></i></a>
+    @if (session('registerSuccess'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ session('registerSuccess') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <i class="fa-sharp fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    @endif
+    <a href="{{url('/')}}"><i class="fa-solid fa-arrow-left"></i></a>
     <h2 class="ttl">Register</h2>
-    <form action="{{ url('auth/create/register')}}" method="POST">
+    <form action="{{url('auth/create/register')}}" method="POST" enctype="multipart/form-data">  
         @csrf
         <div class="input-gp">
             <label for="">Name:</label>
@@ -15,7 +23,7 @@
         </div>
         <div class="input-gp">
             <label for="">Email:</label>
-            <input type="text" name="email" id="" value="{{old('email')}}" placeholder="Enter Your Email...">
+            <input type="email" name="email" id="" value="{{old('email')}}" placeholder="Enter Your Email...">
             @error('email')
             <span class="text-danger text-sm"><b>{{$message}}</b></span>
             @enderror
@@ -34,7 +42,39 @@
             <span class="text-danger text-sm"><b>{{$message}}</b></span>
             @enderror
         </div>
-        <button type="submit" class="reg-btn">Register</button>
+        <div class="input-gp">
+            <label for="">Address:</label>
+            <textarea name="address" id="" rows="5" placeholder="Enter Your Address...">{{old('address')}}</textarea>
+            @error('address')
+            <span class="text-danger text-sm"><b>{{$message}}</b></span>
+            @enderror
+        </div>
+        <div class="input-gp">
+            <label for="">Date Of Birth:</label>
+            <input type="date" name="dob" id="" value="{{old('dob')}}">
+            @error('dob')
+            <span class="text-danger text-sm"><b>{{$message}}</b></span>
+            @enderror
+        </div>
+        <div class="input-gp">
+            <label for="">Phone Number:</label>
+            <input type="text" name="phone" id="" placeholder="Enter Your Phone Number..." value="{{old('phone')}}">
+            @error('phone')
+            <span class="text-danger text-sm"><b>{{$message}}</b></span>
+            @enderror
+        </div>
+        <div class="input-gp">
+            <label for="">Profile Photo:</label>
+            <input type="file" name="photo" id="image" class="custom-file-input">
+            @error('photo')
+            <span class="text-danger text-sm"><b>{{$message}}</b></span>
+            @enderror
+       </div>
+       <label for="">preview image</label><br>
+       <img id="preview-image" src="" style="max-height: 150px;">
+        <button type="submit" class="reg-btn mt-5">Register</button>
     </form>
 </div>
+<script src="{{asset('js/jquery.min.js')}}"></script>
+<script src="{{asset('js/main.js')}}"></script>
 @endsection

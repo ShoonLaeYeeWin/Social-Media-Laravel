@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class adminAuthenticate
 {
@@ -16,13 +18,16 @@ class adminAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('admin')->user()) {
-            return $next($request);
+        if (Auth::user()) {
+            $user_type = Auth::user()->type;
+            if ($user_type == 0) {
+                return $next($request);
+            } else {
+                Session::flush();
+                Auth::logout();
+                return redirect('/');
+            }
         }
-        if ($request->ajax() || $request->wantsJson()) {
-            return response('Unauthorized.', 401);
-        } else {
-            return redirect(route('adminLogin'));
-        }
+        return redirect('/');
     }
 }

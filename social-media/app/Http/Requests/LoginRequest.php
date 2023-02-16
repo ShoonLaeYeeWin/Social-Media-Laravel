@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\isValidPassword;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +25,8 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'email' => ['required','unique:users,email',new CustomEmailValidation()],
+            'email'=>'required',
             'password' => ['required', 'string', new isValidPassword],
-            'confirm_password' => 'required|same:password',
         ];
     }
 }

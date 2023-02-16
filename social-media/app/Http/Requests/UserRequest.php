@@ -34,7 +34,7 @@ class UserRequest extends FormRequest
             'address' => 'required',
             'photo'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'dob'=>'required|date|before:'.$todayDate,
-            'phone' => 'required|digits:10',
+            'phone' => 'required|digits:11',
         ];
     }
 }

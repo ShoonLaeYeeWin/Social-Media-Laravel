@@ -24,7 +24,7 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-3"></i> Profile</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket me-3"></i> Log Out</a></li>
+              <li><a class="dropdown-item" href="{{url('/logout')}}"><i class="fa-solid fa-right-from-bracket me-3"></i> Log Out</a></li>
             </ul>
           </li>
         </ul>

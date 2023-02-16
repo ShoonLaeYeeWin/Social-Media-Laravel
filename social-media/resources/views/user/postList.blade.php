@@ -1,4 +1,5 @@
 @extends('layouts')
+<title>PostList | Social Media</title>
 @section('head')
 <div class="container">
     <div class="row d-flex justify-content-center align-items-center">
@@ -16,7 +17,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($posts as $post)
+                        @foreach ($posts as $post)
                         <tr>
                             <td>
                                 {{ $post->title}}
@@ -25,7 +26,7 @@
                                 {{ $user->content}}
                             </td>
                         </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
