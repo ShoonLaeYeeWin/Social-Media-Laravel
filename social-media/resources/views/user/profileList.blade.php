@@ -16,19 +16,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($posts as $post)
-                        <tr>
-                            <td>
-                                {{ $post->title}}
-                            </td>
-                            <td>
-                                {{ $user->content}}
-                            </td>
-                        </tr>
-                        @endforeach --}}
                     </tbody>
                 </table>
             </div>
+            <button><a href="{{url('/auth/logout')}}">Logout</a></button>
         </div>
     </div>
 </div>

@@ -21,21 +21,37 @@ class PostController extends Controller
         ]);
         $data=$this->data($request);
         $input=Post::create($data);
-        // dd($input);
+        return back()->with(['registerSuccess' => 'Your Post Has Been Created Successfully!']);
     }
 
     public function list(Request $request)
     {
         $posts=Post::all();
-        // dd($posts);
-        return redirect('user/show/post',compact('posts'));
+       return view('user.postList',compact('posts'));
     }
 
-    public function show()
+    public function delete($id)
     {
-        return view('user.postList');
+        $postDelete=Post::find($id)->delete();
+        return back()->with(['deleteSuccess' => 'Your Post Has Been Deleted Successfully!']);
     }
 
+    public function edit($id)
+    {
+        $postEdit=Post::where('id',$id)->first();
+        return view('user.postEdit',compact('postEdit'));
+    }
+
+    public function update($id,Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|min:10',
+            'content' => 'required',
+        ]);
+        $data=$this->data($request);
+        $postUpdate=Post::where('id',$request->id)->update($data);
+        return redirect('/user/list/post')->with(['updateSuccess' => 'Your Post Has Been Updated Successfully!']);
+    }
     private function data(Request $request)
     {
         return [

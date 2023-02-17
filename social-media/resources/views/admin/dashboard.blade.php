@@ -22,7 +22,7 @@
               <img src="{{asset('img/img_profile.jpeg')}}" alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px;">
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-3"></i> Profile</a></li>
+              <li><a class="dropdown-item" href="{{url('/admin/profile')}}"><i class="fa-solid fa-user me-3"></i> Profile</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{{url('/logout')}}"><i class="fa-solid fa-right-from-bracket me-3"></i> Log Out</a></li>
             </ul>

@@ -45,6 +45,12 @@ class AuthController extends Controller
         }
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
+    
     private function data($request)
     {
         $imageName = uniqid().'_image.'.$request->photo->extension();  

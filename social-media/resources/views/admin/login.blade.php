@@ -1,7 +1,7 @@
 @extends('layouts')
 <title>Login | Admin |Social Media</title>
 @section('head')
-<div class="container">
+<div class="container inner">
     @if (session('loginError'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>{{ session('loginError') }}</strong>

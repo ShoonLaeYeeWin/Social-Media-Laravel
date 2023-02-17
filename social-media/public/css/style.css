@@ -46,7 +46,7 @@ button{
     justify-content: center !important;
 }
 /* Login */
-.container{
+.inner{
     display: block;
     margin: 10% auto;
     width: 30%;
@@ -142,4 +142,32 @@ textarea{
     margin: 0;
     font-weight: bold;
     font-size: 16px;
+  }
+  .thead-dark{
+    background-color: #4f4f4f;
+    color: #fff;
+  }
+  .th-lg{
+    width: 25%;
+  }
+  .th-sm{
+    width: 5%;
+  }
+  .th-md{
+    width: 20%;
+  }
+  .edit,.delete{
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    margin: 0 10px;
+    font-size: 16px;
+  }
+  .edit{
+    background-color: #00ab1d;
+    border: 2px solid #258c0b;
+  }
+  .delete{
+    background-color: #ef1414;
+    border: 2px solid #900606;
   }

@@ -1,7 +1,7 @@
 @extends('layouts')
 <title>Register | User |Social Media</title>
 @section('head')
-<div class="container con-reg">
+<div class="container inner con-reg">
     @if (session('registerSuccess'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>{{ session('registerSuccess') }}</strong>

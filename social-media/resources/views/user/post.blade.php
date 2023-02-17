@@ -1,15 +1,15 @@
 @extends('layouts')
 <title>Post | Social Media</title>
 @section('head')
-<div class="container con-reg">
-    {{-- @if (session('registerSuccess'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="container  inner con-reg">
+    @if (session('registerSuccess'))
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
         <strong>{{ session('registerSuccess') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <i class="fa-sharp fa-solid fa-xmark"></i>
         </button>
       </div>
-    @endif --}}
+    @endif
     <a href="{{url('/user/profile')}}"><i class="fa-solid fa-arrow-left"></i></a>
     <h2 class="ttl">Post Create</h2>
     <form action="{{url('user/create/post')}}" method="POST">  

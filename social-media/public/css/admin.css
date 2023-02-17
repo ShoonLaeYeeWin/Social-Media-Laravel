@@ -166,14 +166,18 @@ a{
     background-color: #4154f1;
   }
 
-	/* Home */
-	.container-blk{
-    margin-top: 8%;
-    margin-left: 23% !important;
-	}
-	.row {
-    --bs-gutter-x: 8.5rem !important;
-	}
-	.col-md-2 {
-    width: 17.666667% !important;
-	}
+/* Profile */
+.profile-blk{
+  width: 50% !important;
+  margin-left: 35% !important;
+  border: 3px solid #85B6FF;
+  margin-top: 8%;
+  position: relative;
+}
+.fa-user-pen{
+  position: absolute;
+  right: 2%;
+  font-size: 20px;
+  top: 5%;
+  color: #85B6FF;
+}
