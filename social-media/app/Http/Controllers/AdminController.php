@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use App\Rules\CustomEmailValidation;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -13,7 +16,7 @@ class AdminController extends Controller
     {
         return view('admin.login');
     }
-    
+
     public function login(LoginRequest $request)
     {
         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
@@ -45,26 +48,28 @@ class AdminController extends Controller
         return view('admin.profile',compact('user'));
     }
 
-    public function edit()
+    public function edit($id)
     {
-        if(Auth::user()->type == 0)
-        {
-            $user=Auth::user();
-        }
-        // $id=$user->id;
-        // // dd($id);
+        $user=User::where('id',$id)->first();
         return view('admin.profileEdit',compact('user'));
     }
 
-    public function upgrade($id,Request $request)
+    public function upgrade(Request $request, $id)
     {
-        if(Auth::user()->type == 0)
-        {
-            $user=Auth::user();
+        $this->profileUpdateRequest($request);
+        $data=$this->data($request);
+        User::where('id',$id)->update($data);
+        if($request->hasFile('editPhoto')){
+            $imageName = uniqid().$request->file('editPhoto')->getClientOriginalName();
+            $request->file('editPhoto')->storeAs('public/', $imageName);
+            $data = User::find($id);
+
+            if($data){
+                $data->photo=$imageName;
+            }
         }
-        // $data=$this->data($request);
-        $input=User::where('id',$user->id)->get();
-        dd($input);
+        $data->update();
+        return redirect('/admin/profile')->with(['updateSuccess' => 'Your Profile Has Been Updated Successfully!']);
     }
 
     public function logout()
@@ -73,18 +78,67 @@ class AdminController extends Controller
         return redirect('/');
     }
 
-    private function data($request)
+    public function listPost()
     {
-        // $imageName = uniqid().'_image.'.$request->photo->extension();  
-        // $request->photo->storeAs('images', $imageName);
+        $posts=Post::all();
+        return view('admin.postList',compact('posts'));
+    }
+
+    public function editPost($id)
+    {
+        $post=Post::find($id)->first();
+        return view('admin.postEdit',compact('post'));
+    }
+
+    public function updatePost($id,Request $request)
+    {
+        $request->validate([
+            'title' => 'required|min:10',
+            'content' => 'required',
+        ]);
+        $postData=$this->postData($request);
+        Post::where('id',$id)->update($postData);
+        return redirect('/admin/list/post')->with(['updateSuccess' => 'Your Post Has Been Updated Successfully!']);
+
+    }
+
+    public function deletePost($id)
+    {
+        Post::find($id)->delete();
+        return back()->with(['deleteSuccess' => 'Your Post Has Been Deleted Successfully!']);
+    }
+
+    private function postData(Request $request)
+    {
         return [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'address' => $request->address,
-            // 'photo'=>$imageName,
-            'dob'=>$request->dob,
-            'phone'=>$request->phone,
+            'title'=>$request->title,
+            'content'=>$request->content,
         ];
+    }
+
+    private function data(Request $request)
+    {
+        return [
+            'name' => $request->editName,
+            'email' => $request->editEmail,
+            'Address' => $request->editAddress,
+            'photo'=>$request->editPhoto,
+            'dob'=>$request->editDob,
+            'phone'=>$request->editPhone,
+        ];
+    }
+
+    private function profileUpdateRequest($request)
+    {
+        $todayDate = date('m/d/Y');
+        $validation= [
+            'editName' => 'required',
+            'editEmail' => ['required','unique:users,email,'.Auth::user()->id,new CustomEmailValidation()],
+            'editAddress' => 'required',
+            'editPhoto'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'editDob'=>'required|date|before:'.$todayDate,
+            'editPhone' => 'required|digits:11',
+        ];
+        Validator::make($request->all(), $validation)->validate();
     }
 }

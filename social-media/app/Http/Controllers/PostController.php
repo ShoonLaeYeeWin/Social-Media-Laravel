@@ -20,7 +20,7 @@ class PostController extends Controller
             'content' => 'required',
         ]);
         $data=$this->data($request);
-        $input=Post::create($data);
+        Post::create($data);
         return back()->with(['registerSuccess' => 'Your Post Has Been Created Successfully!']);
     }
 

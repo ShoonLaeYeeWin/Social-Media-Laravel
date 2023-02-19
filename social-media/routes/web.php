@@ -42,9 +42,13 @@ Route::group(['prefix' => 'user', 'middleware' => ['userauth']], function(){
 Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function(){
     Route::get('/dashboard',[AdminController::class,'view']);
     Route::get('/profile',[AdminController::class,'show']);
-    Route::get('/edit/profile',[AdminController::class,'edit']);
+    Route::get('/edit/profile/{id}',[AdminController::class,'edit']);
+    Route::post('/update/profile/{id}',[AdminController::class,'upgrade']);
+    Route::get('/list/post',[AdminController::class,'listPost']);
+    Route::get('/edit/post/{id}',[AdminController::class,'editPost']);
+    Route::post('/update/post/{id}',[AdminController::class,'updatePost']);
+    Route::get('/delete/post/{id}',[AdminController::class,'deletePost']);
 });
-Route::get('/delete/profile/{id}',[AdminController::class,'upgrade']);
 /* Admin auth */
 Route::get('/login',[AdminController::class,'index']);
 Route::post('/create/login',[AdminController::class,'login']);

@@ -19,7 +19,7 @@ class AuthController extends Controller
     public function create(UserRequest $request)
     {
         $data = $this->data($request);
-        $input = User::create($data);
+        User::create($data);
         return back()->with(['registerSuccess' => 'Your Account registeration is successfully!']);
     }
 
@@ -50,10 +50,10 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/');
     }
-    
+
     private function data($request)
     {
-        $imageName = uniqid().'_image.'.$request->photo->extension();  
+        $imageName = uniqid().'_image.'.$request->photo->extension();
         $request->photo->storeAs('images', $imageName);
         return [
             'name' => $request->name,
