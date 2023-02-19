@@ -8,7 +8,9 @@ use App\Http\Requests\LoginRequest;
 use App\Rules\CustomEmailValidation;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class AdminController extends Controller
 {

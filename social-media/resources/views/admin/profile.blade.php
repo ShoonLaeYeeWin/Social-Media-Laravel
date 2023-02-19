@@ -35,9 +35,7 @@
         </div>
         <div class="mt-2 d-flex justify-content-around">
             <h5>Photo:</h5>
-            <img src="{{asset('storage/'.$user['photo'])}}" alt="" style="max-width: 100px;
-            height: 100px;
-            object-fit: cover;">
+            <img src="{{asset('storage/'.$user['photo'])}}" alt="" style="max-width: 100px;height: 100px;object-fit: cover;">
         </div>
     </div>
 </div>

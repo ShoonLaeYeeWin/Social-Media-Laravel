@@ -46,7 +46,7 @@
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="">
+            <a href="{{url('/admin/list/post')}}">
               <i class="fa-regular fa-circle"></i><span>User List</span>
             </a>
           </li>

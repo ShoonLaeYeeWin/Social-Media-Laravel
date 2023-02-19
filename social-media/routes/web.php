@@ -49,6 +49,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function(){
     Route::post('/update/post/{id}',[AdminController::class,'updatePost']);
     Route::get('/delete/post/{id}',[AdminController::class,'deletePost']);
 });
+
 /* Admin auth */
 Route::get('/login',[AdminController::class,'index']);
 Route::post('/create/login',[AdminController::class,'login']);
