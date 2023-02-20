@@ -29,7 +29,10 @@ Route::prefix('auth')->group(function () {
 
 // /* User */
 Route::group(['prefix' => 'user', 'middleware' => ['userauth']], function(){
+    Route::get('/dashboard',[UserController::class,'dashboard']);
     Route::get('/profile',[UserController::class,'index']);
+    Route::get('/edit/profile/{id}',[UserController::class,'edit']);
+    Route::post('/update/profile/{id}',[UserController::class,'update']);
     Route::get('/post',[PostController::class,'index']);
     Route::post('/create/post',[PostController::class,'create']);
     Route::get('/list/post',[PostController::class,'list']);

@@ -1,7 +1,7 @@
-@extends('admin.dashboard')
-<title>Profile | Admin</title>
-@section('dashboard')
-<div class="container profile-blk shadow-lg pb-5">
+@extends('layouts')
+<link rel="stylesheet" href="{{asset('css/admin.css')}}">
+@section('head')
+<div class="container profile-blk shadow-lg pb-5 mt-5">
     @if (session('updateSuccess'))
     <div class="alert alert-success alert-dismissible fade show mt-5 mb-3 m-auto w-50 text-center" role="alert">
         <strong>{{ session('updateSuccess') }}</strong>
@@ -11,8 +11,9 @@
       </div>
     @endif
     <div class="row">
-        <h2 class="text-center mt-4 ttl">Admin Profile</h2>
-        <a href="{{url('/admin/edit/profile',$user->id)}}"><i class="fa-solid fa-user-pen"></i></a>
+        <a href="{{url('/user/dashboard')}}" class="m-3"><i class="fa-solid fa-arrow-left"></i></a>
+        <h2 class="text-center mt-4 ttl">User Profile</h2>
+        <a href="{{url('/user/edit/profile',$user->id)}}"><i class="fa-solid fa-user-pen"></i></a>
         <div class="mt-5 d-flex justify-content-around">
             <h5>Name:</h5>
             <p>{{$user->name}}</p>

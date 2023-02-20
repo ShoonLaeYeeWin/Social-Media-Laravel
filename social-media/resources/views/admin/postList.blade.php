@@ -2,7 +2,7 @@
 <title>PostList | Admin</title>
 @section('dashboard')
 <div class="container profile-blk shadow-lg pb-5">
-    {{--@if (session('deleteSuccess'))
+    @if (session('deleteSuccess'))
     <div class="alert alert-success alert-dismissible fade show mt-5 mb-3 m-auto w-50 text-center" role="alert">
         <strong>{{ session('deleteSuccess') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -17,7 +17,7 @@
           <i class="fa-sharp fa-solid fa-xmark"></i>
         </button>
       </div>
-    @endif--}}
+    @endif
     <div class="row">
         <h5 class="text-center mt-3">Post List</h5>
         <div class="col-md-6 mt-2 w-100">

@@ -38,7 +38,7 @@ class AuthController extends Controller
         $input_data = Auth::attempt($user_data);
         if ($input_data) {
             if (Auth::user()->type == 1) {
-                return redirect('/user/profile');
+                return redirect('/user/dashboard');
             }
         } else {
             return back()->with('loginError', 'Your email and password are incorrect!');
@@ -54,7 +54,7 @@ class AuthController extends Controller
     private function data($request)
     {
         $imageName = uniqid().'_image.'.$request->photo->extension();
-        $request->photo->storeAs('images', $imageName);
+        $request->photo->storeAs('public/', $imageName);
         return [
             'name' => $request->name,
             'email' => $request->email,

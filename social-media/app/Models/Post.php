@@ -13,10 +13,10 @@ class Post extends Model
     use SoftDeletes;
 
     protected $table = 'posts';
-    protected $fillable = ['title','content',];
+    protected $fillable = ['title','content','user_id',];
 
-    // public function post()
-    // {
-    //     return $this->hasMany(User::class,'user_id','id');
-    // }
+    public function post()
+    {
+        return $this->hasMany(User::class,'user_id','id');
+    }
 }

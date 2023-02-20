@@ -10,7 +10,7 @@
         </button>
       </div>
     @endif
-    <a href="{{url('/user/profile')}}"><i class="fa-solid fa-arrow-left"></i></a>
+    <a href="{{url('/user/list/post')}}"><i class="fa-solid fa-arrow-left"></i></a>
     <h2 class="ttl">Post Create</h2>
     <form action="{{url('user/create/post')}}" method="POST">  
         @csrf

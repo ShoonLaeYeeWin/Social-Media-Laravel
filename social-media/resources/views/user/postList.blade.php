@@ -1,5 +1,6 @@
 @extends('layouts')
 <title>PostList | Social Media</title>
+<link rel="stylesheet" href="{{asset('css/user.css')}}">
 @section('head')
 <div class="container">
     @if (session('deleteSuccess'))
@@ -18,6 +19,8 @@
         </button>
       </div>
     @endif
+    <a href="{{url('/user/dashboard')}}" class="me-5"><i class="fa-solid fa-arrow-left"></i></a>
+    <button class="create"><a href="{{asset('/user/post')}}"><i class="fa-solid fa-square-plus"></i> Create</a></button>
     <div class="row">
         <h5 class="text-center mt-3">Post List</h5>
         <div class="col-md-6 mt-2 w-100">

@@ -1,0 +1,19 @@
+.create{
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid #055509;
+    background-color: #35ff6b;
+    font-size: 16px;
+    margin: 20px 0 0;
+}
+.create a{
+    color: #000;
+}
+.create-post{
+    margin-top: 5%;
+}
+.col-md-5{
+    padding: 0 !important;
+    background-color: #aacbf3;
+    color: #032d67;
+}

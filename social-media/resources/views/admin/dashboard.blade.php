@@ -15,14 +15,18 @@
             </a>
           </li>
           <li class="nav-item w-50">
-            <h4 class="pt-1">Susan</h4>
+            <h4 class="pt-1">{{Auth::user()->name}}</h4>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="{{asset('img/img_profile.jpeg')}}" alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px;">
+              @if (Auth::user()->photo == NULL)
+              <img src="{{asset('img/img_emptyProfile.png')}}"  alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;" >
+              @else
+              <img src="{{asset('storage/'.Auth::user()->photo)}}" alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
+              @endif
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{url('/admin/profile')}}"><i class="fa-solid fa-user me-3"></i> Profile</a></li>
+              <li><a class="dropdown-item" href="{{url('admin/profile')}}"><i class="fa-solid fa-user me-3"></i> Profile</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{{url('/logout')}}"><i class="fa-solid fa-right-from-bracket me-3"></i> Log Out</a></li>
             </ul>

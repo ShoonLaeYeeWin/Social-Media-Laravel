@@ -88,7 +88,7 @@ class AdminController extends Controller
 
     public function editPost($id)
     {
-        $post=Post::find($id)->first();
+        $post=Post::where('id',$id)->first();
         return view('admin.postEdit',compact('post'));
     }
 

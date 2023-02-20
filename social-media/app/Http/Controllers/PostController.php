@@ -57,6 +57,7 @@ class PostController extends Controller
         return [
             'title'=>$request->title,
             'content'=>$request->content,
+            'user_id'=>Auth::user()->id,
         ];
     }
 }
