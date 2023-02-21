@@ -15,9 +15,8 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-        $posts = DB::table('users')
-        ->join('posts', 'users.id', '=', 'posts.user_id')
-        ->select('users.id', 'posts.*')
+        $posts = User::join('posts', 'posts.user_id', '=', 'users.id')
+        ->select(['users.id','users.name','users.photo', 'posts.*',])
         ->orderBy('posts.id', 'desc')->paginate(3);
         return view('user.dashboard',compact('posts'));
     }

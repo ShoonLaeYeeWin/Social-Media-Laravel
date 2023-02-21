@@ -39,67 +39,34 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link " href="">
+        <a class="nav-link " href="{{url('admin/dashboard')}}">
           <i class="fa-solid fa-grip"></i>
           <span>Dashboard</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="fa-solid fa-users"></i><span>User Lists</span><i class="fa-solid fa-angle-right ms-auto"></i>
+          <i class="fa-solid fa-clipboard-list"></i><span>Post Lists</span><i class="fa-solid fa-angle-right ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{url('/admin/list/post')}}">
-              <i class="fa-regular fa-circle"></i><span>User List</span>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <i class="fa-regular fa-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <i class="fa-regular fa-circle"></i><span>Badges</span>
+              <i class="fa-regular fa-circle"></i><span>Post List</span>
             </a>
           </li>
         </ul>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="fa-solid fa-clipboard-list"></i><span>Tables</span><i class="fa-solid fa-angle-right ms-auto"></i>
+          <i class="fa-solid fa-users"></i><span>User List</span><i class="fa-solid fa-angle-right ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="">
-              <i class="fa-regular fa-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <i class="fa-regular fa-circle"></i><span>Data Tables</span>
+            <a href="{{url('admin/list/user')}}">
+              <i class="fa-regular fa-circle"></i><span>User List</span>
             </a>
           </li>
         </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="">
-          <i class="fa-solid fa-clipboard-list"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="">
-          <i class="fa-solid fa-clipboard-list"></i>
-          <span>Contact</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="">
-          <i class="fa-solid fa-clipboard-list"></i>
-          <span>Register</span>
-        </a>
       </li>
     </ul>
 </aside>

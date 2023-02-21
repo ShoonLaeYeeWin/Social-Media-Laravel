@@ -1,8 +1,8 @@
 .create{
     padding: 10px 20px;
     border-radius: 10px;
-    border: 2px solid #055509;
-    background-color: #35ff6b;
+    border: 2px solid #055509 !important;
+    background-color: #35ff6b !important;
     font-size: 16px;
     margin: 20px 0 0;
 }
@@ -16,4 +16,31 @@
     padding: 0 !important;
     background-color: #aacbf3;
     color: #032d67;
+}
+.card-header,.card-footer{
+    background-color: transparent !important;
+    border-bottom: 0 !important;
+    border-top: 0 !important;
+}
+.card-text{
+    text-indent: 15%;
+}
+.cmt-btn{
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 2px solid #444444;
+    background-color: #7f7f7f;
+    margin: 0 !important;
+}
+p,h5{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+button{
+    margin: 20px 0 0 !important;
+    background-color: #286f8f !important;
+    color: #fff !important;
+}
+.btn-close{
+    margin: 0 !important;
 }

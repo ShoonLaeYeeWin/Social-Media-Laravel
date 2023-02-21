@@ -93,8 +93,8 @@ input,textarea{
     width: 30%;
 }
 .reg-btn{
-    background-color: #02c924;
-    border: 3px solid #258c0b;
+    background-color: #02c924 !important;
+    border: 3px solid #258c0b !important;
 }
 .fa-arrow-left{
     color: #8b8b8b;
@@ -164,10 +164,10 @@ textarea{
     font-size: 16px;
   }
   .edit{
-    background-color: #00ab1d;
-    border: 2px solid #258c0b;
+    background-color: #00ab1d !important;
+    border: 2px solid #258c0b !important;
   }
   .delete{
-    background-color: #ef1414;
-    border: 2px solid #900606;
+    background-color: #ef1414 !important;
+    border: 2px solid #900606 !important;
   }

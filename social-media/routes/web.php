@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['userauth']], function(){
     Route::get('/delete/post/{id}',[PostController::class,'delete']);
     Route::get('/edit/post/{id}',[PostController::class,'edit']);
     Route::post('/update/post/{id}',[PostController::class,'update']);
+    Route::get('/show/comment',[CommentController::class,'show']);
+    Route::post('/create/comment',[CommentController::class,'create']);
 });
 
 // /* Admin */
