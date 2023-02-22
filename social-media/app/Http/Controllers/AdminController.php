@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Rules\CustomEmailValidation;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ProfileUpdateRequest;
 
@@ -82,7 +82,7 @@ class AdminController extends Controller
 
     public function listPost()
     {
-        $posts=Post::all();
+        $posts=Post::orderBy('id', 'desc')->paginate(4);
         return view('admin.postList',compact('posts'));
     }
 
@@ -108,6 +108,52 @@ class AdminController extends Controller
     {
         Post::find($id)->delete();
         return back()->with(['deleteSuccess' => 'Your Post Has Been Deleted Successfully!']);
+    }
+
+    public function listUser()
+    {
+        $users=Auth::user()->orderBy('id', 'desc')->paginate(5);
+        return view('admin.userList',compact('users'));
+    }
+
+    public function deleteUser($id)
+    {
+        User::find($id)->delete();
+        return back()->with(['deleteSuccess' => 'Your Post Has Been Deleted Successfully!']);
+    }
+
+    public function exportCsv()
+    {
+        $users = User::all();
+
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=users.csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        );
+
+        $columns = array('User Name', 'User Email', 'Address', 'Phone Number','Date Of Birthday');
+
+        $callback = function() use ($users, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($users as $user) {
+                $row = [];
+                $row['User Name'] = $user->name;
+                $row['User Email'] = $user->email;
+                $row['Address'] = $user->address;
+                $row['Phone Number'] = $user->phone;
+                $row['Date Of Birthday'] = $user->dob;
+
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+        return Response::stream($callback, 200, $headers);
     }
 
     private function postData(Request $request)

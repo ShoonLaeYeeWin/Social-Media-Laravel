@@ -3,7 +3,7 @@
 @section('dashboard')
 <div class="container profile-blk shadow-lg pb-5">
     @if (session('deleteSuccess'))
-    <div class="alert alert-success alert-dismissible fade show mt-5 mb-3 m-auto w-50 text-center" role="alert">
+    <div class="alert alert-success alert-dismissible fade show mt-5 mb-3 m-auto w-75 text-center" role="alert">
         <strong>{{ session('deleteSuccess') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <i class="fa-sharp fa-solid fa-xmark"></i>
@@ -11,7 +11,7 @@
       </div>
     @endif
     @if (session('updateSuccess'))
-    <div class="alert alert-success alert-dismissible fade show mt-5 mb-3 m-auto w-50 text-center" role="alert">
+    <div class="alert alert-success alert-dismissible fade show mt-5 mb-3 m-auto w-75 text-center" role="alert">
         <strong>{{ session('updateSuccess') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <i class="fa-sharp fa-solid fa-xmark"></i>
@@ -45,6 +45,9 @@
                 </tbody>
               </table>
         </div>
+    </div>
+    <div class="mt-3 pagniation d-flex justify-content-center">
+      {{ $posts->links() }}
     </div>
 </div>
 <script src="{{asset('js/jquery.min.js')}}"></script>

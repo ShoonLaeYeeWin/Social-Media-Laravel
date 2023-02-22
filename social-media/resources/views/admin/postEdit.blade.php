@@ -3,7 +3,7 @@
 @section('dashboard')
 <div class="container profile-blk shadow-lg pb-5">
     <a href="{{url('admin/list/post')}}"><i class="fa-solid fa-arrow-left mt-3"></i></a>
-    <h2 class="ttl">Post Edit</h2>
+    <h4 class="text-center mt-3">Post Edit</h4>
     <form action="{{url('admin/update/post',$post->id)}}" method="POST">
         @csrf
         <div class="input-gp">

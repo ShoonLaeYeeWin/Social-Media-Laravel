@@ -44,3 +44,17 @@ button{
 .btn-close{
     margin: 0 !important;
 }
+
+.download-btn,.upload-btn{
+    width: 15% !important;
+    background-color: #ff9800 !important;
+    border: none;
+    margin: 0 !important;
+}
+
+  .upload-btn{
+    background-color: #0d9df0 !important;
+    margin: 0 20px 0 !important;
+    width: 35% !important;
+    padding: 0;
+  }

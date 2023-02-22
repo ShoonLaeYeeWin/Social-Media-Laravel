@@ -1,5 +1,6 @@
 a{
 	text-decoration: none;
+  display: bloack;
 }
 
 /* Header */
@@ -101,9 +102,7 @@ a{
     align-items: center;
     font-size: 15px;
     font-weight: 600;
-    color: #4154f1;
     transition: 0.3;
-    background: #f6f9ff;
     padding: 10px 15px;
     border-radius: 4px;
   }
@@ -111,7 +110,6 @@ a{
   .sidebar-nav .nav-link i {
     font-size: 16px;
     margin-right: 10px;
-    color: #4154f1;
   }
   
   .sidebar-nav .nav-link.collapsed {
@@ -128,6 +126,11 @@ a{
     background: #f6f9ff;
   }
   
+.active {
+    color: #4154f1 !important;
+    background: #f6f9ff !important;
+  } */
+
   .sidebar-nav .nav-link:hover i {
     color: #4154f1;
   }
@@ -180,4 +183,28 @@ a{
   font-size: 20px;
   top: 5%;
   color: #85B6FF;
+}
+
+.user-list{
+  width: 70% !important;
+  margin-left: 25% !important;
+}
+
+.th-md-user{
+  width: 13%;
+}
+
+.th-lg-user{
+  width: 14%;
+}
+
+.edit .fa-pen-to-square{
+  color: #fff !important;
+}
+
+.download-btn{
+  margin: 0 15px 0;
+  width: 15% !important;
+  background-color: #ff9800;
+  border: none;
 }

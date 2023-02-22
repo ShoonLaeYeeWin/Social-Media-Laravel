@@ -22,6 +22,19 @@
     <a href="{{url('/user/dashboard')}}" class="me-5"><i class="fa-solid fa-arrow-left"></i></a>
     <button class="create"><a href="{{asset('/user/post')}}"><i class="fa-solid fa-square-plus"></i> Create</a></button>
     <div class="row">
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <button class="download-btn text-center me-3"><a href="{{ route('post.export') }}">Post Download</a></button>
+        <form method="POST" action="{{ route('post.import') }}" enctype="multipart/form-data" class="d-flex justify-content-end">
+            @csrf
+            <div class="input-gp mb-0">
+              <input type="file" name="csv_file">
+              @error('csv_file')
+              <span class="text-danger text-sm"><b>{{$message}}</b></span>
+              @enderror
+            </div>
+            <button type="submit" class="upload-btn">Post Upload</button>
+        </form>
+      </div>
         <h5 class="text-center mt-3">Post List</h5>
         <div class="col-md-6 mt-2 w-100">
             <table class="table table-striped table-bordered">

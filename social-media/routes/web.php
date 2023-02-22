@@ -42,18 +42,23 @@ Route::group(['prefix' => 'user', 'middleware' => ['userauth']], function(){
     Route::post('/update/post/{id}',[PostController::class,'update']);
     Route::get('/show/comment',[CommentController::class,'show']);
     Route::post('/create/comment',[CommentController::class,'create']);
+    Route::get('/postList/export', [PostController::class,'exportCsv'])->name('post.export');
+    Route::post('/postList/import', [PostController::class,'importCsv'])->name('post.import');
 });
 
 // /* Admin */
 Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function(){
-    Route::get('/dashboard',[AdminController::class,'view']);
+    Route::get('/dashboard',[AdminController::class,'view'])->name('admin.dashboard');
     Route::get('/profile',[AdminController::class,'show']);
     Route::get('/edit/profile/{id}',[AdminController::class,'edit']);
     Route::post('/update/profile/{id}',[AdminController::class,'upgrade']);
-    Route::get('/list/post',[AdminController::class,'listPost']);
+    Route::get('/list/post',[AdminController::class,'listPost'])->name('list.post');
     Route::get('/edit/post/{id}',[AdminController::class,'editPost']);
     Route::post('/update/post/{id}',[AdminController::class,'updatePost']);
     Route::get('/delete/post/{id}',[AdminController::class,'deletePost']);
+    Route::get('/list/user',[AdminController::class,'listUser'])->name('list.user');
+    Route::get('/delete/user/{id}',[AdminController::class,'deleteUser']);
+    Route::get('/userList/export', [AdminController::class,'exportCsv'])->name('user.export');
 });
 
 /* Admin auth */
