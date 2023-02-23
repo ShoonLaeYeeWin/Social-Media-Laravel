@@ -35,8 +35,9 @@
             <button type="submit" class="upload-btn">Post Upload</button>
         </form>
       </div>
-        <h5 class="text-center mt-3">Post List</h5>
+        <h3 class="text-center mt-3">Post List</h3>
         <div class="col-md-6 mt-2 w-100">
+          @if (count($posts) != 0)
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark text-center">
                   <tr>
@@ -60,6 +61,12 @@
                   @endforeach
                 </tbody>
               </table>
+              <div class="mt-3 pagniation d-flex justify-content-center">
+                {{ $posts->links() }}
+              </div>
+          @else
+              <h2 class="text-center text-danger">There is no data.</h2>
+          @endif
         </div>
     </div>
 </div>

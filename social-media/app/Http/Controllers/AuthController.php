@@ -53,16 +53,16 @@ class AuthController extends Controller
 
     private function data($request)
     {
-        $imageName = uniqid().'_image.'.$request->photo->extension();
+        $imageName = uniqid() . '_image.' . $request->photo->extension();
         $request->photo->storeAs('public/', $imageName);
         return [
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'address' => $request->address,
-            'photo'=>$imageName,
-            'dob'=>$request->dob,
-            'phone'=>$request->phone,
+            'photo' => $imageName,
+            'dob' => $request->dob,
+            'phone' => $request->phone,
         ];
     }
 }

@@ -12,7 +12,16 @@
                 <th scope="col" class="th-lg">User</th>
               </tr>
             </thead>
-            
+            @foreach ($comments as $comment)
+            <tbody>
+              <tr>
+                <td>{{$comment->id}}</td>
+                <td>{{$comment->title}}</td>
+                <td>{{$comment->comment}}</td>
+                <td>{{$comment->name}}</td>
+              </tr>
+            </tbody>
+            @endforeach
     </div>
 </div>
 @endsection

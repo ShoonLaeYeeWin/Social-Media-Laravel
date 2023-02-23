@@ -134,7 +134,7 @@ textarea{
     padding-right: 1rem;
 }
   .close{
-    padding-right: 0;
+    /* padding-right: 0; */
     border-radius: 0;
     border: none;
     background-color: transparent;

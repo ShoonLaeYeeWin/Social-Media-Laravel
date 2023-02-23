@@ -29,11 +29,11 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => ['required','unique:users,email',new CustomEmailValidation()],
-            'password' => ['required', 'string', new isValidPassword],
+            'password' => ['required', 'string', new isValidPassword()],
             'confirm_password' => 'required|same:password',
             'address' => 'required',
-            'photo'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'dob'=>'required|date|before:'.$todayDate,
+            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'dob' => 'required|date|before:' . $todayDate,
             'phone' => 'required|digits:11',
         ];
     }

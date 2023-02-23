@@ -20,21 +20,21 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password'=>Hash::make('Admin123@'),
-            'type'=>'0',
-            'address'=>'Yangon',
-            'phone'=>'09441003608',
-            'dob'=>'2023-02-01',
+            'password' => Hash::make('Admin123@'),
+            'type' => '0',
+            'address' => 'Yangon',
+            'phone' => '09441003608',
+            'dob' => '2023-02-01',
         ]);
 
         User::factory()->create([
             'name' => 'User',
             'email' => 'user@gmail.com',
-            'password'=>Hash::make('User123@'),
-            'type'=>'1',
-            'address'=>'Mandalay',
-            'phone'=>'09910036081',
-            'dob'=>'2023-02-01',
+            'password' => Hash::make('User123@'),
+            'type' => '1',
+            'address' => 'Mandalay',
+            'phone' => '09910036081',
+            'dob' => '2023-02-01',
         ]);
     }
 }

@@ -3,7 +3,7 @@
 @section('dashboard')
 <div class="container profile-blk shadow-lg pb-5">
     @if (session('updateSuccess'))
-    <div class="alert alert-success alert-dismissible fade show mt-5 mb-3 m-auto w-50 text-center" role="alert">
+    <div class="alert alert-success alert-dismissible fade show mt-5 mb-3 m-auto w-75 text-center" role="alert">
         <strong>{{ session('updateSuccess') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <i class="fa-sharp fa-solid fa-xmark"></i>

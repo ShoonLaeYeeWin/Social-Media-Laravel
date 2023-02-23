@@ -5,7 +5,7 @@ namespace App\Rules;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Validation\Rule;
 
-class isValidPassword implements Rule
+class IsValidPassword implements Rule
 {
     /**
      * Create a new rule instance.
@@ -82,49 +82,57 @@ class isValidPassword implements Rule
                 && !$this->lowercasePasses
                 && $this->numericPasses
                 && $this->specialCharacterPasses:
-                return 'The :attribute must be at least 6 characters and contain at least one uppercase character and one lowercase character.';
+                return 'The :attribute must be at least 6 characters and contain at least
+                one uppercase character and one lowercase character.';
 
             case !$this->numericPasses
                 && !$this->lowercasePasses
                 && $this->uppercasePasses
                 && $this->specialCharacterPasses:
-                return 'The :attribute must be at least 6 characters and contain at least one number and one lowercase character.';
+                return 'The :attribute must be at least 6 characters and contain at least
+                one number and one lowercase character.';
 
             case !$this->specialCharacterPasses
                 && !$this->uppercasePasses
                 && $this->numericPasses
                 && $this->lowercasePasses:
-                return 'The :attribute must be at least 6 characters and contain at least one uppercase character and one special character.';
+                return 'The :attribute must be at least 6 characters and contain at least
+                one uppercase character and one special character.';
 
             case !$this->specialCharacterPasses
                 && !$this->lowercasePasses
                 && $this->numericPasses
                 && $this->uppercasePasses:
-                return 'The :attribute must be at least 6 characters and contain at least one lowercase character and one special character.';
+                return 'The :attribute must be at least 6 characters and contain at least
+                one lowercase character and one special character.';
 
             case !$this->uppercasePasses
                 && !$this->numericPasses
                 && $this->lowercasePasses
                 && $this->specialCharacterPasses:
-                return 'The :attribute must be at least 6 characters and contain at least one uppercase character and one number.';
+                return 'The :attribute must be at least 6 characters and contain at least
+                one uppercase character and one number.';
 
             case !$this->uppercasePasses
                 && !$this->specialCharacterPasses
                 && !$this->lowercasePasses
                 && $this->numericPasses:
-                return 'The :attribute must be at least 6 characters and contain at least one uppercase character,one lowercase character and one special character.';
+                return 'The :attribute must be at least 6 characters and contain at least
+                one uppercase character,one lowercase character and one special character.';
 
             case !$this->uppercasePasses
                 && !$this->numericPasses
                 && !$this->specialCharacterPasses
                 && $this->lowercasePasses:
-                return 'The :attribute must be at least 6 characters and contain at least one uppercase character, one number, and one special character.';
+                return 'The :attribute must be at least 6 characters and contain at least
+                one uppercase character, one number, and one special character.';
 
             case !$this->lowercasePasses
                 && !$this->numericPasses
                 && !$this->specialCharacterPasses
                 && $this->uppercasePasses:
-                return 'The :attribute must be at least 6 characters and contain at least one lowercase character, one number, and one special character.';
+                return 'The :attribute must be at least 6 characters and contain at least
+                one lowercase character, one number, and one special character.';
 
             default:
                 return 'The :attribute must be at least 6 characters.';
