@@ -37,7 +37,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['userauth']], function () {
     Route::post('/update/profile/{id}', [UserController::class, 'update']);
     Route::get('/post', [PostController::class, 'index']);
     Route::post('/create/post', [PostController::class, 'create']);
-    Route::get('/list/post', [PostController::class, 'list']);
+    Route::get('/list/post', [PostController::class, 'list'])->name('list.post');
     Route::get('/delete/post/{id}', [PostController::class, 'delete']);
     Route::get('/edit/post/{id}', [PostController::class, 'edit']);
     Route::post('/update/post/{id}', [PostController::class, 'update']);

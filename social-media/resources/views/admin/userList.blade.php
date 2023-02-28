@@ -10,9 +10,22 @@
         </button>
       </div>
     @endif
-    <div class="row justify-content-end">
-        <h5 class="text-center mt-3">User List</h5>
+    <div class="row">
+        <h5 class="text-center my-3">User List</h5>
+        <div class="d-flex justify-content-center">
+        <form action="" method="GET">
+          <div class="d-flex mb-3">
+            <input type="search" class="me-3" value="{{ request('name') }}" placeholder="Search  name" name="name">
+          </div>
+        </form>
+        <form action="" method="GET">
+          <div class="d-flex mb-3">
+            <input type="search" value="{{ request('email') }}" placeholder="Search  email" name="email">
+          </div>
+        </form>
+        <a href="{{route('list.user')}}" class="ms-3 text-white btn bg-danger">Cancel</a>
         <button class="download-btn text-center"><a href="{{ route('user.export') }}">CSV Download</a></button>
+        </div>
         <div class="col-md-6 mt-2 w-100">
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark text-center">
@@ -54,9 +67,9 @@
               </table>
         </div>
     </div>
-    <div class="mt-3 pagniation d-flex justify-content-center">
+    {{-- <div class="mt-3 pagniation d-flex justify-content-center">
         {{ $users->links() }}
-    </div>
+    </div> --}}
 </div>
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>

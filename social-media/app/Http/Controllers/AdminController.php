@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
@@ -78,9 +80,15 @@ class AdminController extends Controller
         return redirect('/');
     }
 
-    public function listUser()
+    public function listUser(Request $request)
     {
-        $users = Auth::user()->orderBy('id', 'desc')->paginate(5);
+        if (request('name')) {
+            $users = User::where('name', 'like', '%' . request('name') . '%')->get();
+        } elseif (request('email')) {
+            $users = User::where('email', 'like', '%' . request('email') . '%')->get();
+        } else {
+            $users = Auth::user()->orderBy('id', 'desc')->paginate(5);
+        }
         return view('admin.userList', compact('users'));
     }
 

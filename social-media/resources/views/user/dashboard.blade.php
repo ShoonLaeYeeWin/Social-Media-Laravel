@@ -100,7 +100,6 @@
             </button>
           </div>
         </div>
-        @endforeach
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -121,18 +120,10 @@
                 <span class="text-danger text-sm ms-3"><b>{{$message}}</b></span>
                 @enderror
               </div>
-          {{-- @foreach ($comments as $comment)
-          <div class="card-footer d-flex justify-content-between align-items-center">
-            <p>{{$comment->comment}}</p>
-            <div class="gp d-flex justify-content-between align-items-center">
-              <h5>{{$comment->name}}</h5>
-              <small class="text-muted ms-2">3 mins ago</small>
-            </div>
-          </div>
-          @endforeach --}}
             </div>
           </div>
         </div>
+        @endforeach
       </div>
       <div class="mt-3 pagniation">
         {{ $posts->links() }}

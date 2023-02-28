@@ -13,12 +13,12 @@ class CommentController extends Controller
 {
     public function show()
     {
-        $comments = User::join('comments', 'comments.user_id', '=', 'users.id')
-        ->join('posts', 'posts.user_id', '=', 'users.id')
-        ->select('users.id', 'users.name', 'users.photo', 'comments.*', 'posts.*')
-        // ->where('posts.id','comments.post_id')
+        $comments = User::join('posts', 'posts.user_id', '=', 'users.id')
+        ->select('users.id', 'users.name', 'users.photo', 'posts.*')
+        ->where('id', 'posts.id')
         ->get()->toArray();
-        // dd($comments);
+        dd($comments);
+        // $comment=Post::where('id', $comments->id)
         return view('user.comment', compact('comments'));
     }
 
@@ -28,6 +28,7 @@ class CommentController extends Controller
             'comment' => 'required',
         ]);
         $data = $this->commentData($request);
+        // dd($data);
         Comment::create($data);
         return redirect()->route('comment.show');
     }

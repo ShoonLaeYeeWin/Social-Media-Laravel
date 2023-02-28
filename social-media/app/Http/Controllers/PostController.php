@@ -23,10 +23,15 @@ class PostController extends Controller
             return back()->with(['registerSuccess' => 'Your Post Has Been Created Successfully!']);
     }
 
-    public function list()
+    public function list(Request $request)
     {
-            $posts = Post::orderBy('id', 'desc')->paginate(5);
-            return view('user.postList', compact('posts'));
+        if ($request->content) {
+            $posts = Post::where('user_id', Auth::user()->id)->where('content', 'like', '%' . $request->content .
+            '%')->get();
+        } else {
+            $posts = Post::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(5);
+        }
+        return view('user.postList', compact('posts'));
     }
 
     public function delete($id)
