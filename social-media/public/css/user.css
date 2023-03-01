@@ -10,9 +10,9 @@
     color: #000;
 }
 .create-post{
-    margin-top: 5%;
+    margin-top: 5% !important;
 }
-.col-md-5{
+.col-md-3{
     padding: 0 !important;
     background-color: #aacbf3;
     color: #032d67;

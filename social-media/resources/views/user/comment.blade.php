@@ -12,15 +12,19 @@
                 <th scope="col" class="th-lg">User</th>
               </tr>
             </thead>
-            @foreach ($comments as $comment)
+            @foreach ($posts as $post)
+              @foreach ($comments as $comment)
             <tbody>
               <tr>
+                @if($comment->post_id == $post->id)
                 <td>{{$comment->id}}</td>
                 <td>{{$comment->title}}</td>
                 <td>{{$comment->comment}}</td>
                 <td>{{$comment->name}}</td>
+                @endif
               </tr>
             </tbody>
+            @endforeach
             @endforeach
     </div>
 </div>

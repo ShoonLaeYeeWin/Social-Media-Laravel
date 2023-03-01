@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
@@ -18,7 +19,7 @@ class UserController extends Controller
     {
         $posts = User::join('posts', 'posts.user_id', '=', 'users.id')
         ->select(['users.id','users.name','users.photo', 'posts.*',])
-        ->orderBy('posts.id', 'desc')->paginate(3);
+        ->orderBy('posts.id', 'desc')->paginate(5);
         return view('user.dashboard', compact('posts'));
     }
 

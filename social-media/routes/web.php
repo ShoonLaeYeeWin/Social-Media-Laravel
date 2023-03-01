@@ -25,10 +25,15 @@ Route::get('/', function () {
 Route::prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'login']);
     Route::post('/create/login', [AuthController::class, 'save']);
+    Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/register', [AuthController::class, 'index']);
     Route::post('/create/register', [AuthController::class, 'create']);
-    Route::get('/logout', [AuthController::class, 'logout']);
 });
+/* Admin auth */
+Route::get('/login', [AdminController::class, 'index']);
+Route::post('/create/login', [AdminController::class, 'login']);
+Route::get('/logout', [AdminController::class, 'logout']);
+
 // /* User */
 Route::group(['prefix' => 'user', 'middleware' => ['userauth']], function () {
     Route::get('/dashboard', [UserController::class, 'dashboard']);
@@ -41,7 +46,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['userauth']], function () {
     Route::get('/delete/post/{id}', [PostController::class, 'delete']);
     Route::get('/edit/post/{id}', [PostController::class, 'edit']);
     Route::post('/update/post/{id}', [PostController::class, 'update']);
-    Route::get('/show/comment', [CommentController::class, 'show'])->name('comment.show');
+    Route::get('/posts/{post}', [CommentController::class, 'show'])->name('post.show');
     Route::post('/create/comment', [CommentController::class, 'create']);
     Route::get('/postList/export', [PostController::class, 'exportCsv'])->name('post.export');
     Route::post('/postList/import', [PostController::class, 'importCsv'])->name('post.import');
@@ -56,7 +61,3 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function () {
     Route::get('/delete/user/{id}', [AdminController::class, 'deleteUser']);
     Route::get('/userList/export', [AdminController::class, 'exportCsv'])->name('user.export');
 });
-/* Admin auth */
-Route::get('/login', [AdminController::class, 'index']);
-Route::post('/create/login', [AdminController::class, 'login']);
-Route::get('/logout', [AdminController::class, 'logout']);

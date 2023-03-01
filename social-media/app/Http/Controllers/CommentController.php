@@ -8,32 +8,24 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
-    public function show()
+    public function show(Post $post)
     {
-        $comments = User::join('posts', 'posts.user_id', '=', 'users.id')
-        ->select('users.id', 'users.name', 'users.photo', 'posts.*')
-        ->where('id', 'posts.id')
-        ->get()->toArray();
-        dd($comments);
-        // $comment=Post::where('id', $comments->id)
-        return view('user.comment', compact('comments'));
+        $comments = Comment::where('post_id', '=', $post->id)->get();
+        return view('user.showPost', compact('post', 'comments'));
     }
 
-    public function create(Request $request)
+    public function create(CommentRequest $request)
     {
-        $validated = $request->validate([
-            'comment' => 'required',
-        ]);
         $data = $this->commentData($request);
-        // dd($data);
         Comment::create($data);
-        return redirect()->route('comment.show');
+        return back();
     }
 
-    private function commentData(Request $request)
+    private function commentData(CommentRequest $request)
     {
         return [
             'comment' => $request->comment,

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('content');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
             $table->softDeletes();
         });

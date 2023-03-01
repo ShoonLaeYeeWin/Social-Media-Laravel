@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\DB;
@@ -22,19 +23,38 @@ class AdminController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
-        $user_data = array(
-            $fieldType => $request->email,
-            'password'  => $request->password,
-        );
-        $input_data = Auth::attempt($user_data);
-        if ($input_data) {
-            if (Auth::user()->type == 0) {
-                return redirect('/admin/dashboard');
-            }
-        } else {
-            return back()->with('loginError', 'Your email and password are incorrect!');
+        if (Auth::guard('webadmin')->attempt($request->only(['email', 'password']))) {
+            return redirect()->route('admin.dashboard');
         }
+            return redirect()->back()->with('error', 'Invalid Credentials');
+        // $data = $this->loginData($request);
+        // $input_data = Auth::attempt($data);
+        // if ($input_data) {
+        //     return redirect('/admin/dashboard');
+        // } else {
+        //     return back()->with('loginError', 'Your email and password are incorrect!');
+        // }
+        // dd($data);
+        // $user = Admin::first();
+        // // dd($user);
+        // if (($user['email'] == $data['email']) && ($user['password'] == $data['password'])) {
+        //     return redirect('/admin/dashboard');
+        // } else {
+        //     return back()->with('loginError', 'Your email and password are incorrect!');
+        // }
+        // $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+        // $user_data = array(
+        //     $fieldType => $request->email,
+        //     'password'  => $request->password,
+        // );
+        // $input_data = Auth::attempt($user_data);
+        // if ($input_data) {
+        //     if (Auth::user()->type == 0) {
+        //         return redirect('/admin/dashboard');
+        //     }
+        // } else {
+        //     return back()->with('loginError', 'Your email and password are incorrect!');
+        // }
     }
 
     public function view()
@@ -59,7 +79,6 @@ class AdminController extends Controller
     public function upgrade(ProfileUpdateRequest $request, $id)
     {
         $data = $this->data($request);
-        // dd($data);
         User::where('id', $id)->update($data);
         if ($request->hasFile('editPhoto')) {
             $imageName = uniqid() . $request->file('editPhoto')->getClientOriginalName();
@@ -130,6 +149,14 @@ class AdminController extends Controller
             fclose($file);
         };
         return Response::stream($callback, 200, $headers);
+    }
+
+    private function loginData(LoginRequest $request)
+    {
+        return [
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ];
     }
 
     private function data(ProfileUpdateRequest $request)

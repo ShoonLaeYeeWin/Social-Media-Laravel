@@ -2,25 +2,27 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Admin extends Model
 {
-    use HasApiTokens;
     use HasFactory;
+    use HasApiTokens;
     use Notifiable;
     use SoftDeletes;
 
-/**
+    protected $guarded = [];
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+
+    protected $table = 'admins';
     protected $dates = ['deleted_at'];
     protected $fillable = [
         'name',
