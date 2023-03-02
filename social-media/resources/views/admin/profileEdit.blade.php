@@ -1,7 +1,7 @@
 @extends('admin.dashboard')
 <title>ProfileEdit | Admin</title>
 @section('dashboard')
-<div class="container profile-blk p-5">
+<div class="container admin-profile-blk px-5 py-3 w-50 border border-dark rounded-2">
     <a href="{{url('/admin/profile')}}"><i class="fa-solid fa-arrow-left"></i></a>
     <h2 class="ttl">Profile Edit</h2>
     <form action="{{url('admin/update/profile',$user->id)}}" method="POST" enctype="multipart/form-data">

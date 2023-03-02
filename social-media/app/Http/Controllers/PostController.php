@@ -49,7 +49,7 @@ class PostController extends Controller
     public function update($id, PostRequest $request)
     {
             $data = $this->data($request);
-            $postUpdate = Post::where('id', $request->id)->update($data);
+            Post::where('id', $request->id)->update($data);
             return redirect('/user/list/post')->with(['updateSuccess' => 'Your Post Has Been Updated Successfully!']);
     }
 

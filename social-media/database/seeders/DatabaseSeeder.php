@@ -18,13 +18,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        Admin::factory()->create([
+        User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('Admin123@'),
             'address' => 'Yangon',
             'phone' => '09441003608',
             'dob' => '2023-02-01',
+            'type' => '0',
         ]);
 
         User::factory()->create([
@@ -34,6 +35,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Mandalay',
             'phone' => '09910036081',
             'dob' => '2023-02-01',
+            'type' => '1',
         ]);
     }
 }

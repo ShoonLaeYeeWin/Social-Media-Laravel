@@ -68,7 +68,7 @@ a{
     height: 8px;
     background-color: #fff;
   }
-  
+
   .sidebar::-webkit-scrollbar-thumb {
     background-color: #aab7cf;
   }
@@ -78,17 +78,17 @@ a{
     margin: 0;
     list-style: none;
   }
-  
+
   .sidebar-nav li {
     padding: 0;
     margin: 0;
     list-style: none;
   }
-  
+
   .sidebar-nav .nav-item {
     margin-bottom: 5px;
   }
-  
+
   .sidebar-nav .nav-heading {
     font-size: 11px;
     text-transform: uppercase;
@@ -96,7 +96,7 @@ a{
     font-weight: 600;
     margin: 10px 0 5px 15px;
   }
-  
+
   .sidebar-nav .nav-link {
     display: flex;
     align-items: center;
@@ -106,26 +106,26 @@ a{
     padding: 10px 15px;
     border-radius: 4px;
   }
-  
+
   .sidebar-nav .nav-link i {
     font-size: 16px;
     margin-right: 10px;
   }
-  
+
   .sidebar-nav .nav-link.collapsed {
     color: #012970;
     background: #fff;
   }
-  
+
   .sidebar-nav .nav-link.collapsed i {
     color: #899bbd;
   }
-  
+
   .sidebar-nav .nav-link:hover {
     color: #4154f1;
     background: #f6f9ff;
   }
-  
+
 .active {
     color: #4154f1 !important;
     background: #f6f9ff !important;
@@ -140,7 +140,7 @@ a{
     margin: 0;
     list-style: none;
   }
-  
+
   .sidebar-nav .nav-content a {
     display: flex;
     align-items: center;
@@ -149,39 +149,37 @@ a{
     color: #012970;
     transition: 0.3;
     padding: 10px 0 10px 40px;
-    transition: 0.3s;
-		text-decoration: none;
+	text-decoration: none;
   }
-  
+
   .sidebar-nav .nav-content a i {
     font-size: 6px;
     margin-right: 8px;
     line-height: 0;
     border-radius: 50%;
   }
-  
+
   .sidebar-nav .nav-content a:hover,
   .sidebar-nav .nav-content a.active {
     color: #4154f1;
   }
-  
+
   .sidebar-nav .nav-content a.active i {
     background-color: #4154f1;
   }
 
 /* Profile */
-.profile-blk{
-  width: 50% !important;
-  margin-left: 35% !important;
-  border: 3px solid #85B6FF;
-  margin-top: 8%;
-  position: relative;
+
+.admin-profile-blk {
+    margin-top: 6%;
+    margin-bottom: 10%;
 }
+
 .fa-user-pen{
-  position: absolute;
-  right: 2%;
+  /*position: absolute;
+  right: 2%;*/
   font-size: 20px;
-  top: 5%;
+  /*top: 5%;*/
   color: #85B6FF;
 }
 

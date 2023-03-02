@@ -25,11 +25,13 @@
       <div class="d-flex justify-content-between align-items-center mt-3">
         <button class="download-btn text-center me-3"><a href="{{ route('post.export') }}">Post Download</a></button>
         <form action="" method="GET">
-          <div class="d-flex mb-3">
+          <div class="d-flex">
             <input type="search" class="me-3" value="{{ request('content') }}" placeholder="Search Content" name="content">
+            <a href="" class="ms-3 text-white btn bg-danger">Search</a>
+            <a href="{{route('list.post')}}" class="ms-3 text-white btn bg-danger">Cancel</a>
           </div>
         </form>
-        <a href="{{route('list.post')}}" class="ms-3 text-white btn bg-danger">Cancel</a>
+
         <form method="POST" action="{{ route('post.import') }}" enctype="multipart/form-data" class="d-flex justify-content-end">
             @csrf
             <div class="input-gp mb-0">

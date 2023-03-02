@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->date('dob')->nullable();
             $table->string('phone')->nullable();
+            $table->integer('type')->default('0');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();

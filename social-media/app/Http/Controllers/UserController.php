@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $posts = User::join('posts', 'posts.user_id', '=', 'users.id')
         ->select(['users.id','users.name','users.photo', 'posts.*',])
-        ->orderBy('posts.id', 'desc')->paginate(5);
+        ->orderBy('posts.id', 'desc')->paginate(9);
         return view('user.dashboard', compact('posts'));
     }
 

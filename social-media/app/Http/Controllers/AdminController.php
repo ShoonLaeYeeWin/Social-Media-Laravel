@@ -23,10 +23,10 @@ class AdminController extends Controller
 
     public function login(LoginRequest $request)
     {
-        if (Auth::guard('webadmin')->attempt($request->only(['email', 'password']))) {
-            return redirect()->route('admin.dashboard');
-        }
-            return redirect()->back()->with('error', 'Invalid Credentials');
+        //if (Auth::guard('webadmin')->attempt($request->only(['email', 'password']))) {
+        //    return redirect()->route('admin.dashboard');
+        //}
+        //    return redirect()->back()->with('error', 'Invalid Credentials');
         // $data = $this->loginData($request);
         // $input_data = Auth::attempt($data);
         // if ($input_data) {
@@ -42,19 +42,19 @@ class AdminController extends Controller
         // } else {
         //     return back()->with('loginError', 'Your email and password are incorrect!');
         // }
-        // $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
-        // $user_data = array(
-        //     $fieldType => $request->email,
-        //     'password'  => $request->password,
-        // );
-        // $input_data = Auth::attempt($user_data);
-        // if ($input_data) {
-        //     if (Auth::user()->type == 0) {
-        //         return redirect('/admin/dashboard');
-        //     }
-        // } else {
-        //     return back()->with('loginError', 'Your email and password are incorrect!');
-        // }
+         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+         $user_data = array(
+             $fieldType => $request->email,
+             'password'  => $request->password,
+         );
+         $input_data = Auth::attempt($user_data);
+         if ($input_data) {
+             if (Auth::user()->type == 0) {
+                 return redirect('/admin/dashboard');
+             }
+         } else {
+             return back()->with('loginError', 'Your email and password are incorrect!');
+         }
     }
 
     public function view()
@@ -106,7 +106,7 @@ class AdminController extends Controller
         } elseif (request('email')) {
             $users = User::where('email', 'like', '%' . request('email') . '%')->get();
         } else {
-            $users = Auth::user()->orderBy('id', 'desc')->paginate(5);
+            $users = Auth::user()->id->orderBy('id', 'desc')->paginate(5);
         }
         return view('admin.userList', compact('users'));
     }

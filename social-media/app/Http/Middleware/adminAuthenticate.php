@@ -19,16 +19,16 @@ class AdminAuthenticate
     public function handle(Request $request, Closure $next)
     {
         // $user = Admin::first();
-        // if (Auth::user()) {
-        //     $user_type = Auth::user()->type;
-        //     if ($user_type == 0) {
+         if (Auth::user()) {
+             $user_type = Auth::user()->type;
+             if ($user_type == 0) {
                 return $next($request);
-        //     } else {
-        //         Session::flush();
-        //         Auth::logout();
-        //         return redirect('/');
-        //     }
-        // }
-        // return redirect('/');
+             } else {
+                 Session::flush();
+                 Auth::logout();
+                 return redirect('/');
+             }
+         }
+         return redirect('/');
     }
 }

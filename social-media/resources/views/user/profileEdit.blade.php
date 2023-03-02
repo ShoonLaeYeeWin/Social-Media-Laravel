@@ -1,7 +1,7 @@
 @extends('layouts')
 <link rel="stylesheet" href="{{asset('css/admin.css')}}">
 @section('head')
-<div class="container profile-blk p-5">
+<div class="container profile-blk py-3 px-5 mt-5 w-50 border border-dark rounded-2">
     <a href="{{url('/user/profile')}}"><i class="fa-solid fa-arrow-left"></i></a>
     <h2 class="ttl">Profile Edit</h2>
     <form action="{{url('user/update/profile',$user->id)}}" method="POST" enctype="multipart/form-data">

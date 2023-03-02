@@ -58,6 +58,16 @@
             <div class="col-md-4 mb-3 mt-5">
                 <a href="{{ url('/user/dashboard') }}"><i class="fa-solid fa-arrow-left mb-3"></i></a>
                 <div class="card">
+                    @foreach ($comments as $comment)
+                     <h2>{{$comment->name}}</h2>
+                     @if (Auth::user()->photo == null)
+                     <img src="{{ asset('img/img_emptyProfile.png') }}" alt="Profile"
+                         class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
+                 @else
+                     <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Profile"
+                         class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
+                 @endif
+                    @endforeach
                     <div class="card-body">
                         <h5 class="card-title">{{ $post->title }}</h5>
                         <p class="card-text">
@@ -95,6 +105,15 @@
                 @foreach ($comments as $comment)
                     <div>
                         <h2>{{$comment->comment}}</h2>
+                        <h2>{{$comment->name}}</h2>
+                        @if (Auth::user()->photo == null)
+                        <img src="{{ asset('img/img_emptyProfile.png') }}" alt="Profile"
+                            class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
+                    @else
+                        <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Profile"
+                            class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
+                    @endif
+                    <h2>{{$comment->created_at}}</h2>
                     </div>
                 @endforeach
             </div>

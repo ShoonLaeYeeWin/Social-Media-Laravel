@@ -58,6 +58,7 @@ button{
 .ttl{
     font-size: 30px;
     text-align: center;
+    color: #aabaf3;
 }
 .input-gp{
     margin-bottom: 30px;
@@ -91,6 +92,7 @@ input,textarea{
 .con-reg{
     margin: 5% auto;
     width: 30%;
+    background: #aabaf3;
 }
 .reg-btn{
     background-color: #02c924 !important;
@@ -144,7 +146,7 @@ textarea{
     font-size: 16px;
   }
   .thead-dark{
-    background-color: #4f4f4f;
+    background-color: #aabaf3;
     color: #fff;
   }
   .th-lg{

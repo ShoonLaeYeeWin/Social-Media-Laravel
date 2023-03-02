@@ -85,11 +85,9 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <a href="{{url('/user/posts',$post->id)}}">
-                                            <h3 class="card-title text-success mb-3">{{ $post->title }}</h3>
+                                            <h3 class="card-title text-success mb-3 d-inline-block text-truncate w-100">{{ $post->title }}</h3>
                                         </a>
-                                        <p class="card-text">
-                                            {{ Str::limit($post->content, 150) }}
-                                        </p>
+                                        <p class="">{{ Str::limit($post->content, $limit = 80, $end = '...') }}</p>
                                     </div>
                                     <div class="card-footer">
                                         <div class="gp d-flex justify-content-start align-items-center">
@@ -119,7 +117,7 @@
                         <h2 class="text-center text-danger">There is no data.</h2>
                     @endif
                 </div>
-                <div class="mt-3 pagniation">
+                <div class="mt-3 pagination d-flex justify-content-center">
                     {{ $posts->links() }}
                 </div>
             </div>

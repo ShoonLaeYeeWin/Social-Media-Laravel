@@ -11,8 +11,8 @@
       </div>
     @endif
     <a href="{{url('/user/list/post')}}"><i class="fa-solid fa-arrow-left"></i></a>
-    <h2 class="ttl">Post Create</h2>
-    <form action="{{url('user/create/post')}}" method="POST">  
+    <h2 class="ttl text-white">Post Create</h2>
+    <form action="{{url('user/create/post')}}" method="POST">
         @csrf
         <div class="input-gp">
             <label for="">Post Title:</label>
