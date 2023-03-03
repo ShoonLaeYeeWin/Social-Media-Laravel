@@ -27,7 +27,8 @@
         <form action="" method="GET">
           <div class="d-flex">
             <input type="search" class="me-3" value="{{ request('content') }}" placeholder="Search Content" name="content">
-            <a href="" class="ms-3 text-white btn bg-danger">Search</a>
+            {{-- <input type="search" class="me-3" value="{{ request('status') }}" placeholder="Search Active/Inacrtive" name="status"> --}}
+            {{-- <a href="" class="ms-3 text-white btn bg-danger">Search</a> --}}
             <a href="{{route('list.post')}}" class="ms-3 text-white btn bg-danger">Cancel</a>
           </div>
         </form>
@@ -52,15 +53,25 @@
                     <th scope="col" class="th-sm">#</th>
                     <th scope="col" class="th-md">Post Title</th>
                     <th scope="col">Post Content</th>
+                    <th scope="col" class="th-md">Active/Inactive</th>
                     <th scope="col" class="th-lg">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach ($posts as $post)
-                      <tr>
+                      <tr class="post{{ $post->status == 0 ? ' post-active' : '' }}">
                         <td class="text-center">{{$post->id}}</td>
                         <td>{{$post->title}}</td>
                         <td class="text-truncate" style="max-width: 150px;">{{$post->content}}</td>
+                        <td>
+                          <div class="d-flex justify-content-center">
+                            @if($post->status == 1)
+                            <a href="{{route('status.update',$post->id)}}" class="btn btn-success">Active</a>
+                            @else
+                            <a href="{{route('status.update',$post->id)}}" class="btn btn-danger">Inactive</a>
+                            @endif
+                          </div>
+                        </td>
                         <td class="text-center">
                             <button class="edit"><a href="{{url('/user/edit/post',$post->id)}}"><i class="fa-solid fa-pen-to-square"></i> Edit</a></button>
                             <button class="delete"><a href="{{url('/user/delete/post',$post->id)}}"><i class="fa-solid fa-trash"></i> Delete</a></button>

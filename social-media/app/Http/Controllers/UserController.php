@@ -20,7 +20,8 @@ class UserController extends Controller
         $posts = User::join('posts', 'posts.user_id', '=', 'users.id')
         ->select(['users.id','users.name','users.photo', 'posts.*',])
         ->orderBy('posts.id', 'desc')->paginate(9);
-        return view('user.dashboard', compact('posts'));
+        $userCount = Auth::user()->count();
+        return view('user.dashboard', compact('posts', 'userCount'));
     }
 
     public function index()
@@ -28,13 +29,15 @@ class UserController extends Controller
         if (Auth::user()->type == 1) {
             $user = Auth::user();
         }
-        return view('user.profile', compact('user'));
+        $userCount = Auth::user()->count();
+        return view('user.profile', compact('userCount'));
     }
 
     public function edit($id)
     {
         $user = User::where('id', $id)->first();
-        return view('user.profileEdit', compact('user'));
+        $userCount = Auth::user()->count();
+        return view('user.profileEdit', compact('user', 'userCount'));
     }
 
     public function update(ProfileUpdateRequest $request, $id)

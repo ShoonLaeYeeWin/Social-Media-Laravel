@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\Admin;
+use App\Mail\NoticeMail;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use App\Notifications\UserCreated;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\ProfileUpdateRequest;
 
@@ -23,25 +27,6 @@ class AdminController extends Controller
 
     public function login(LoginRequest $request)
     {
-        //if (Auth::guard('webadmin')->attempt($request->only(['email', 'password']))) {
-        //    return redirect()->route('admin.dashboard');
-        //}
-        //    return redirect()->back()->with('error', 'Invalid Credentials');
-        // $data = $this->loginData($request);
-        // $input_data = Auth::attempt($data);
-        // if ($input_data) {
-        //     return redirect('/admin/dashboard');
-        // } else {
-        //     return back()->with('loginError', 'Your email and password are incorrect!');
-        // }
-        // dd($data);
-        // $user = Admin::first();
-        // // dd($user);
-        // if (($user['email'] == $data['email']) && ($user['password'] == $data['password'])) {
-        //     return redirect('/admin/dashboard');
-        // } else {
-        //     return back()->with('loginError', 'Your email and password are incorrect!');
-        // }
          $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
          $user_data = array(
              $fieldType => $request->email,
@@ -49,7 +34,7 @@ class AdminController extends Controller
          );
          $input_data = Auth::attempt($user_data);
          if ($input_data) {
-             if (Auth::user()->type == 0) {
+             if (Auth::user()->type == 1) {
                  return redirect('/admin/dashboard');
              }
          } else {
@@ -59,7 +44,8 @@ class AdminController extends Controller
 
     public function view()
     {
-        return view('admin.dashboard');
+        $userCount = Auth::user()->all()->count();
+        return view('admin.dashboard', compact('userCount'));
     }
 
     public function show()
@@ -67,13 +53,15 @@ class AdminController extends Controller
         if (Auth::user()->type == 0) {
             $user = Auth::user();
         }
-        return view('admin.profile', compact('user'));
+        $userCount = Auth::user()->all()->count();
+        return view('admin.profile', compact('userCount'));
     }
 
     public function edit($id)
     {
         $user = User::where('id', $id)->first();
-        return view('admin.profileEdit', compact('user'));
+        $userCount = Auth::user()->all()->count();
+        return view('admin.profileEdit', compact('user', 'userCount'));
     }
 
     public function upgrade(ProfileUpdateRequest $request, $id)
@@ -106,9 +94,29 @@ class AdminController extends Controller
         } elseif (request('email')) {
             $users = User::where('email', 'like', '%' . request('email') . '%')->get();
         } else {
-            $users = Auth::user()->id->orderBy('id', 'desc')->paginate(5);
+            $users = Auth::user()->orderBy('id', 'desc')->paginate(5);
+            $userCount = Auth::user()->all()->count();
         }
-        return view('admin.userList', compact('users'));
+        return view('admin.userList', compact('users', 'userCount'));
+    }
+
+    public function statusUpdate($id)
+    {
+        $userList = User::where('id', $id)->select('status')->get()->toArray();
+        if ($userList[0]['status'] == '1') {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+        $userStatus = User::where('id', $id)->update(['status' => $status]);
+        if ($status == '0') {
+            $user = User::where('id', $id)->first();
+            $user->deleted_at = Carbon::now();
+            $user->save();
+            Mail::to($user->email)
+            ->send(new NoticeMail());
+        }
+        return back();
     }
 
     public function deleteUser($id)

@@ -37,7 +37,7 @@ class AuthController extends Controller
         );
         $input_data = Auth::attempt($user_data);
         if ($input_data) {
-            if (Auth::user()->type == 1) {
+            if (Auth::user()->type == 0) {
                 return redirect('/user/dashboard');
             }
         } else {

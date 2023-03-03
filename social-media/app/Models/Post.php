@@ -13,7 +13,10 @@ class Post extends Model
     use SoftDeletes;
 
     protected $table = 'posts';
-    protected $fillable = ['title','content','user_id'];
+    protected $fillable = ['title','content','user_id','status'];
+    protected $casts = [
+        'status' => 'string',
+    ];
 
     public function post()
     {

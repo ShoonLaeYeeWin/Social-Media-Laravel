@@ -25,6 +25,7 @@ class PostController extends Controller
 
     public function list(Request $request)
     {
+        // $array = [0, 1];
         if ($request->content) {
             $posts = Post::where('user_id', Auth::user()->id)->where('content', 'like', '%' . $request->content .
             '%')->get();
@@ -51,6 +52,18 @@ class PostController extends Controller
             $data = $this->data($request);
             Post::where('id', $request->id)->update($data);
             return redirect('/user/list/post')->with(['updateSuccess' => 'Your Post Has Been Updated Successfully!']);
+    }
+
+    public function statusUpdate($id)
+    {
+        $postList = Post::where('id', $id)->select('status')->get()->toArray();
+        if ($postList[0]['status'] == '1') {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+        $postStatus = Post::where('id', $id)->update(['status' => $status]);
+        return back();
     }
 
     public function exportCsv()

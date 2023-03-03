@@ -11,7 +11,7 @@
       </div>
     @endif
     <a href="{{url('/')}}"><i class="fa-solid fa-arrow-left"></i></a>
-    <h2 class="ttl">Register</h2>
+    <h2 class="ttl text-white">Register</h2>
     <form action="{{url('auth/create/register')}}" method="POST" enctype="multipart/form-data">  
         @csrf
         <div class="input-gp">

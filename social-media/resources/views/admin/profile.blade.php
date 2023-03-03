@@ -14,35 +14,35 @@
         <div class="row d-flex justify-content-center">
             <div class="d-flex align-items-center w-50 justify-content-between">
                 <h2 class="text-center mt-2 ttl">Admin Profile</h2>
-            <a href="{{url('/admin/edit/profile',$user->id)}}"><i class="fa-solid fa-user-pen"></i></a>
+            <a href="{{url('/admin/edit/profile',Auth::user()->id)}}"><i class="fa-solid fa-user-pen"></i></a>
             </div>
 <div class="info-blk w-75 d-flex flex-column justify-content-center">
     <div class="mt-5 d-flex justify-content-between">
         <h5>Name:</h5>
-        <p>{{$user->name}}</p>
+        <p>{{Auth::user()->name}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Email:</h5>
-        <p>{{$user->email}}</p>
+        <p>{{Auth::user()->email}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Address:</h5>
-        <p>{{$user->address}}</p>
+        <p>{{Auth::user()->address}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Phone Number:</h5>
-        <p>{{$user->phone}}</p>
+        <p>{{Auth::user()->phone}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Date Of Birth:</h5>
-        <p>{{$user->dob}}</p>
+        <p>{{Auth::user()->dob}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Photo:</h5>
-        @if ($user['photo'] == NULL)
+        @if (Auth::user()->photo == NULL)
         <img src="{{asset('img/img_emptyProfile.png')}}" alt="" style="max-width: 100px;height: 100px;object-fit: cover;">
         @else
-        <img src="{{asset('storage/'.$user['photo'])}}" alt="" style="max-width: 100px;height: 100px;object-fit: cover;">
+        <img src="{{asset('storage/'.Auth::user()->photo)}}" alt="" style="max-width: 100px;height: 100px;object-fit: cover;">
         @endif
     </div>
 </div>

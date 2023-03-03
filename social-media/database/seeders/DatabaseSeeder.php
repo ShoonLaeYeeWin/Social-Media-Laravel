@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Yangon',
             'phone' => '09441003608',
             'dob' => '2023-02-01',
-            'type' => '0',
+            'type' => '1',
         ]);
 
         User::factory()->create([
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Mandalay',
             'phone' => '09910036081',
             'dob' => '2023-02-01',
-            'type' => '1',
+            'type' => '0',
         ]);
     }
 }

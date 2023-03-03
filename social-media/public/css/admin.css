@@ -175,6 +175,10 @@ a{
     margin-bottom: 10%;
 }
 
+.list-profile-blk{
+  margin-top: 10%;
+}
+
 .fa-user-pen{
   /*position: absolute;
   right: 2%;*/
@@ -184,8 +188,8 @@ a{
 }
 
 .user-list{
-  width: 70% !important;
-  margin-left: 25% !important;
+  width: 75% !important;
+  margin-left: 22% !important;
 }
 
 .th-md-user{
@@ -205,4 +209,8 @@ a{
   width: 15% !important;
   background-color: #ff9800;
   border: none;
+}
+
+.post-active{
+  background-color: #ffd5d5;
 }

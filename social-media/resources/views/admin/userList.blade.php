@@ -1,7 +1,7 @@
 @extends('admin.dashboard')
 <title>UserList | Admin</title>
 @section('dashboard')
-<div class="container profile-blk user-list shadow-lg pb-5">
+<div class="container list-profile-blk user-list shadow-lg pb-5">
     @if (session('deleteSuccess'))
     <div class="alert alert-success alert-dismissible fade show mt-5 mb-3 m-auto w-75 text-center" role="alert">
         <strong>{{ session('deleteSuccess') }}</strong>
@@ -37,12 +37,13 @@
                     <th scope="col" class="th-lg-user">User Profile</th>
                     <th scope="col" class="th-md-user">Phone Number</th>
                     <th scope="col" class="th-lg-user">Date Of Birthday</th>
+                    <th scope="col" class="th-md-user">Activate/Deactivate</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach ($users as $user)
-                      <tr>
+                      <tr class="post{{ $user->status == 0 ? ' post-active' : '' }}">
                         <td class="text-center">{{$user->id}}</td>
                         <td>{{$user->name}}</td>
                         <td class="text-truncate" style="max-width: 150px;">{{$user->email}}</td>
@@ -58,6 +59,15 @@
                         </td>
                         <td>{{$user->phone}}</td>
                         <td>{{$user->dob}}</td>
+                        <td>
+                          <div class="d-flex justify-content-center">
+                            @if($user->status == 1)
+                            <a href="{{ route('user.status',$user->id)}}" class="btn btn-success">Activate</a>
+                            @else
+                            <a href="{{ route('user.status',$user->id)}}" class="btn btn-danger">Deactivate</a>
+                            @endif
+                          </div>
+                        </td>
                         <td class="text-center" style="width: 40%;">
                             <button class="delete"><a href="{{url('/admin/delete/user',$user->id)}}"><i class="fa-solid fa-trash"></i> Delete</a></button>
                         </td>
@@ -67,9 +77,9 @@
               </table>
         </div>
     </div>
-    {{-- <div class="mt-3 pagniation d-flex justify-content-center">
+    <div class="mt-3 pagniation d-flex justify-content-center">
         {{ $users->links() }}
-    </div> --}}
+    </div>
 </div>
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>

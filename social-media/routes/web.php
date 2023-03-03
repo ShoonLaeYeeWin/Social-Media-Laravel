@@ -46,6 +46,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['userauth']], function () {
     Route::get('/delete/post/{id}', [PostController::class, 'delete']);
     Route::get('/edit/post/{id}', [PostController::class, 'edit']);
     Route::post('/update/post/{id}', [PostController::class, 'update']);
+    Route::get('/status_update/{id}', [PostController::class,'statusUpdate'])->name('status.update');
     Route::get('/posts/{post}', [CommentController::class, 'show'])->name('post.show');
     Route::post('/create/comment', [CommentController::class, 'create']);
     Route::get('/postList/export', [PostController::class, 'exportCsv'])->name('post.export');
@@ -58,6 +59,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function () {
     Route::get('/edit/profile/{id}', [AdminController::class, 'edit']);
     Route::post('/update/profile/{id}', [AdminController::class, 'upgrade']);
     Route::get('/list/user', [AdminController::class, 'listUser'])->name('list.user');
+    Route::get('/status_update/{id}', [AdminController::class,'statusUpdate'])->name('user.status');
     Route::get('/delete/user/{id}', [AdminController::class, 'deleteUser']);
     Route::get('/userList/export', [AdminController::class, 'exportCsv'])->name('user.export');
 });

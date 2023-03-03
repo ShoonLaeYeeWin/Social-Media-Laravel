@@ -20,7 +20,7 @@ class UserAuthenticate
     {
         if (Auth::user()) {
             $user_type = Auth::user()->type;
-            if ($user_type == 1) {
+            if ($user_type == 0) {
                 return $next($request);
             } else {
                 Session::flush();

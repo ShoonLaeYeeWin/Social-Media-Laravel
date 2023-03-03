@@ -58,20 +58,12 @@
             <div class="col-md-4 mb-3 mt-5">
                 <a href="{{ url('/user/dashboard') }}"><i class="fa-solid fa-arrow-left mb-3"></i></a>
                 <div class="card">
-                    @foreach ($comments as $comment)
-                     <h2>{{$comment->name}}</h2>
-                     @if (Auth::user()->photo == null)
-                     <img src="{{ asset('img/img_emptyProfile.png') }}" alt="Profile"
-                         class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
-                 @else
-                     <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Profile"
-                         class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
-                 @endif
-                    @endforeach
                     <div class="card-body">
-                        <h5 class="card-title">{{ $post->title }}</h5>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title">{{ $post->title }}</h5>
+                        </div>
                         <p class="card-text">
-                            {{ Str::limit($post->content, 150) }}
+                            {{ $post->content }}
                         </p>
                     </div>
                     <div class="card-footer">
@@ -79,8 +71,6 @@
                             <time datetime="{{ $post->created_at }}">
                                 {{ $post->created_at->diffForHumans() }}
                             </time>
-                            <span class="text-warning">&middot;</span>
-                            <span>{{ ceil(strlen($post->cotent) / 863) }} min read</span>
                         </div>
                     </div>
                 </div>
@@ -104,16 +94,20 @@
 
                 @foreach ($comments as $comment)
                     <div>
-                        <h2>{{$comment->comment}}</h2>
-                        <h2>{{$comment->name}}</h2>
-                        @if (Auth::user()->photo == null)
-                        <img src="{{ asset('img/img_emptyProfile.png') }}" alt="Profile"
-                            class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
-                    @else
-                        <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Profile"
-                            class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
-                    @endif
-                    <h2>{{$comment->created_at}}</h2>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="me-3 text-primary">{{$comment->name}}</h5>
+                            @if ($comment->photo == null)
+                            <img src="{{ asset('img/img_emptyProfile.png') }}" alt="Profile"
+                                class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
+                           @else
+                            <img src="{{ asset('storage/' . $comment->photo) }}" alt="Profile"
+                                class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
+                           @endif
+                        </div>
+                            <div class="d-flex justify-content-between">
+                            <p>{{$comment->comment}}</p>
+                            <span>{{$comment->created_at}}</span>
+                        </div>
                     </div>
                 @endforeach
             </div>

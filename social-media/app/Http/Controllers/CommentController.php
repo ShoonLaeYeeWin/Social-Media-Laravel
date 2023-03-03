@@ -14,7 +14,7 @@ class CommentController extends Controller
 {
     public function show(Post $post)
     {
-        $comments = Comment::join('users','users.id','=','comments.user_id')
+        $comments = Comment::join('users', 'users.id', '=', 'comments.user_id')
         ->select(['users.name','users.photo', 'comments.*',])
         ->where('post_id', '=', $post->id)->get();
         return view('user.showPost', compact('post', 'comments'));

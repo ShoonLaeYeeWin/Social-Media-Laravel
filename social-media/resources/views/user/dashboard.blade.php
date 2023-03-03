@@ -15,7 +15,7 @@
                     <li class="nav-item w-25">
                         <a class="nav-link nav-icon" href="#">
                             <i class="fa-solid fa-bell"></i>
-                            <span class="badge bg-primary badge-number">4</span>
+                            <span class="badge bg-primary badge-number">{{$userCount}}</span>
                         </a>
                     </li>
                     <li class="nav-item w-50">
@@ -106,8 +106,6 @@
                                             <time datetime="{{ $post->created_at }}">
                                                 {{ $post->created_at->diffForHumans() }}
                                             </time>
-                                            <span class="text-warning">&middot;</span>
-                                            <span>{{ ceil(strlen($post->cotent) / 863) }} min read</span>
                                         </div>
                                     </div>
                                 </div>
