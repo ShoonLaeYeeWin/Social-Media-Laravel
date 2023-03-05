@@ -37,7 +37,7 @@ p,h5{
     padding: 0 !important;
 }
 button{
-    margin: 20px 0 0 !important;
+    /*margin: 20px 0 0 !important;*/
     background-color: #286f8f !important;
     color: #fff !important;
 }
@@ -46,7 +46,7 @@ button{
 }
 
 .download-btn,.upload-btn{
-    width: 15% !important;
+    width: 12% !important;
     background-color: #ff9800 !important;
     border: none;
     margin: 0 !important;
@@ -62,3 +62,31 @@ button{
   .post-active{
     background-color: #ffd5d5;
   }
+
+  .post-detail {
+    background-color:#DDF7E3 ;
+  }
+  .cmt-section {
+background-color: #EEEEEE;
+  }
+  .post-detail .card-body p {
+    word-wrap: break-word;
+  }
+  .comment-time,.post-time,.db-post-time {
+    width: max-content;
+    font-size: 0.7rem;
+  }
+  .cmt-txt {
+    word-wrap: break-word;
+  }
+
+  table th {
+    font-weight: 900;
+  }
+
+  table tr td {
+    vertical-align: middle;
+    padding: 0 15px;
+    max-width: 150px;
+  }
+

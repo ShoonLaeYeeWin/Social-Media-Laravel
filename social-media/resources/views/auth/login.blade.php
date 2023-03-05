@@ -10,9 +10,17 @@
         </button>
       </div>
     @endif
+    @if (session('registerSuccess'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ session('registerSuccess') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <i class="fa-sharp fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    @endif
     <a href="{{url('/')}}"><i class="fa-solid fa-arrow-left"></i></a>
     <h2 class="ttl">User Login</h2>
-    <form action="{{url('auth/create/login')}}" method="POST">  
+    <form action="{{url('auth/create/login')}}" method="POST">
         @csrf
         <div class="input-gp">
             <label for="">Email:</label>

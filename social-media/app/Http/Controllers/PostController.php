@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,17 +21,22 @@ class PostController extends Controller
     {
             $data = $this->data($request);
             Post::create($data);
-            return back()->with(['registerSuccess' => 'Your Post Has Been Created Successfully!']);
+            return redirect()->route('list.post')->with(['registerSuccess' => 'Your Post Has Been Created Successfully!']);
     }
 
     public function list(Request $request)
     {
-        // $array = [0, 1];
+        $userCount = Post::all()->count();
         if ($request->content) {
             $posts = Post::where('user_id', Auth::user()->id)->where('content', 'like', '%' . $request->content .
             '%')->get();
+        } elseif (in_array(request('postStatus'), [0, 1])) {
+            $posts = Post::where('user_id', Auth::user()->id)->where('status', 'like', '%' . $request->postStatus .
+            '%')->get();
         } else {
-            $posts = Post::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(5);
+            //$posts = Post::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(5);
+            $posts = Post::where('user_id', Auth::user()->id)->withTrashed()->get();
+            dd($posts);
         }
         return view('user.postList', compact('posts'));
     }
@@ -50,7 +56,7 @@ class PostController extends Controller
     public function update($id, PostRequest $request)
     {
             $data = $this->data($request);
-            Post::where('id', $request->id)->update($data);
+            Post::where('id', $id)->update($data);
             return redirect('/user/list/post')->with(['updateSuccess' => 'Your Post Has Been Updated Successfully!']);
     }
 
@@ -62,7 +68,18 @@ class PostController extends Controller
         } else {
             $status = 1;
         }
-        $postStatus = Post::where('id', $id)->update(['status' => $status]);
+        Post::where('id', $id)->update(['status' => $status]);
+        if ($status == '0') {
+            $post = Post::where('id', $id)->first();
+            $post->deleted_at = Carbon::now();
+            $post->save();
+        }
+            //$post = Post::where('id', $id)->first();
+            //dd($post);
+        //    $post->withTrashed()->get();
+        //    //$user->deleted_at = null;
+        //    $post->save();
+        //}
         return back();
     }
 

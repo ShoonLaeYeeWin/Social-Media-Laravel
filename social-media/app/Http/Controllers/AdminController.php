@@ -27,12 +27,7 @@ class AdminController extends Controller
 
     public function login(LoginRequest $request)
     {
-         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
-         $user_data = array(
-             $fieldType => $request->email,
-             'password'  => $request->password,
-         );
-         $input_data = Auth::attempt($user_data);
+        $input_data = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
          if ($input_data) {
              if (Auth::user()->type == 1) {
                  return redirect('/admin/dashboard');
@@ -40,11 +35,16 @@ class AdminController extends Controller
          } else {
              return back()->with('loginError', 'Your email and password are incorrect!');
          }
+         if($input_data) {
+            if (Auth::user()->type == 0) {
+                return back()->with('loginError', 'Your email and password are incorrect!');
+            }
+        }
     }
 
     public function view()
     {
-        $userCount = Auth::user()->all()->count();
+        $userCount = User::all()->count();
         return view('admin.dashboard', compact('userCount'));
     }
 
@@ -53,14 +53,14 @@ class AdminController extends Controller
         if (Auth::user()->type == 0) {
             $user = Auth::user();
         }
-        $userCount = Auth::user()->all()->count();
+        $userCount = User::all()->count();
         return view('admin.profile', compact('userCount'));
     }
 
     public function edit($id)
     {
         $user = User::where('id', $id)->first();
-        $userCount = Auth::user()->all()->count();
+        $userCount = User::all()->count();
         return view('admin.profileEdit', compact('user', 'userCount'));
     }
 
@@ -94,8 +94,8 @@ class AdminController extends Controller
         } elseif (request('email')) {
             $users = User::where('email', 'like', '%' . request('email') . '%')->get();
         } else {
-            $users = Auth::user()->orderBy('id', 'desc')->paginate(5);
-            $userCount = Auth::user()->all()->count();
+            $users = User::orderBy('id', 'desc')->paginate(5);
+            $userCount = User::all()->count();
         }
         return view('admin.userList', compact('users', 'userCount'));
     }

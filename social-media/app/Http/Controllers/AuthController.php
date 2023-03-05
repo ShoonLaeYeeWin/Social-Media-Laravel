@@ -20,7 +20,7 @@ class AuthController extends Controller
     {
         $data = $this->data($request);
         User::create($data);
-        return back()->with(['registerSuccess' => 'Your Account registeration is successfully!']);
+        return redirect('/auth/login')->with(['registerSuccess' => 'Your Account registeration is successfully!']);
     }
 
     public function login()
@@ -30,18 +30,18 @@ class AuthController extends Controller
 
     public function save(LoginRequest $request)
     {
-        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
-        $user_data = array(
-            $fieldType => $request->email,
-            'password'  => $request->password,
-        );
-        $input_data = Auth::attempt($user_data);
+        $input_data = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
         if ($input_data) {
             if (Auth::user()->type == 0) {
                 return redirect('/user/dashboard');
             }
         } else {
             return back()->with('loginError', 'Your email and password are incorrect!');
+        }
+        if($input_data) {
+            if (Auth::user()->type == 1) {
+                return back()->with('loginError', 'Your email and password are incorrect!');
+            }
         }
     }
 

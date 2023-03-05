@@ -66,7 +66,7 @@ button{
 label{
     margin-bottom: 5px;
 }
-input,textarea{
+input,textarea, select{
     width: 100%;
     padding: 8px 20px;
     border-radius: 10px;
@@ -159,11 +159,11 @@ textarea{
     width: 20%;
   }
   .edit,.delete{
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 6px 20px;
+    border-radius: 6px;
     color: #fff;
     margin: 0 10px;
-    font-size: 16px;
+    font-size: 15px;
   }
   .edit{
     background-color: #00ab1d !important;

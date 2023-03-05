@@ -205,7 +205,7 @@ a{
 }
 
 .download-btn{
-  margin: 0 15px 0;
+  margin: 0 15px !important;
   width: 15% !important;
   background-color: #ff9800;
   border: none;
@@ -213,4 +213,26 @@ a{
 
 .post-active{
   background-color: #ffd5d5;
+}
+
+/*********************** home.blade ************************/
+
+.home-ttl {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.home-count {
+    color: #000066;
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.home-count small {
+    margin-left: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+.admin-count {
+    margin-left: 10% !important;
 }

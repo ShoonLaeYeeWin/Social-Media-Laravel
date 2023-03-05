@@ -58,5 +58,21 @@
       </li>
     </ul>
 </aside>
+<div class="container-fluid">
+    <h2 class="page-ttl my-5">ホームページ</h2>
+    <div class="wrapper pt-3">
+        <div class="admin-count row row-cols-1 row-cols-md-5 justify-content-center align-items-center mt-5">
+            <div class="col mb-12">
+                <div class="card border border-dark rounded-0">
+                    <div class="card-body gap-3 text-center">
+                        <h5 class="card-title home-ttl">User Count</h5>
+                        <p class="card-text home-count">{{$userCount}}<small>person</small></p>
+                        <a href="{{route('list.user')}}" class="d-block text-primary font-bold link">User List Page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @yield('dashboard')
 @endsection

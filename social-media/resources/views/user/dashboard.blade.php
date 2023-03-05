@@ -11,13 +11,13 @@
                 Logo</a>
             <div class="collapse navbar-collapse d-flex justify-content-end align-items-center mx-3"
                 id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-between align-items-center w-100">
-                    <li class="nav-item w-25">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-between align-items-center w-75">
+                    {{--<li class="nav-item w-25">
                         <a class="nav-link nav-icon" href="#">
                             <i class="fa-solid fa-bell"></i>
                             <span class="badge bg-primary badge-number">{{$userCount}}</span>
                         </a>
-                    </li>
+                    </li>--}}
                     <li class="nav-item w-50">
                         <h4 class="pt-1">{{ Auth::user()->name }}</h4>
                     </li>
@@ -90,20 +90,21 @@
                                         <p class="">{{ Str::limit($post->content, $limit = 80, $end = '...') }}</p>
                                     </div>
                                     <div class="card-footer">
-                                        <div class="gp d-flex justify-content-start align-items-center">
-                                            <p class="me-3 fw-bold">{{ $post->name }}</p>
-                                            @if ($post->photo == null)
-                                                <img src="{{ asset('img/img_emptyProfile.png') }}" alt="Profile"
-                                                    class="rounded-circle mw-100"
-                                                    style="width: 25px; height: 25px; object-fit: cover;">
-                                            @else
-                                                <img src="{{ asset('storage/' . $post->photo) }}" alt="Profile"
-                                                    class="rounded-circle mw-100"
-                                                    style="width: 25px; height: 25px; object-fit: cover;">
-                                            @endif
-                                        </div>
-                                        <div class="d-flex text-sm">
-                                            <time datetime="{{ $post->created_at }}">
+
+                                        <div class="d-flex align-items-center justify-content-between text-sm">
+                                            <div class="gp d-flex justify-content-start align-items-center">
+                                                <p class="me-3 fw-bold">{{ $post->name }}</p>
+                                                @if ($post->photo == null)
+                                                    <img src="{{ asset('img/img_emptyProfile.png') }}" alt="Profile"
+                                                        class="rounded-circle mw-100"
+                                                        style="width: 25px; height: 25px; object-fit: cover;">
+                                                @else
+                                                    <img src="{{ asset('storage/' . $post->photo) }}" alt="Profile"
+                                                        class="rounded-circle mw-100"
+                                                        style="width: 25px; height: 25px; object-fit: cover;">
+                                                @endif
+                                            </div>
+                                            <time datetime="{{ $post->created_at }}" class="db-post-time">
                                                 {{ $post->created_at->diffForHumans() }}
                                             </time>
                                         </div>

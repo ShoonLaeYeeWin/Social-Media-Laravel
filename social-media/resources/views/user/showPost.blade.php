@@ -55,19 +55,17 @@
     </nav>
     <div class="container-fluid mt-5">
         <div class="row d-flex justify-content-center">
-            <div class="col-md-4 mb-3 mt-5">
+            <div class="col-md-8 mb-3 mt-5">
                 <a href="{{ url('/user/dashboard') }}"><i class="fa-solid fa-arrow-left mb-3"></i></a>
-                <div class="card">
+                <div class="p-5 post-detail rounded-3">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex justify-content-center align-items-center mb-3">
                             <h5 class="card-title">{{ $post->title }}</h5>
                         </div>
-                        <p class="card-text">
-                            {{ $post->content }}
-                        </p>
+                        <p class="mb-4">{{ $post->content }}</p>
                     </div>
                     <div class="card-footer">
-                        <div class="d-flex text-sm">
+                        <div class="post-time d-flex text-sm">
                             <time datetime="{{ $post->created_at }}">
                                 {{ $post->created_at->diffForHumans() }}
                             </time>
@@ -77,15 +75,15 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center">
-            <div class="col-md-4 mb-3 mt-3">
-                <h2 class="text-center text-primary">Add Comments</h2>
-                <div class="card-body m-3 ">
+            <div class="col-md-6 mb-3 mt-3">
+                {{--<h2 class="text-center text-primary">Comments</h2>--}}
+                <div class="card-body">
                     <form action="{{url('/user/create/comment')}}" method="POST"
                       class="d-flex justify-content-between align-items-center">
                       @csrf
-                      <input type="text" name="comment" id="" placeholder="Enter Comment Here! ..." value="{{old('comment')}}">
+                      <input type="text" name="comment" id="" placeholder="Enter Comment Here! ..." value="{{old('comment')}}" class="shadow-none">
                       <input type="hidden" name="post_id" value="{{$post->id}}">
-                      <button type="submit" class="cmt-btn ms-3">Comment</button>
+                      <button type="submit" class="cmt-btn ms-3 p-2 border border-0">Comment</button>
                     </form>
                     @error('comment')
                     <span class="text-danger text-sm ms-3"><b>{{$message}}</b></span>
@@ -93,7 +91,7 @@
                 </div>
 
                 @foreach ($comments as $comment)
-                    <div>
+                    <div class="cmt-section mt-4 p-4 rounded-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="me-3 text-primary">{{$comment->name}}</h5>
                             @if ($comment->photo == null)
@@ -104,10 +102,10 @@
                                 class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
                            @endif
                         </div>
-                            <div class="d-flex justify-content-between">
-                            <p>{{$comment->comment}}</p>
-                            <span>{{$comment->created_at}}</span>
+                            <div class="my-3">
+                            <p class="cmt-txt">{{$comment->comment}}</p>
                         </div>
+                        <span class="comment-time d-block ms-auto">{{$comment->created_at}}</span>
                     </div>
                 @endforeach
             </div>
