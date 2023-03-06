@@ -63,6 +63,10 @@ button{
     background-color: #ffd5d5;
   }
 
+  .postActive{
+    background-color: #F2F2F2!important;
+  }
+
   .post-detail {
     background-color:#DDF7E3 ;
   }

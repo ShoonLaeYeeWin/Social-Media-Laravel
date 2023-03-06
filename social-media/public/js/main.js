@@ -18,3 +18,24 @@ $(document).ready(function (e) {
         $('.alert').hide();
     })
 });
+
+$(document).ready(function() {
+    $('#searchName').on('input', function() {
+      if ($(this).val().length > 0) {
+        $('#searchBtn').show();
+        $('#cancelBtn').hide();
+      } else {
+        $('#searchBtn').hide();
+        $('#cancelBtn').show();
+      }
+    });
+    $('#searchEmail').on('input', function() {
+      if ($(this).val().length > 0) {
+        $('#searchBtn').show();
+        $('#cancelBtn').hide();
+      } else {
+        $('#searchBtn').hide();
+        $('#cancelBtn').show();
+      }
+    });
+  });

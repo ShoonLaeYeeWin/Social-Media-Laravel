@@ -38,7 +38,7 @@ class AuthController extends Controller
         } else {
             return back()->with('loginError', 'Your email and password are incorrect!');
         }
-        if($input_data) {
+        if ($input_data) {
             if (Auth::user()->type == 1) {
                 return back()->with('loginError', 'Your email and password are incorrect!');
             }

@@ -21,29 +21,26 @@ class PostController extends Controller
     {
             $data = $this->data($request);
             Post::create($data);
-            return redirect()->route('list.post')->with(['registerSuccess' => 'Your Post Has Been Created Successfully!']);
+            return redirect()->route('list.post')->with(['registerSuccess' => 'Your Post Has Been Created 
+            Successfully!']);
     }
 
     public function list(Request $request)
     {
-        $userCount = Post::all()->count();
-        if ($request->content) {
-            $posts = Post::where('user_id', Auth::user()->id)->where('content', 'like', '%' . $request->content .
-            '%')->get();
-        } elseif (in_array(request('postStatus'), [0, 1])) {
-            $posts = Post::where('user_id', Auth::user()->id)->where('status', 'like', '%' . $request->postStatus .
-            '%')->get();
-        } else {
-            //$posts = Post::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(5);
-            $posts = Post::where('user_id', Auth::user()->id)->withTrashed()->get();
-            dd($posts);
-        }
+        $posts = Post::where('user_id', Auth::user()->id)
+        ->when(request('content'), function ($query) {
+            $query->where('content', 'like', '%' . request('content') . '%');
+        })
+        ->when(in_array(request('postStatus'), [0, 1]), function ($query) {
+            $query->where('status', 'like', '%' . request('postStatus') . '%');
+        })
+        ->orderBy('id', 'desc')->paginate(5);
         return view('user.postList', compact('posts'));
     }
 
     public function delete($id)
     {
-            $postDelete = Post::find($id)->delete();
+            $postDelete = Post::where('id', $id)->delete();
             return back()->with(['deleteSuccess' => 'Your Post Has Been Deleted Successfully!']);
     }
 
@@ -65,28 +62,20 @@ class PostController extends Controller
         $postList = Post::where('id', $id)->select('status')->get()->toArray();
         if ($postList[0]['status'] == '1') {
             $status = 0;
-        } else {
+        }
+        if ($postList[0]['status'] == '0') {
             $status = 1;
         }
         Post::where('id', $id)->update(['status' => $status]);
-        if ($status == '0') {
-            $post = Post::where('id', $id)->first();
-            $post->deleted_at = Carbon::now();
-            $post->save();
-        }
-            //$post = Post::where('id', $id)->first();
-            //dd($post);
-        //    $post->withTrashed()->get();
-        //    //$user->deleted_at = null;
-        //    $post->save();
-        //}
         return back();
     }
 
-    public function exportCsv()
+    public function exportCsv($id)
     {
             $users = User::join('posts', 'posts.user_id', '=', 'users.id')
             ->select(['users.id','users.name','users.photo', 'posts.*',])
+            ->where('users.id', $id)
+            ->whereNull('posts.deleted_at')
             ->get();
             $headers = array(
                 "Content-type" => "text/csv",
@@ -111,7 +100,6 @@ class PostController extends Controller
 
                     fputcsv($file, $row);
                 }
-
                 fclose($file);
             };
             return Response::stream($callback, 200, $headers);

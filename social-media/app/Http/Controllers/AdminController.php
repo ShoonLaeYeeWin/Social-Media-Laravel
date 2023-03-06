@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\Admin;
+use App\Mail\InformMail;
 use App\Mail\NoticeMail;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
@@ -28,14 +29,14 @@ class AdminController extends Controller
     public function login(LoginRequest $request)
     {
         $input_data = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
-         if ($input_data) {
-             if (Auth::user()->type == 1) {
+        if ($input_data) {
+            if (Auth::user()->type == 1) {
                  return redirect('/admin/dashboard');
-             }
-         } else {
+            }
+        } else {
              return back()->with('loginError', 'Your email and password are incorrect!');
-         }
-         if($input_data) {
+        }
+        if ($input_data) {
             if (Auth::user()->type == 0) {
                 return back()->with('loginError', 'Your email and password are incorrect!');
             }
@@ -89,14 +90,14 @@ class AdminController extends Controller
 
     public function listUser(Request $request)
     {
-        if (request('name')) {
-            $users = User::where('name', 'like', '%' . request('name') . '%')->get();
-        } elseif (request('email')) {
-            $users = User::where('email', 'like', '%' . request('email') . '%')->get();
-        } else {
-            $users = User::orderBy('id', 'desc')->paginate(5);
-            $userCount = User::all()->count();
-        }
+        $users = User::when(request('name'), function ($query) {
+            $query->where('name', 'like', '%' . request('name') . '%');
+        })
+        ->when(request('email'), function ($query) {
+            $query->where('email', 'like', '%' . request('email') . '%');
+        })
+        ->orderBy('id', 'desc')->paginate(5);
+        $userCount = User::all()->count();
         return view('admin.userList', compact('users', 'userCount'));
     }
 
@@ -115,6 +116,12 @@ class AdminController extends Controller
             $user->save();
             Mail::to($user->email)
             ->send(new NoticeMail());
+        } else {
+            $user = User::where('id', $id)->first();
+            $user->deleted_at = null;
+            $user->save();
+            Mail::to($user->email)
+            ->send(new InformMail());
         }
         return back();
     }
@@ -128,7 +135,7 @@ class AdminController extends Controller
     public function exportCsv()
     {
         $users = User::all();
-
+        dd($users);
         $headers = array(
             "Content-type" => "text/csv",
             "Content-Disposition" => "attachment; filename=users.csv",

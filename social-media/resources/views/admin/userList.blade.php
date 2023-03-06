@@ -72,18 +72,16 @@
         <div class="d-flex justify-content-center align-items-center">
         <form action="" method="GET">
           <div class="d-flex">
-            <input type="search" class="me-3" value="{{ request('name') }}" placeholder="Search  name" name="name">
+            <input type="search" id="searchName" class="me-3" value="{{ request('name') }}" placeholder="Search  name" name="name">
+            <input type="search" id="searchEmail" class="me-3" value="{{ request('email') }}" placeholder="Search  email" name="email">
+            <button class="m-0 text-white btn bg-primary" id="searchBtn" style="display:none">Search</button>
+            <a href="{{route('list.user')}}" class="ms-3 text-white btn bg-danger" id="cancelBtn" style="display:none">Cancel</a>
           </div>
         </form>
-        <form action="" method="GET">
-          <div class="d-flex">
-            <input type="search" value="{{ request('email') }}" placeholder="Search  email" name="email">
-          </div>
-        </form>
-        <button class="download-btn text-center bg-danger"><a href="{{route('list.user')}}" class="text-white">Cancel</a></button>
         <button class="download-btn text-center"><a href="{{ route('user.export') }}">CSV Download</a></button>
         </div>
         <div class="col-md-6 mt-2 w-100">
+          @if (count($users) != 0)
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark text-center">
                   <tr>
@@ -131,12 +129,15 @@
                       </tr>
                   @endforeach
                 </tbody>
-              </table>
+            </table>
+          @else
+            <h2 class="text-center text-danger">There is no data.</h2>
+          @endif
         </div>
     </div>
-    {{--<div class="mt-3 pagniation d-flex justify-content-center">
+    <div class="mt-3 pagniation d-flex justify-content-center">
         {{ $users->links() }}
-    </div>--}}
+    </div>
 </div>
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>

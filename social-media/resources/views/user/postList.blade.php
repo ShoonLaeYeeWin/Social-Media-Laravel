@@ -32,20 +32,29 @@
     <h3 class="text-center mt-3">Post List</h3>
     <div class="row">
       <div class="d-flex justify-content-between align-items-center mt-3">
-        <button class="download-btn text-center me-3"><a href="{{ route('post.export') }}">Post Download</a></button>
+        <button class="download-btn text-center me-3"><a href="{{ route('post.export', Auth::user()->id) }}">Post Download</a></button>
         <form action="" method="GET">
           <div class="d-flex align-items-center">
-            <input type="search" class="me-3 shadow-none" value="{{ request('content') }}" placeholder="Search Content" name="content">
-            <select name="postStatus" id="post-status" class="me-3 shadow-none pe-2 text-muted w-50">
-                <option value="" selected>Status</option>
-                <option value="0">Inactive</option>
-                <option value="1">Active</option>
+            <input type="search" id="searchName" class="me-3 shadow-none" value="{{ request('content') }}" placeholder="Search Content" name="content">
+            <select name="postStatus" class="me-3 shadow-none pe-2 text-muted w-50"  id="searchEmail">
+              <option value="" selected>Status</option>
+              @if(request('postStatus') == 0 )
+              <option value="0" selected>Inactive</option>
+              <option value="1">Active</option>
+              @elseif(request('postStatus') == 1 )
+              <option value="0">Inactive</option>
+              <option value="1" selected>Active</option>
+              @else
+              <option value="" selected>Status</option>
+              @endif
+                {{-- <option value="" selected>@if(request('postStatus') == null) Status @endif</option>
+                <option value="0"> @if(request('postStatus') == 0) Inactive @endif</option>
+                <option value="1"> @if(request('postStatus') == 1) Active @endif</option> --}}
             </select>
-            <button class="m-0 text-white btn bg-primary">Search</button>
-            <a href="{{route('list.post')}}" class="ms-3 text-white btn bg-danger">Cancel</a>
+            <button class="m-0 text-white btn bg-primary" id="searchBtn" style="display:none">Search</button>
+            <a href="{{route('list.post')}}" class="ms-3 text-white btn bg-danger" id="cancelBtn" style="display:none">Cancel</a>
           </div>
         </form>
-
         <form method="POST" action="{{ route('post.import') }}" enctype="multipart/form-data" class="d-flex justify-content-end">
             @csrf
             <div class="input-gp mb-0">
@@ -90,7 +99,7 @@
                       </tr>
                   @endforeach
                 </tbody>
-              </table>
+            </table>
               {{-- <div class="mt-3 pagniation d-flex justify-content-center">
                 {{ $posts->links() }}
               </div> --}}
