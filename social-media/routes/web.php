@@ -23,13 +23,11 @@ Route::get('/', function () {
     return view('auth.dashboard');
 });
 Route::prefix('auth')->group(function () {
-    // Route::middleware(['guest'])->group(function () {
-        Route::get('/login', [AuthController::class, 'login']);
-        Route::post('/create/login', [AuthController::class, 'save']);
-        Route::get('/logout', [AuthController::class, 'logout']);
-        Route::get('/register', [AuthController::class, 'index']);
-        Route::post('/create/register', [AuthController::class, 'create']);
-    // });
+    Route::get('/login', [AuthController::class, 'login']);
+    Route::post('/create/login', [AuthController::class, 'save']);
+    Route::get('/register', [AuthController::class, 'index']);
+    Route::post('/create/register', [AuthController::class, 'create']);
+    Route::get('/logout', [AuthController::class, 'logout']);
 });
 /* Admin auth */
 Route::get('/login', [AdminController::class, 'index']);
@@ -37,31 +35,35 @@ Route::post('/create/login', [AdminController::class, 'login']);
 Route::get('/logout', [AdminController::class, 'logout']);
 
 // /* User */
-Route::group(['prefix' => 'user', 'middleware' => ['userauth']], function () {
-    Route::get('/dashboard', [UserController::class, 'dashboard']);
-    Route::get('/profile', [UserController::class, 'index']);
-    Route::get('/edit/profile/{id}', [UserController::class, 'edit']);
-    Route::post('/update/profile/{id}', [UserController::class, 'update']);
-    Route::get('/post', [PostController::class, 'index']);
-    Route::post('/create/post', [PostController::class, 'create']);
-    Route::get('/list/post', [PostController::class, 'list'])->name('list.post');
-    Route::get('/delete/post/{id}', [PostController::class, 'delete']);
-    Route::get('/edit/post/{id}', [PostController::class, 'edit']);
-    Route::post('/update/post/{id}', [PostController::class, 'update']);
-    Route::get('/status_update/{id}', [PostController::class,'statusUpdate'])->name('status.update');
-    Route::get('/posts/{post}', [CommentController::class, 'show'])->name('post.show');
-    Route::post('/create/comment', [CommentController::class, 'create']);
-    Route::get('/postList/export/{id}', [PostController::class, 'exportCsv'])->name('post.export');
-    Route::post('/postList/import', [PostController::class, 'importCsv'])->name('post.import');
+Route::group(['prefix' => 'user'], function () {
+    Route::middleware(['userauth'])->group(function () {
+        Route::get('/dashboard', [UserController::class, 'dashboard']);
+        Route::get('/profile', [UserController::class, 'index']);
+        Route::get('/edit/profile/{id}', [UserController::class, 'edit']);
+        Route::post('/update/profile/{id}', [UserController::class, 'update']);
+        Route::get('/post', [PostController::class, 'index']);
+        Route::post('/create/post', [PostController::class, 'create']);
+        Route::get('/list/post', [PostController::class, 'list'])->name('list.post');
+        Route::get('/delete/post/{id}', [PostController::class, 'delete']);
+        Route::get('/edit/post/{id}', [PostController::class, 'edit']);
+        Route::post('/update/post/{id}', [PostController::class, 'update']);
+        Route::get('/status_update/{id}', [PostController::class,'statusUpdate'])->name('status.update');
+        Route::get('/posts/{post}', [CommentController::class, 'show'])->name('post.show');
+        Route::post('/create/comment', [CommentController::class, 'create']);
+        Route::get('/postList/export/{id}', [PostController::class, 'exportCsv'])->name('post.export');
+        Route::post('/postList/import', [PostController::class, 'importCsv'])->name('post.import');
+    });
 });
 // /* Admin */
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/dashboard', [AdminController::class, 'view'])->name('admin.dashboard');
-    Route::get('/profile', [AdminController::class, 'show']);
-    Route::get('/edit/profile/{id}', [AdminController::class, 'edit']);
-    Route::post('/update/profile/{id}', [AdminController::class, 'upgrade']);
-    Route::get('/list/user', [AdminController::class, 'listUser'])->name('list.user');
-    Route::get('/status_update/{id}', [AdminController::class,'statusUpdate'])->name('user.status');
-    Route::get('/delete/user/{id}', [AdminController::class, 'deleteUser']);
-    Route::get('/userList/export', [AdminController::class, 'exportCsv'])->name('user.export');
+    Route::middleware(['adminauth'])->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'view'])->name('admin.dashboard');
+        Route::get('/profile', [AdminController::class, 'show']);
+        Route::get('/edit/profile/{id}', [AdminController::class, 'edit']);
+        Route::post('/update/profile/{id}', [AdminController::class, 'upgrade']);
+        Route::get('/list/user', [AdminController::class, 'listUser'])->name('list.user');
+        Route::get('/status_update/{id}', [AdminController::class,'statusUpdate'])->name('user.status');
+        Route::get('/delete/user/{id}', [AdminController::class, 'deleteUser']);
+        Route::get('/userList/export', [AdminController::class, 'exportCsv'])->name('user.export');
+    });
 });

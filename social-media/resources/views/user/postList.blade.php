@@ -47,9 +47,6 @@
               @else
               <option value="" selected>Status</option>
               @endif
-                {{-- <option value="" selected>@if(request('postStatus') == null) Status @endif</option>
-                <option value="0"> @if(request('postStatus') == 0) Inactive @endif</option>
-                <option value="1"> @if(request('postStatus') == 1) Active @endif</option> --}}
             </select>
             <button class="m-0 text-white btn bg-primary" id="searchBtn" style="display:none">Search</button>
             <a href="{{route('list.post')}}" class="ms-3 text-white btn bg-danger" id="cancelBtn" style="display:none">Cancel</a>
@@ -100,9 +97,9 @@
                   @endforeach
                 </tbody>
             </table>
-              {{-- <div class="mt-3 pagniation d-flex justify-content-center">
+              <div class="mt-3 pagniation d-flex justify-content-center">
                 {{ $posts->links() }}
-              </div> --}}
+              </div>
           @else
               <h2 class="text-center text-danger">There is no data.</h2>
           @endif

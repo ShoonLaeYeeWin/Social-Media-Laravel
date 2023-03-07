@@ -10,13 +10,7 @@
             <div class="collapse navbar-collapse d-flex justify-content-end align-items-center mx-3"
                 id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-between align-items-center w-100">
-                    <li class="nav-item w-25">
-                        <a class="nav-link nav-icon" href="#">
-                            <i class="fa-solid fa-bell"></i>
-                            <span class="badge bg-primary badge-number">{{$userCount}}</span>
-                        </a>
-                    </li>
-                    <li class="nav-item w-50">
+                    <li class="nav-item w-100">
                         <h4 class="pt-1">{{ Auth::user()->name }}</h4>
                     </li>
                     <li class="nav-item dropdown">

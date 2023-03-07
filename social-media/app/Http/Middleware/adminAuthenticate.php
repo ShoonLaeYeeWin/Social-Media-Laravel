@@ -18,21 +18,9 @@ class AdminAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        // $user = Admin::first();
-        // if (Auth::user()) {
-        //     $user_type = Auth::user()->type;
-        //     if ($user_type == 1) {
-        //         return $next($request);
-        //     } else {
-        //          Session::flush();
-        //          Auth::logout();
-        //          return redirect('/');
-        //     }
-        // }
-        //  return redirect('/');
-        if(Auth::guard('web')->check()){
+        if(Auth::guard('admin')->check()){
             return $next($request);
         }
-        return redirect('/');
+        return redirect('/login');
     }
 }

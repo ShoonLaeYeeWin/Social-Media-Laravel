@@ -26,9 +26,6 @@ class UserController extends Controller
 
     public function index()
     {
-        if (Auth::user()->type == 1) {
-            $user = Auth::user();
-        }
         $userCount = User::all()->count();
         return view('user.profile', compact('userCount'));
     }

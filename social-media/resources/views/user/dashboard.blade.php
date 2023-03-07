@@ -12,23 +12,17 @@
             <div class="collapse navbar-collapse d-flex justify-content-end align-items-center mx-3"
                 id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-between align-items-center w-75">
-                    {{--<li class="nav-item w-25">
-                        <a class="nav-link nav-icon" href="#">
-                            <i class="fa-solid fa-bell"></i>
-                            <span class="badge bg-primary badge-number">{{$userCount}}</span>
-                        </a>
-                    </li>--}}
-                    <li class="nav-item w-50">
-                        <h4 class="pt-1">{{ Auth::user()->name }}</h4>
+                    <li class="nav-item w-100">
+                        <h4 class="pt-1">{{ Auth::guard('web')->user()->name }}</h4>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            @if (Auth::user()->photo == null)
+                            @if (Auth::guard('web')->user()->photo == null)
                                 <img src="{{ asset('img/img_emptyProfile.png') }}" alt="Profile"
                                     class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
                             @else
-                                <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Profile"
+                                <img src="{{ asset('storage/' . Auth::guard('web')->user()->photo) }}" alt="Profile"
                                     class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
                             @endif
                         </a>

@@ -21,7 +21,7 @@ class PostController extends Controller
     {
             $data = $this->data($request);
             Post::create($data);
-            return redirect()->route('list.post')->with(['registerSuccess' => 'Your Post Has Been Created 
+            return redirect()->route('list.post')->with(['registerSuccess' => 'Your Post Has Been Created
             Successfully!']);
     }
 
@@ -107,32 +107,32 @@ class PostController extends Controller
 
     public function importCsv(Request $request)
     {
-            $validated = $request->validate([
-                'csv_file' => 'required',
-            ]);
-            $file = $request->file('csv_file')->getRealPath();
-            $data = array_map('str_getcsv', file($file));
-            $header = array_shift($data);
+        $request->validate([
+            'csv_file' => 'required',
+        ]);
+        $file = $request->file('csv_file')->getRealPath();
+        $data = array_map('str_getcsv', file($file));
+        $header = array_shift($data);
         foreach ($data as $row) {
-                $row = array_combine($header, $row);
-                $posts = User::select(['users.id','users.name'])
-                ->where('users.name', $row['User'])
-                ->get()->toArray();
-                $postTitle = $row['Post Title'];
-                $content = $row['Post Content'];
-                $user = $row['User'];
-                $createdAt = $row['Created_At'];
-            if (count($posts) > 0) {
-                foreach ($posts as $post) {
-                    if ($user == $post['name']) {
+            $row = array_combine($header, $row);
+            $posts = User::select(['users.id','users.name'])
+                    ->where('users.name', $row['User'])
+                    ->get()->toArray();
+            $postTitle = $row['Post Title'];
+            $content = $row['Post Content'];
+            $user = $row['User'];
+            $createdAt = $row['Created_At'];
+                if (count($posts) > 0) {
+                    foreach ($posts as $post) {
+                        if ($user == $post['name']) {
                             Post::create([
                                 'title' => $postTitle,
                                 'content' => $content,
                                 'user_id' => $post['id'],
                             ]);
+                        }
                     }
                 }
-            }
             return redirect()->back();
         }
     }

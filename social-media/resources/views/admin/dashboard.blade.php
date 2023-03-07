@@ -22,7 +22,7 @@
               @if (Auth::guard('admin')->user()->photo == NULL)
               <img src="{{asset('img/img_emptyProfile.png')}}"  alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;" >
               @else
-              <img src="{{asset('storage/'.Auth::Auth::guard('admin')->user()->photo)}}" alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
+              <img src="{{asset('storage/'.Auth::guard('admin')->user()->photo)}}" alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
               @endif
             </a>
             <ul class="dropdown-menu">
