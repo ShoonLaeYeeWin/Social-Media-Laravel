@@ -30,19 +30,18 @@ class AuthController extends Controller
 
     public function save(LoginRequest $request)
     {
-        $input_data = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        dd(Auth::guard('web'));
+        $input_data = Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password]);
         if ($input_data) {
-            if (Auth::user()->type == 0) {
-                return redirect('/user/dashboard');
-            }
+            return redirect('/user/dashboard');
         } else {
             return back()->with('loginError', 'Your email and password are incorrect!');
         }
-        if ($input_data) {
-            if (Auth::user()->type == 1) {
-                return back()->with('loginError', 'Your email and password are incorrect!');
-            }
-        }
+        // if ($input_data) {
+        //     if (Auth::user()->type == 1) {
+        //         return back()->with('loginError', 'Your email and password are incorrect!');
+        //     }
+        // }
     }
 
     public function logout()

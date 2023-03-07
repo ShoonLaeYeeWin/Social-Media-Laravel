@@ -15,14 +15,14 @@
             </a>
           </li>
           <li class="nav-item w-50">
-            <h4 class="pt-1">{{Auth::user()->name}}</h4>
+            <h4 class="pt-1">{{Auth::guard('admin')->user()->name}}</h4>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              @if (Auth::user()->photo == NULL)
+              @if (Auth::guard('admin')->user()->photo == NULL)
               <img src="{{asset('img/img_emptyProfile.png')}}"  alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;" >
               @else
-              <img src="{{asset('storage/'.Auth::user()->photo)}}" alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
+              <img src="{{asset('storage/'.Auth::guard('admin')->user()->photo)}}" alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
               @endif
             </a>
             <ul class="dropdown-menu">
@@ -71,35 +71,35 @@
         <div class="row d-flex justify-content-center">
             <div class="d-flex align-items-center w-50 justify-content-between">
                 <h2 class="text-center mt-2 ttl">Admin Profile</h2>
-            <a href="{{url('/admin/edit/profile',Auth::user()->id)}}"><i class="fa-solid fa-user-pen"></i></a>
+            <a href="{{url('/admin/edit/profile',Auth::guard('admin')->user()->id)}}"><i class="fa-solid fa-user-pen"></i></a>
             </div>
 <div class="info-blk w-75 d-flex flex-column justify-content-center">
     <div class="mt-5 d-flex justify-content-between">
         <h5>Name:</h5>
-        <p>{{Auth::user()->name}}</p>
+        <p>{{Auth::guard('admin')->user()->name}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Email:</h5>
-        <p>{{Auth::user()->email}}</p>
+        <p>{{Auth::guard('admin')->user()->email}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Address:</h5>
-        <p>{{Auth::user()->address}}</p>
+        <p>{{Auth::guard('admin')->user()->address}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Phone Number:</h5>
-        <p>{{Auth::user()->phone}}</p>
+        <p>{{Auth::guard('admin')->user()->phone}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Date Of Birth:</h5>
-        <p>{{Auth::user()->dob}}</p>
+        <p>{{Auth::guard('admin')->user()->dob}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Photo:</h5>
-        @if (Auth::user()->photo == NULL)
+        @if (Auth::guard('admin')->user()->photo == NULL)
         <img src="{{asset('img/img_emptyProfile.png')}}" alt="" style="max-width: 100px;height: 100px;object-fit: cover;">
         @else
-        <img src="{{asset('storage/'.Auth::user()->photo)}}" alt="" style="max-width: 100px;height: 100px;object-fit: cover;">
+        <img src="{{asset('storage/'.Auth::guard('admin')->user()->photo)}}" alt="" style="max-width: 100px;height: 100px;object-fit: cover;">
         @endif
     </div>
 

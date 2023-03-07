@@ -23,11 +23,13 @@ Route::get('/', function () {
     return view('auth.dashboard');
 });
 Route::prefix('auth')->group(function () {
-    Route::get('/login', [AuthController::class, 'login']);
-    Route::post('/create/login', [AuthController::class, 'save']);
-    Route::get('/logout', [AuthController::class, 'logout']);
-    Route::get('/register', [AuthController::class, 'index']);
-    Route::post('/create/register', [AuthController::class, 'create']);
+    // Route::middleware(['guest'])->group(function () {
+        Route::get('/login', [AuthController::class, 'login']);
+        Route::post('/create/login', [AuthController::class, 'save']);
+        Route::get('/logout', [AuthController::class, 'logout']);
+        Route::get('/register', [AuthController::class, 'index']);
+        Route::post('/create/register', [AuthController::class, 'create']);
+    // });
 });
 /* Admin auth */
 Route::get('/login', [AdminController::class, 'index']);
@@ -53,7 +55,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['userauth']], function () {
     Route::post('/postList/import', [PostController::class, 'importCsv'])->name('post.import');
 });
 // /* Admin */
-Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function () {
+Route::group(['prefix' => 'admin'], function () {
     Route::get('/dashboard', [AdminController::class, 'view'])->name('admin.dashboard');
     Route::get('/profile', [AdminController::class, 'show']);
     Route::get('/edit/profile/{id}', [AdminController::class, 'edit']);

@@ -15,14 +15,14 @@
             </a>
           </li>
           <li class="nav-item w-50">
-            <h4 class="pt-1">{{Auth::user()->name}}</h4>
+            <h4 class="pt-1">{{Auth::guard('admin')->user()->name}}</h4>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              @if (Auth::user()->photo == NULL)
+              @if (Auth::guard('admin')->user()->photo == NULL)
               <img src="{{asset('img/img_emptyProfile.png')}}"  alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;" >
               @else
-              <img src="{{asset('storage/'.Auth::user()->photo)}}" alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
+              <img src="{{asset('storage/'.Auth::Auth::guard('admin')->user()->photo)}}" alt="Profile" class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
               @endif
             </a>
             <ul class="dropdown-menu">

@@ -28,7 +28,8 @@ class ProfileUpdateRequest extends FormRequest
         $todayDate = date('m/d/Y');
         return [
             'editName' => 'required',
-            'editEmail' => ['required', 'unique:users,email,' . Auth::user()->id,new CustomEmailValidation()],
+            'editEmail' => ['required', 'unique:users,email,' . Auth::guard('admin')->user()->id,
+            new CustomEmailValidation()],
             'editAddress' => 'required',
             'editPhoto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'editDob' => 'required|date|before:' . $todayDate,

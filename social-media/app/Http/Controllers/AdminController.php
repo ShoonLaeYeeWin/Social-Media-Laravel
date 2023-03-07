@@ -28,51 +28,42 @@ class AdminController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $input_data = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        // dd(Auth::guard('admin'));
+        $input_data = Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]);
         if ($input_data) {
-            if (Auth::user()->type == 1) {
-                 return redirect('/admin/dashboard');
-            }
+            return redirect('/admin/dashboard');
         } else {
              return back()->with('loginError', 'Your email and password are incorrect!');
-        }
-        if ($input_data) {
-            if (Auth::user()->type == 0) {
-                return back()->with('loginError', 'Your email and password are incorrect!');
-            }
         }
     }
 
     public function view()
     {
-        $userCount = User::all()->count();
+        $userCount = Admin::all()->count();
         return view('admin.dashboard', compact('userCount'));
     }
 
     public function show()
     {
-        if (Auth::user()->type == 0) {
-            $user = Auth::user();
-        }
-        $userCount = User::all()->count();
+        $userCount = Admin::all()->count();
         return view('admin.profile', compact('userCount'));
     }
 
     public function edit($id)
     {
-        $user = User::where('id', $id)->first();
-        $userCount = User::all()->count();
+        $user = Admin::where('id', $id)->first();
+        $userCount = Admin::all()->count();
         return view('admin.profileEdit', compact('user', 'userCount'));
     }
 
     public function upgrade(ProfileUpdateRequest $request, $id)
     {
         $data = $this->data($request);
-        User::where('id', $id)->update($data);
+        Admin::where('id', $id)->update($data);
         if ($request->hasFile('editPhoto')) {
             $imageName = uniqid() . $request->file('editPhoto')->getClientOriginalName();
             $request->file('editPhoto')->storeAs('public/', $imageName);
-            $data = User::find($id);
+            $data = Admin::find($id);
 
             if ($data) {
                 $data->photo = $imageName;
@@ -88,83 +79,83 @@ class AdminController extends Controller
         return redirect('/');
     }
 
-    public function listUser(Request $request)
-    {
-        $users = User::when(request('name'), function ($query) {
-            $query->where('name', 'like', '%' . request('name') . '%');
-        })
-        ->when(request('email'), function ($query) {
-            $query->where('email', 'like', '%' . request('email') . '%');
-        })
-        ->orderBy('id', 'desc')->paginate(5);
-        $userCount = User::all()->count();
-        return view('admin.userList', compact('users', 'userCount'));
-    }
+    // public function listUser(Request $request)
+    // {
+    //     $users = User::when(request('name'), function ($query) {
+    //         $query->where('name', 'like', '%' . request('name') . '%');
+    //     })
+    //     ->when(request('email'), function ($query) {
+    //         $query->where('email', 'like', '%' . request('email') . '%');
+    //     })
+    //     ->orderBy('id', 'desc')->paginate(5);
+    //     $userCount = User::all()->count();
+    //     return view('admin.userList', compact('users', 'userCount'));
+    // }
 
-    public function statusUpdate($id)
-    {
-        $userList = User::where('id', $id)->select('status')->get()->toArray();
-        if ($userList[0]['status'] == '1') {
-            $status = 0;
-        } else {
-            $status = 1;
-        }
-        $userStatus = User::where('id', $id)->update(['status' => $status]);
-        if ($status == '0') {
-            $user = User::where('id', $id)->first();
-            $user->deleted_at = Carbon::now();
-            $user->save();
-            Mail::to($user->email)
-            ->send(new NoticeMail());
-        } else {
-            $user = User::where('id', $id)->first();
-            $user->deleted_at = null;
-            $user->save();
-            Mail::to($user->email)
-            ->send(new InformMail());
-        }
-        return back();
-    }
+    // public function statusUpdate($id)
+    // {
+    //     $userList = User::where('id', $id)->select('status')->get()->toArray();
+    //     if ($userList[0]['status'] == '1') {
+    //         $status = 0;
+    //     } else {
+    //         $status = 1;
+    //     }
+    //     $userStatus = User::where('id', $id)->update(['status' => $status]);
+    //     if ($status == '0') {
+    //         $user = User::where('id', $id)->first();
+    //         $user->deleted_at = Carbon::now();
+    //         $user->save();
+    //         Mail::to($user->email)
+    //         ->send(new NoticeMail());
+    //     } else {
+    //         $user = User::where('id', $id)->first();
+    //         $user->deleted_at = null;
+    //         $user->save();
+    //         Mail::to($user->email)
+    //         ->send(new InformMail());
+    //     }
+    //     return back();
+    // }
 
-    public function deleteUser($id)
-    {
-        User::find($id)->delete();
-        return back()->with(['deleteSuccess' => 'Your Post Has Been Deleted Successfully!']);
-    }
+    // public function deleteUser($id)
+    // {
+    //     User::find($id)->delete();
+    //     return back()->with(['deleteSuccess' => 'Your Post Has Been Deleted Successfully!']);
+    // }
 
-    public function exportCsv()
-    {
-        $users = User::all();
-        dd($users);
-        $headers = array(
-            "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=users.csv",
-            "Pragma" => "no-cache",
-            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-            "Expires" => "0"
-        );
+    // public function exportCsv()
+    // {
+    //     $users = User::all();
+    //     dd($users);
+    //     $headers = array(
+    //         "Content-type" => "text/csv",
+    //         "Content-Disposition" => "attachment; filename=users.csv",
+    //         "Pragma" => "no-cache",
+    //         "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+    //         "Expires" => "0"
+    //     );
 
-        $columns = array('User Name', 'User Email', 'Address', 'Phone Number','Date Of Birthday');
+    //     $columns = array('User Name', 'User Email', 'Address', 'Phone Number','Date Of Birthday');
 
-        $callback = function () use ($users, $columns) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, $columns);
+    //     $callback = function () use ($users, $columns) {
+    //         $file = fopen('php://output', 'w');
+    //         fputcsv($file, $columns);
 
-            foreach ($users as $user) {
-                $row = [];
-                $row['User Name'] = $user->name;
-                $row['User Email'] = $user->email;
-                $row['Address'] = $user->address;
-                $row['Phone Number'] = $user->phone;
-                $row['Date Of Birthday'] = $user->dob;
+    //         foreach ($users as $user) {
+    //             $row = [];
+    //             $row['User Name'] = $user->name;
+    //             $row['User Email'] = $user->email;
+    //             $row['Address'] = $user->address;
+    //             $row['Phone Number'] = $user->phone;
+    //             $row['Date Of Birthday'] = $user->dob;
 
-                fputcsv($file, $row);
-            }
+    //             fputcsv($file, $row);
+    //         }
 
-            fclose($file);
-        };
-        return Response::stream($callback, 200, $headers);
-    }
+    //         fclose($file);
+    //     };
+    //     return Response::stream($callback, 200, $headers);
+    // }
 
     private function loginData(LoginRequest $request)
     {

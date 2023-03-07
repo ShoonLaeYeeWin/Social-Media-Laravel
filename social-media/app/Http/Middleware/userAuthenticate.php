@@ -18,16 +18,16 @@ class UserAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()) {
-            $user_type = Auth::user()->type;
-            if ($user_type == 0) {
-                return $next($request);
-            } else {
-                Session::flush();
-                Auth::logout();
-                return redirect('/');
-            }
-        }
-        return redirect('/');
+        // if (Auth::user()) {
+        //     $user_type = Auth::user()->type;
+        //     if ($user_type == 0) {
+        //         return $next($request);
+        //     } else {
+        //         Session::flush();
+        //         Auth::logout();
+        //         return redirect('/');
+        //     }
+        // }
+        // return redirect('/');
     }
 }
