@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 use App\Rules\CustomEmailValidation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserProfileRequest;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\ProfileUpdateRequest;
 
 class UserController extends Controller
 {
@@ -37,7 +37,7 @@ class UserController extends Controller
         return view('user.profileEdit', compact('user', 'userCount'));
     }
 
-    public function update(ProfileUpdateRequest $request, $id)
+    public function update(UserProfileRequest $request, $id)
     {
         $data = $this->data($request);
         User::where('id', $id)->update($data);

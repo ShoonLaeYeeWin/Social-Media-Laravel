@@ -76,82 +76,77 @@ class AdminController extends Controller
         return redirect('/');
     }
 
-     public function listUser(Request $request)
-     {
+    public function listUser(Request $request)
+    {
          $users = User::when(request('name'), function ($query) {
              $query->where('name', 'like', '%' . request('name') . '%');
          })
          ->when(request('email'), function ($query) {
              $query->where('email', 'like', '%' . request('email') . '%');
          })
+         ->when(in_array(request('userStatus'), [0, 1]), function ($query) {
+            $query->where('status', 'like', '%' . request('userStatus') . '%');
+         })
+         ->withTrashed()
          ->orderBy('id', 'desc')->paginate(5);
          $userCount = User::all()->count();
          return view('admin.userList', compact('users', 'userCount'));
-     }
+    }
 
-     public function statusUpdate($id)
-     {
-         $userList = User::where('id', $id)->select('status')->get()->toArray();
-         if ($userList[0]['status'] == '1') {
+    public function statusUpdate($id)
+    {
+        $userList = User::where('id', $id)->select('status')->get()->toArray();
+        if ($userList[0]['status'] == '1') {
              $status = 0;
-         } else {
+        } else {
              $status = 1;
-         }
-         $userStatus = User::where('id', $id)->update(['status' => $status]);
-         if ($status == '0') {
+        }
+        $userStatus = User::where('id', $id)->update(['status' => $status]);
+        if ($status == '0') {
              $user = User::where('id', $id)->first();
-             $user->deleted_at = Carbon::now();
-             $user->save();
              Mail::to($user->email)
              ->send(new NoticeMail());
-         } else {
+        } else {
              $user = User::where('id', $id)->first();
-             $user->deleted_at = null;
-             $user->save();
              Mail::to($user->email)
              ->send(new InformMail());
-         }
+        }
          return back();
-     }
+    }
 
-     public function deleteUser($id)
-     {
-         User::find($id)->delete();
-         return back()->with(['deleteSuccess' => 'Your Account User Has Been Deleted Successfully!']);
-     }
+    public function deleteUser($id)
+    {
+        User::where('id', $id)->delete();
+        return back()->with(['deleteSuccess' => 'Your Account User Has Been Deleted Successfully!']);
+    }
 
-     public function exportCsv()
-     {
-         $users = User::all();
-         $headers = array(
-             "Content-type" => "text/csv",
-             "Content-Disposition" => "attachment; filename=users.csv",
-             "Pragma" => "no-cache",
-             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-             "Expires" => "0"
-         );
-
-         $columns = array('User Name', 'User Email', 'Address', 'Phone Number','Date Of Birthday');
-
+    public function exportCsv()
+    {
+        $users = User::all();
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=users.csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        );
+         $columns = array('User Name', 'User Email', 'Address', 'Phone Number', 'Date Of Birthday');
          $callback = function () use ($users, $columns) {
              $file = fopen('php://output', 'w');
              fputcsv($file, $columns);
-
-             foreach ($users as $user) {
-                 $row = [];
-                 $row['User Name'] = $user->name;
-                 $row['User Email'] = $user->email;
-                 $row['Address'] = $user->address;
-                 $row['Phone Number'] = $user->phone;
-                 $row['Date Of Birthday'] = $user->dob;
-
-                 fputcsv($file, $row);
-             }
-
+            foreach ($users as $user) {
+                $row = [];
+                $row['User Name'] = $user->name;
+                $row['User Email'] = $user->email;
+                $row['Address'] = $user->address;
+                $row['Phone Number'] =  "=\"" . $user->phone . "\"";
+                $row['Date Of Birthday'] = Carbon::parse($user->dob)->format('d-M-Y');
+                fputcsv($file, $row);
+            }
              fclose($file);
          };
          return Response::stream($callback, 200, $headers);
-     }
+    }
 
     private function data(ProfileUpdateRequest $request)
     {

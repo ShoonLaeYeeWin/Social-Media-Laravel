@@ -92,7 +92,7 @@
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Date Of Birth:</h5>
-        <p>{{Auth::guard('admin')->user()->dob}}</p>
+        <p>{{ \Carbon\Carbon::parse(Auth::guard('admin')->user()->dob)->format('d-M-Y')}}</p>
     </div>
     <div class="mt-2 d-flex justify-content-between">
         <h5>Photo:</h5>

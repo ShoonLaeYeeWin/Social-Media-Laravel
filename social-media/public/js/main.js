@@ -38,4 +38,13 @@ $(document).ready(function() {
         $('#cancelBtn').show();
       }
     });
+    $('#searchSelect').on('input', function() {
+      if ($(this).val().length > 0) {
+        $('#searchBtn').show();
+        $('#cancelBtn').hide();
+      } else {
+        $('#searchBtn').hide();
+        $('#cancelBtn').show();
+      }
+    });
   });

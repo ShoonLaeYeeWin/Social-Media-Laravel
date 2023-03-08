@@ -23,17 +23,16 @@ Route::get('/', function () {
     return view('auth.dashboard');
 });
 Route::prefix('auth')->group(function () {
-    Route::get('/login', [AuthController::class, 'login']);
+    Route::get('/login', [AuthController::class, 'login'])->middleware('auth.redirect');
     Route::post('/create/login', [AuthController::class, 'save']);
     Route::get('/register', [AuthController::class, 'index']);
     Route::post('/create/register', [AuthController::class, 'create']);
     Route::get('/logout', [AuthController::class, 'logout']);
 });
 /* Admin auth */
-Route::get('/login', [AdminController::class, 'index']);
-Route::post('/create/login', [AdminController::class, 'login']);
-Route::get('/logout', [AdminController::class, 'logout']);
-
+    Route::get('/login', [AdminController::class, 'index'])->middleware('auth.redirect');
+    Route::post('/create/login', [AdminController::class, 'login']);
+    Route::get('/logout', [AdminController::class, 'logout']);
 // /* User */
 Route::group(['prefix' => 'user'], function () {
     Route::middleware(['userauth'])->group(function () {

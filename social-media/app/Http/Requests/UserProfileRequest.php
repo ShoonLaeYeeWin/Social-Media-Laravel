@@ -6,7 +6,7 @@ use App\Rules\CustomEmailValidation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfileUpdateRequest extends FormRequest
+class UserProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class ProfileUpdateRequest extends FormRequest
         $todayDate = date('d-m-Y');
         return [
             'editName' => 'required',
-            'editEmail' => ['required', 'unique:users,email,' . Auth::guard('admin')->user()->id,
+            'editEmail' => ['required', 'unique:users,email,' . Auth::guard('web')->user()->id,
             new CustomEmailValidation()],
             'editAddress' => 'required',
             'editPhoto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',

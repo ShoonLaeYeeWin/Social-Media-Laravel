@@ -96,7 +96,7 @@ class PostController extends Controller
                     $row['Post Title'] = $user->title;
                     $row['Post Content'] = $user->content;
                     $row['User'] = $user->name;
-                    $row['Created_At'] = $user->created_at;
+                    $row['Created_At'] = $user->created_at->format('d-M-Y');
 
                     fputcsv($file, $row);
                 }
@@ -122,19 +122,19 @@ class PostController extends Controller
             $content = $row['Post Content'];
             $user = $row['User'];
             $createdAt = $row['Created_At'];
-                if (count($posts) > 0) {
-                    foreach ($posts as $post) {
-                        if ($user == $post['name']) {
-                            Post::create([
-                                'title' => $postTitle,
-                                'content' => $content,
-                                'user_id' => $post['id'],
-                            ]);
-                        }
+            if (count($posts) > 0) {
+                foreach ($posts as $post) {
+                    if ($user == $post['name']) {
+                        Post::create([
+                            'title' => $postTitle,
+                            'content' => $content,
+                            'user_id' => $post['id'],
+                        ]);
                     }
                 }
-            return redirect()->back();
+            }
         }
+        return redirect()->back();
     }
 
     private function data(PostRequest $request)

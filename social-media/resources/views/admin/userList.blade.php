@@ -74,6 +74,18 @@
           <div class="d-flex">
             <input type="search" id="searchName" class="me-3" value="{{ request('name') }}" placeholder="Search  name" name="name">
             <input type="search" id="searchEmail" class="me-3" value="{{ request('email') }}" placeholder="Search  email" name="email">
+            <select name="userStatus" class="me-3 shadow-none pe-2 text-muted w-50"  id="searchSelect">
+              <option value="" selected>Status</option>
+              @if(request('userStatus') == 0 )
+              <option value="0" selected>Inactive</option>
+              <option value="1">Active</option>
+              @elseif(request('userStatus') == 1 )
+              <option value="0">Inactive</option>
+              <option value="1" selected>Active</option>
+              @else
+              <option value="" selected>Status</option>
+              @endif
+            </select>
             <button class="m-0 text-white btn bg-primary" id="searchBtn" style="display:none">Search</button>
             <a href="{{route('list.user')}}" class="ms-3 text-white btn bg-danger" id="cancelBtn" style="display:none">Cancel</a>
           </div>
@@ -113,18 +125,24 @@
                             @endif
                         </td>
                         <td>{{$user->phone}}</td>
-                        <td>{{$user->dob}}</td>
+                        <td>{{ \Carbon\Carbon::parse($user->dob)->format('d-M-Y')}}</td>
                         <td>
                           <div class="d-flex justify-content-center">
-                            @if($user->status == 1)
-                            <a href="{{ route('user.status',$user->id)}}" class="btn btn-success">Activate</a>
+                            @if($user->deleted_at == null)
+                              @if($user->status == 1)
+                              <a href="{{ route('user.status',$user->id)}}" class="btn btn-success">Activate</a>
+                              @else
+                              <a href="{{ route('user.status',$user->id)}}" class="btn btn-danger">Deactivate</a>
+                              @endif
                             @else
-                            <a href="{{ route('user.status',$user->id)}}" class="btn btn-danger">Deactivate</a>
+                              <a href="#" class="btn btn-danger">Deactivate</a>
                             @endif
                           </div>
                         </td>
                         <td class="text-center" style="width: 40%;">
+                          @if($user->deleted_at == null)
                             <button class="delete"><a href="{{url('/admin/delete/user',$user->id)}}"><i class="fa-solid fa-trash"></i> Delete</a></button>
+                          @endif
                         </td>
                       </tr>
                   @endforeach

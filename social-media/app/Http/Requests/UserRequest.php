@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        $todayDate = date('m/d/Y');
+        $todayDate = date('d-m-Y');
         return [
             'name' => 'required',
             'email' => ['required','unique:users,email',new CustomEmailValidation()],
