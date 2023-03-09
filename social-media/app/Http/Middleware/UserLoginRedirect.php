@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RedirectIfAuthenticated
+class UserLoginRedirect
 {
     /**
      * Handle an incoming request.
@@ -20,8 +20,8 @@ class RedirectIfAuthenticated
 
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard('admin')->check()) {
-            return redirect('admin/dashboard'); // replace '/dashboard' with the URL you want to redirect to
+        if (Auth::guard('web')->check()) {
+            return redirect('user/dashboard');
         }
         return $next($request);
     }

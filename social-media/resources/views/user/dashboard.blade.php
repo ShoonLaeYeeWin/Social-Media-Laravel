@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-md-3 px-4 rounded">
                 <h3 class="ms-4 my-3">Create Post</h3>
-                <form action="{{ url('user/create/post') }}" method="POST">
+                <form action="{{ url('user/create/dashboard/post') }}" method="POST">
                     @csrf
                     <div class="input-gp">
                         <label for="">Post Title:</label>

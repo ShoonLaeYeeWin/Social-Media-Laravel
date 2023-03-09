@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\DB;
 use App\Rules\CustomEmailValidation;
@@ -52,6 +53,22 @@ class UserController extends Controller
         }
         $data->update();
         return redirect('/user/profile')->with(['updateSuccess' => 'Your Profile Has Been Updated Successfully!']);
+    }
+
+    public function createPost(PostRequest $request)
+    {
+        $data = $this->postData($request);
+        Post::create($data);
+        return back();
+    }
+
+    private function postData($request)
+    {
+        return [
+            'title' => $request->title,
+            'content' => $request->content,
+            'user_id' => Auth::user()->id,
+        ];
     }
 
     private function data($request)

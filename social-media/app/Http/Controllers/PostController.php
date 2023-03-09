@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
@@ -19,42 +18,42 @@ class PostController extends Controller
 
     public function create(PostRequest $request)
     {
-            $data = $this->data($request);
-            Post::create($data);
-            return redirect()->route('list.post')->with(['registerSuccess' => 'Your Post Has Been Created
-            Successfully!']);
+        $data = $this->data($request);
+        Post::create($data);
+        return redirect()->route('list.post')->with(['registerSuccess' => 'Your Post Has Been Created
+            Successfully!', ]);
     }
 
     public function list(Request $request)
     {
         $posts = Post::where('user_id', Auth::user()->id)
-        ->when(request('content'), function ($query) {
-            $query->where('content', 'like', '%' . request('content') . '%');
-        })
-        ->when(in_array(request('postStatus'), [0, 1]), function ($query) {
-            $query->where('status', 'like', '%' . request('postStatus') . '%');
-        })
-        ->orderBy('id', 'desc')->paginate(5);
+            ->when(request('content'), function ($query) {
+                $query->where('content', 'like', '%' . request('content') . '%');
+            })
+            ->when(in_array(request('postStatus'), [0, 1]), function ($query) {
+                $query->where('status', 'like', '%' . request('postStatus') . '%');
+            })
+            ->orderBy('id', 'desc')->paginate(5);
         return view('user.postList', compact('posts'));
     }
 
     public function delete($id)
     {
-            $postDelete = Post::where('id', $id)->delete();
-            return back()->with(['deleteSuccess' => 'Your Post Has Been Deleted Successfully!']);
+        $postDelete = Post::where('id', $id)->delete();
+        return back()->with(['deleteSuccess' => 'Your Post Has Been Deleted Successfully!']);
     }
 
     public function edit($id)
     {
-            $postEdit = Post::where('id', $id)->first();
-            return view('user.postEdit', compact('postEdit'));
+        $postEdit = Post::where('id', $id)->first();
+        return view('user.postEdit', compact('postEdit'));
     }
 
     public function update($id, PostRequest $request)
     {
-            $data = $this->data($request);
-            Post::where('id', $id)->update($data);
-            return redirect('/user/list/post')->with(['updateSuccess' => 'Your Post Has Been Updated Successfully!']);
+        $data = $this->data($request);
+        Post::where('id', $id)->update($data);
+        return redirect('/user/list/post')->with(['updateSuccess' => 'Your Post Has Been Updated Successfully!']);
     }
 
     public function statusUpdate($id)
@@ -72,37 +71,42 @@ class PostController extends Controller
 
     public function exportCsv($id)
     {
-            $users = User::join('posts', 'posts.user_id', '=', 'users.id')
-            ->select(['users.id','users.name','users.photo', 'posts.*',])
+        $users = User::join('posts', 'posts.user_id', '=', 'users.id')
+            ->select(['users.id', 'users.name', 'users.photo', 'posts.*'])
             ->where('users.id', $id)
             ->whereNull('posts.deleted_at')
             ->get();
-            $headers = array(
-                "Content-type" => "text/csv",
-                "Content-Disposition" => "attachment; filename=posts.csv",
-                "Pragma" => "no-cache",
-                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-                "Expires" => "0"
-            );
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=posts.csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0",
+        );
 
-            $columns = array('Post Title', 'Post Content','User','Created_At',);
+        $columns = array('Post Title', 'Post Content', 'User', 'Status', 'Created_At');
 
-            $callback = function () use ($users, $columns) {
-                $file = fopen('php://output', 'w');
-                fputcsv($file, $columns);
+        $callback = function () use ($users, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
 
-                foreach ($users as $user) {
-                    $row = [];
-                    $row['Post Title'] = $user->title;
-                    $row['Post Content'] = $user->content;
-                    $row['User'] = $user->name;
-                    $row['Created_At'] = $user->created_at->format('d-M-Y');
-
-                    fputcsv($file, $row);
+            foreach ($users as $user) {
+                $row = [];
+                $row['Post Title'] = $user->title;
+                $row['Post Content'] = $user->content;
+                $row['User'] = $user->name;
+                if ($user->status == '1') {
+                    $row['Status'] = 'Active';
+                } else {
+                    $row['Status'] = 'Inactive';
                 }
-                fclose($file);
-            };
-            return Response::stream($callback, 200, $headers);
+                $row['Created_At'] = $user->created_at->format('d-M-Y');
+
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        };
+        return Response::stream($callback, 200, $headers);
     }
 
     public function importCsv(Request $request)
@@ -115,9 +119,9 @@ class PostController extends Controller
         $header = array_shift($data);
         foreach ($data as $row) {
             $row = array_combine($header, $row);
-            $posts = User::select(['users.id','users.name'])
-                    ->where('users.name', $row['User'])
-                    ->get()->toArray();
+            $posts = User::select(['users.id', 'users.name'])
+                ->where('users.name', $row['User'])
+                ->get()->toArray();
             $postTitle = $row['Post Title'];
             $content = $row['Post Content'];
             $user = $row['User'];

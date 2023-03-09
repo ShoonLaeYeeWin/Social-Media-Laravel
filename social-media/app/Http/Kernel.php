@@ -74,5 +74,6 @@ class Kernel extends HttpKernel
         'adminauth' => \App\Http\Middleware\adminAuthenticate::class,
         'userauth' => \App\Http\Middleware\userAuthenticate::class,
         'auth.redirect' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'user.redirect' => \App\Http\Middleware\UserLoginRedirect::class,
     ];
 }

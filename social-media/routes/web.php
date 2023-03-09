@@ -17,16 +17,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
-
+// ->middleware('auth.redirect');
 /* Auth */
 Route::get('/', function () {
     return view('auth.dashboard');
 });
 /* User Auth*/
 Route::prefix('auth')->group(function () {
-    Route::get('/login', [AuthController::class, 'login'])->middleware('auth.redirect');
+    Route::get('/login', [AuthController::class, 'login'])->middleware('user.redirect');
     Route::post('/create/login', [AuthController::class, 'save']);
-    Route::get('/register', [AuthController::class, 'index'])->middleware('auth.redirect');
+    Route::get('/register', [AuthController::class, 'index'])->middleware('user.redirect');
     Route::post('/create/register', [AuthController::class, 'create']);
     Route::get('/logout', [AuthController::class, 'logout']);
 });
@@ -43,6 +43,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('/update/profile/{id}', [UserController::class, 'update']);
         Route::get('/post', [PostController::class, 'index']);
         Route::post('/create/post', [PostController::class, 'create']);
+        Route::post('/create/dashboard/post', [UserController::class, 'createPost']);
         Route::get('/list/post', [PostController::class, 'list'])->name('list.post');
         Route::get('/delete/post/{id}', [PostController::class, 'delete']);
         Route::get('/edit/post/{id}', [PostController::class, 'edit']);

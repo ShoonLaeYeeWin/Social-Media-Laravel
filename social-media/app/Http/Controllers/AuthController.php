@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
-use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,7 +30,8 @@ class AuthController extends Controller
 
     public function save(LoginRequest $request)
     {
-        $input_data = Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password]);
+        $input_data = Auth::guard('web')->attempt(['email' => $request->email, 'password' =>
+            $request->password, 'status' => '1']);
         if ($input_data) {
             return redirect('/user/dashboard');
         } else {
