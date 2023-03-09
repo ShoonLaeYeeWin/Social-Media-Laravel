@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Comment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
     public function show(Post $post)
     {
         $comments = Comment::join('users', 'users.id', '=', 'comments.user_id')
-        ->select(['users.name','users.photo', 'comments.*',])
-        ->where('post_id', '=', $post->id)->get();
+            ->select(['users.name', 'users.photo', 'comments.*'])
+            ->where('post_id', '=', $post->id)->get();
         return view('user.showPost', compact('post', 'comments'));
     }
 

@@ -78,12 +78,14 @@
                             <div class="col-md-4 mb-3">
                                 <div class=" card {{ $post->status == 0 ? ' postActive' : '' }}">
                                     <div class="card-body">
-                                        @if($post->status == 0)
-                                            <h3 class="card-title mb-3 d-inline-block text-truncate w-100">{{ $post->title }}</h3>
+                                        @if ($post->status == 0)
+                                            <h3 class="card-title mb-3 d-inline-block text-truncate w-100">
+                                                {{ $post->title }}</h3>
                                         @else
-                                        <a href="{{url('/user/posts',$post->id)}}">
-                                            <h3 class="card-title text-success mb-3 d-inline-block text-truncate w-100">{{ $post->title }}</h3>
-                                        </a>
+                                            <a href="{{ url('/user/posts', $post->id) }}">
+                                                <h3 class="card-title text-success mb-3 d-inline-block text-truncate w-100">
+                                                    {{ $post->title }}</h3>
+                                            </a>
                                         @endif
                                         <p class="">{{ Str::limit($post->content, $limit = 80, $end = '...') }}</p>
                                     </div>
