@@ -58,7 +58,7 @@ button {
 /* Login */
 .inner {
     display: block;
-    width: 30%;
+    width: 31%;
     margin: 10% auto;
     padding: 30px 35px;
     box-shadow: 4px 4px 13px rgb(96 125 139 / 35%);
@@ -165,7 +165,6 @@ textarea {
     margin: 0;
     border: none;
     color: #000;
-    /* padding-right: 0; */
     border-radius: 0;
     background-color: transparent;
     font-weight: bold;

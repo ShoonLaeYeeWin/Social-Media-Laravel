@@ -18,10 +18,15 @@ class CommentController extends Controller
         return view('user.showPost', compact('post', 'comments'));
     }
 
-    public function create(CommentRequest $request)
+    public function create(CommentRequest $request, $id)
     {
         $data = $this->commentData($request);
-        Comment::create($data);
+        $post = Post::where('id', $id)->where('status', 1)->first();
+        if ($post) {
+            Comment::create($data);
+        } else {
+            abort(404);
+        }
         return back();
     }
 

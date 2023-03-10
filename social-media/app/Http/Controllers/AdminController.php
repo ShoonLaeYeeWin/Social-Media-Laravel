@@ -58,7 +58,6 @@ class AdminController extends Controller
             $imageName = uniqid() . $request->file('editPhoto')->getClientOriginalName();
             $request->file('editPhoto')->storeAs('public/', $imageName);
             $data = Admin::find($id);
-
             if ($data) {
                 $data->photo = $imageName;
             }

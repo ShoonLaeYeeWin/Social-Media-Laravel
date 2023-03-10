@@ -18,8 +18,10 @@ class UserAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('web')->check()) {
+        if (Auth::guard('web')->check() && Auth::guard('web')->user()->status == '1') {
             return $next($request);
+        } else {
+            abort(404);
         }
         return redirect('/auth/login');
     }

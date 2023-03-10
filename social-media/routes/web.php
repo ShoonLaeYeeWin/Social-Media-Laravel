@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
-// ->middleware('auth.redirect');
+
 /* Auth */
 Route::get('/', function () {
     return view('auth.dashboard');
@@ -50,9 +50,9 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('/update/post/{id}', [PostController::class, 'update']);
         Route::get('/status_update/{id}', [PostController::class, 'statusUpdate'])->name('status.update');
         Route::get('/posts/{post}', [CommentController::class, 'show'])->name('post.show');
-        Route::post('/create/comment', [CommentController::class, 'create']);
+        Route::post('/create/comment/{id}', [CommentController::class, 'create']);
         Route::get('/postList/export/{id}', [PostController::class, 'exportCsv'])->name('post.export');
-        Route::post('/postList/import', [PostController::class, 'importCsv'])->name('post.import');
+        Route::post('/postList/import/{id}', [PostController::class, 'importCsv'])->name('post.import');
     });
 });
 /* Admin */

@@ -21,7 +21,7 @@ class PostController extends Controller
         $data = $this->data($request);
         Post::create($data);
         return redirect()->route('list.post')->with(['registerSuccess' => 'Your Post Has Been Created
-            Successfully!', ]);
+            Successfully!',]);
     }
 
     public function list(Request $request)
@@ -83,13 +83,10 @@ class PostController extends Controller
             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
             "Expires" => "0",
         );
-
         $columns = array('Post Title', 'Post Content', 'User', 'Status', 'Created_At');
-
         $callback = function () use ($users, $columns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $columns);
-
             foreach ($users as $user) {
                 $row = [];
                 $row['Post Title'] = $user->title;
@@ -109,7 +106,7 @@ class PostController extends Controller
         return Response::stream($callback, 200, $headers);
     }
 
-    public function importCsv(Request $request)
+    public function importCsv(Request $request, $id)
     {
         $request->validate([
             'csv_file' => 'required',
@@ -126,19 +123,17 @@ class PostController extends Controller
             $content = $row['Post Content'];
             $user = $row['User'];
             $createdAt = $row['Created_At'];
-            if (count($posts) > 0) {
-                foreach ($posts as $post) {
-                    if ($user == $post['name']) {
-                        Post::create([
-                            'title' => $postTitle,
-                            'content' => $content,
-                            'user_id' => $post['id'],
-                        ]);
-                    }
+            foreach ($posts as $post) {
+                if ($user == $post['name'] && $post['id'] == Auth::guard('web')->user()->id) {
+                    Post::create([
+                        'title' => $postTitle,
+                        'content' => $content,
+                        'user_id' => $post['id'],
+                    ]);
                 }
             }
         }
-        return redirect()->back();
+        return back();
     }
 
     private function data(PostRequest $request)

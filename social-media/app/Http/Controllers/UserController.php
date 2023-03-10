@@ -19,8 +19,8 @@ class UserController extends Controller
     public function dashboard()
     {
         $posts = User::join('posts', 'posts.user_id', '=', 'users.id')
-        ->select(['users.id','users.name','users.photo', 'posts.*',])
-        ->orderBy('posts.id', 'desc')->paginate(9);
+            ->select(['users.id', 'users.name', 'users.photo', 'posts.*',])
+            ->orderBy('posts.id', 'desc')->paginate(9);
         $userCount = User::all()->count();
         return view('user.dashboard', compact('posts', 'userCount'));
     }
@@ -46,7 +46,6 @@ class UserController extends Controller
             $imageName = uniqid() . $request->file('editPhoto')->getClientOriginalName();
             $request->file('editPhoto')->storeAs('public/', $imageName);
             $data = User::find($id);
-
             if ($data) {
                 $data->photo = $imageName;
             }

@@ -31,7 +31,7 @@ class UserProfileRequest extends FormRequest
             'editEmail' => ['required', 'unique:users,email,' . Auth::guard('web')->user()->id,
             new CustomEmailValidation()],
             'editAddress' => 'required',
-            'editPhoto' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'editPhoto' => 'required|image|mimes:jpg,png,jpeg,gif,svg,webp|max:2048',
             'editDob' => 'required|date|before:' . $todayDate,
             'editPhone' => 'required|digits:11',
         ];
