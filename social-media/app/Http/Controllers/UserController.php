@@ -19,8 +19,8 @@ class UserController extends Controller
     public function dashboard()
     {
         $posts = User::join('posts', 'posts.user_id', '=', 'users.id')
-            ->select(['users.id', 'users.name', 'users.photo', 'posts.*',])
-            ->orderBy('posts.id', 'desc')->paginate(9);
+                    ->select(['users.id', 'users.name', 'users.photo', 'posts.*',])
+                    ->orderBy('posts.id', 'desc')->paginate(9);
         $userCount = User::all()->count();
         return view('user.dashboard', compact('posts', 'userCount'));
     }
@@ -33,25 +33,30 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::where('id', $id)->first();
+        $user = User::where('id', $id)->firstOrFail();
         $userCount = User::all()->count();
         return view('user.profileEdit', compact('user', 'userCount'));
     }
 
     public function update(UserProfileRequest $request, $id)
     {
-        $data = $this->data($request);
-        User::where('id', $id)->update($data);
+        $data = [
+            'name' => $request->editName,
+            'email' => $request->editEmail,
+            'Address' => $request->editAddress,
+            'dob' => $request->editDob,
+            'phone' => $request->editPhone,
+        ];
         if ($request->hasFile('editPhoto')) {
             $imageName = uniqid() . $request->file('editPhoto')->getClientOriginalName();
             $request->file('editPhoto')->storeAs('public/', $imageName);
-            $data = User::find($id);
-            if ($data) {
-                $data->photo = $imageName;
-            }
+            $data['photo'] = $imageName;
         }
-        $data->update();
-        return redirect('/user/profile')->with(['updateSuccess' => 'Your Profile Has Been Updated Successfully!']);
+        User::where('id', $id)->update($data);
+        return redirect()->route('user.profile')
+            ->with([
+                'updateSuccess' => 'Your Profile Has Been Updated Successfully!'
+            ]);
     }
 
     public function createPost(PostRequest $request)
@@ -67,18 +72,6 @@ class UserController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             'user_id' => Auth::user()->id,
-        ];
-    }
-
-    private function data($request)
-    {
-        return [
-            'name' => $request->editName,
-            'email' => $request->editEmail,
-            'Address' => $request->editAddress,
-            'photo' => $request->editPhoto,
-            'dob' => $request->editDob,
-            'phone' => $request->editPhone,
         ];
     }
 }

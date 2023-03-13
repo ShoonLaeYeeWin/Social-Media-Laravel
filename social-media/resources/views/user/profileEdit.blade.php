@@ -24,19 +24,19 @@
             @endif
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ url('/user/profile') }}">
+            <li><a class="dropdown-item" href="{{ route('user.profile') }}">
                 <i class="fa-solid fa-user me-3"></i>Profile</a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('user/list/post') }}">
+            <li><a class="dropdown-item" href="{{ route('post.listPost') }}">
                 <i class="fa-solid fa-pen-to-square me-3"></i>My Post</a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('/auth/logout') }}">
+            <li><a class="dropdown-item" href="{{ route('user.logout') }}">
                 <i class="fa-solid fa-right-from-bracket me-3"></i> Log Out</a>
             </li>
           </ul>
@@ -46,9 +46,9 @@
   </div>
 </nav>
 <div class="container admin-profile-blk py-3 px-5  w-50 border border-dark rounded-2">
-  <a href="{{ url('/user/profile') }}"><i class="fa-solid fa-arrow-left"></i></a>
+  <a href="{{ route('user.profile') }}"><i class="fa-solid fa-arrow-left"></i></a>
   <h2 class="ttl">Profile Edit</h2>
-  <form action="{{ url('user/update/profile', $user->id) }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('user.profileUpdate', $user->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="input-gp">
       <label for="">Name:</label>

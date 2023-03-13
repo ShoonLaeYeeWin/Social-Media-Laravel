@@ -35,7 +35,7 @@
     </button>
   </div>
   @endif
-  <a href="{{ url('/user/dashboard') }}" class="me-5"><i class="fa-solid fa-arrow-left"></i></a>
+  <a href="{{ route('user.dashboard') }}" class="me-5"><i class="fa-solid fa-arrow-left"></i></a>
   <button class="create border-0"><a href="{{ asset('/user/post') }}"><i class="fa-solid fa-square-plus"></i>
       Create</a></button>
   <h3 class="text-center mt-3">Post List</h3>
@@ -63,11 +63,11 @@
             @endif
           </select>
           <button class="m-0 text-white btn bg-primary" id="searchBtn" style="display:none">Search</button>
-          <a href="{{ route('list.post') }}" class="ms-3 text-white btn bg-danger" id="cancelBtn"
+          <a href="{{ route('post.listPost') }}" class="ms-3 text-white btn bg-danger" id="cancelBtn"
             style="display:none">Cancel</a>
         </div>
       </form>
-      <form method="POST" action="{{ route('post.import',Auth::guard('web')->user()->id) }}"
+      <form method="POST" action="{{ route('post.import',Auth::user()->id) }}"
         enctype="multipart/form-data" class="d-flex justify-content-end">
         @csrf
         <div class="input-gp mb-0">
@@ -105,9 +105,9 @@
               </div>
             </td>
             <td class="text-center">
-              <button class="edit"><a href="{{ url('/user/edit/post', $post->id) }}"><i
+              <button class="edit"><a href="{{ route('post.editPost', $post->id) }}"><i
                     class="fa-solid fa-pen-to-square"></i> Edit</a></button>
-              <button class="delete"><a href="{{ url('/user/delete/post', $post->id) }}"><i
+              <button class="delete"><a href="{{ route('post.deletePost', $post->id) }}"><i
                     class="fa-solid fa-trash"></i> Delete</a></button>
             </td>
           </tr>

@@ -7,7 +7,7 @@
     <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
   </button>
   <button class="register"><i class="fa-solid fa-registered"></i>
-    <a href="{{ url('/auth/register') }}">Register</a>
+    <a href="{{route('user.showRegister')}}">Register</a>
   </button>
 </div>
 <img src="{{ asset('img/img_dashboardView.png') }}" alt="Dashboard View" class="dashboard-img">
@@ -21,9 +21,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary"><i class="fa-solid fa-circle-user"></i>
-          <a href="{{ url('/login') }}"> Admin</a></button>
+          <a href="{{ route('admin.showLogin') }}"> Admin</a></button>
         <button type="button" class="btn btn-primary"><i class="fa-solid fa-user"></i>
-          <a href="{{ url('/auth/login') }}"> User</a></button>
+          <a href="{{ route('user.showLogin') }}"> User</a></button>
       </div>
     </div>
   </div>

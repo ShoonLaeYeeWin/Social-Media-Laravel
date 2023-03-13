@@ -30,12 +30,12 @@
             @endif
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ url('admin/profile') }}"><i class="fa-solid fa-user me-3"></i>
+            <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="fa-solid fa-user me-3"></i>
                 Profile</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('/logout') }}"><i class="fa-solid fa-right-from-bracket me-3"></i>
+            <li><a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="fa-solid fa-right-from-bracket me-3"></i>
                 Log Out</a></li>
           </ul>
         </li>
@@ -54,13 +54,13 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link collapsed {{ request()->routeIs('list.user') ? 'active' : '' }}" data-bs-target="#tables-nav"
-        data-bs-toggle="collapse" href="{{ route('list.user') }}">
+      <a class="nav-link collapsed {{ request()->routeIs('admin.userlist') ? 'active' : '' }}" data-bs-target="#tables-nav"
+        data-bs-toggle="collapse" href="{{ route('admin.userlist') }}">
         <i class="fa-solid fa-users"></i><span>User List</span><i class="fa-solid fa-angle-right ms-auto"></i>
       </a>
       <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>
-          <a href="{{ url('admin/list/user') }}">
+          <a href="{{ route('admin.userlist') }}">
             <i class="fa-regular fa-circle"></i><span>User List</span>
           </a>
         </li>
@@ -77,7 +77,7 @@
           <div class="card-body gap-3 text-center">
             <h5 class="card-title home-ttl">User Count</h5>
             <p class="card-text home-count">{{ $userCount }}<small>person</small></p>
-            <a href="{{ route('list.user') }}" class="d-block text-primary font-bold link">User List
+            <a href="{{ route('admin.userlist') }}" class="d-block text-primary font-bold link">User List
               Page</a>
           </div>
         </div>

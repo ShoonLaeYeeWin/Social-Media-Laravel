@@ -2,9 +2,9 @@
 <title>PostEdit | User</title>
 @section('head')
 <div class="container  inner con-reg">
-  <a href="{{ url('user/list/post') }}"><i class="fa-solid fa-arrow-left"></i></a>
+  <a href="{{ route('post.listPost') }}"><i class="fa-solid fa-arrow-left"></i></a>
   <h2 class="ttl text-white">Post Edit</h2>
-  <form action="{{ url('user/update/post', $postEdit->id) }}" method="POST">
+  <form action="{{ route('post.updatePost', $postEdit->id) }}" method="POST">
     @csrf
     <div class="input-gp">
       <label for="">Post Title:</label>

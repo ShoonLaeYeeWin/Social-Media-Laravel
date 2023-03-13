@@ -30,12 +30,12 @@
             @endif
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ url('admin/profile') }}"><i class="fa-solid fa-user me-3"></i>
+            <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="fa-solid fa-user me-3"></i>
                 Profile</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('/logout') }}"><i class="fa-solid fa-right-from-bracket me-3"></i>
+            <li><a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="fa-solid fa-right-from-bracket me-3"></i>
                 Log Out</a></li>
           </ul>
         </li>
@@ -54,13 +54,13 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link collapsed {{ request()->routeIs('list.user') ? 'active' : '' }}" data-bs-target="#tables-nav"
-        data-bs-toggle="collapse" href="{{ route('list.user') }}">
+      <a class="nav-link collapsed {{ request()->routeIs('admin.userlist') ? 'active' : '' }}" data-bs-target="#tables-nav"
+        data-bs-toggle="collapse" href="{{ route('admin.userlist') }}">
         <i class="fa-solid fa-users"></i><span>User List</span><i class="fa-solid fa-angle-right ms-auto"></i>
       </a>
       <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>
-          <a href="{{ url('admin/list/user') }}">
+          <a href="{{ route('admin.userlist') }}">
             <i class="fa-regular fa-circle"></i><span>User List</span>
           </a>
         </li>
@@ -102,11 +102,11 @@
             @endif
           </select>
           <button class="m-0 text-white btn bg-primary" id="searchBtn" style="display:none">Search</button>
-          <a href="{{ route('list.user') }}" class="ms-3 text-white btn bg-danger" id="cancelBtn"
+          <a href="{{ route('admin.userlist') }}" class="ms-3 text-white btn bg-danger" id="cancelBtn"
             style="display:none">Cancel</a>
         </div>
       </form>
-      <button class="download-btn text-center"><a href="{{ route('user.export') }}">CSV Download</a></button>
+      <button class="download-btn text-center"><a href="{{ route('admin.export') }}">CSV Download</a></button>
     </div>
     <div class="col-md-6 mt-2 w-100">
       @if (count($users) != 0)
@@ -146,9 +146,9 @@
               <div class="d-flex justify-content-center">
                 @if ($user->deleted_at == null)
                 @if ($user->status == 1)
-                <a href="{{ route('user.status', $user->id) }}" class="btn btn-success">Activate</a>
+                <a href="{{ route('admin.status', $user->id) }}" class="btn btn-success">Activate</a>
                 @else
-                <a href="{{ route('user.status', $user->id) }}" class="btn btn-danger">Deactivate</a>
+                <a href="{{ route('admin.status', $user->id) }}" class="btn btn-danger">Deactivate</a>
                 @endif
                 @else
                 <a href="#" class="btn btn-danger">Deactivate</a>
@@ -157,7 +157,7 @@
             </td>
             <td class="text-center" style="width: 40%;">
               @if ($user->deleted_at == null)
-              <button class="delete"><a href="{{ url('/admin/delete/user', $user->id) }}"><i
+              <button class="delete"><a href="{{ route('admin.userDelete', $user->id) }}"><i
                     class="fa-solid fa-trash"></i> Delete</a></button>
               @endif
             </td>

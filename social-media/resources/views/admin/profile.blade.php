@@ -30,12 +30,12 @@
             @endif
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ url('admin/profile') }}"><i class="fa-solid fa-user me-3"></i>
+            <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="fa-solid fa-user me-3"></i>
                 Profile</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('/logout') }}"><i class="fa-solid fa-right-from-bracket me-3"></i>
+            <li><a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="fa-solid fa-right-from-bracket me-3"></i>
                 Log Out</a></li>
           </ul>
         </li>
@@ -54,13 +54,13 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link collapsed {{ request()->routeIs('list.user') ? 'active' : '' }}" data-bs-target="#tables-nav"
-        data-bs-toggle="collapse" href="{{ route('list.user') }}">
+      <a class="nav-link collapsed {{ request()->routeIs('admin.userlist') ? 'active' : '' }}" data-bs-target="#tables-nav"
+        data-bs-toggle="collapse" href="{{ route('admin.userlist') }}">
         <i class="fa-solid fa-users"></i><span>User List</span><i class="fa-solid fa-angle-right ms-auto"></i>
       </a>
       <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>
-          <a href="{{ url('admin/list/user') }}">
+          <a href="{{ route('admin.userlist') }}">
             <i class="fa-regular fa-circle"></i><span>User List</span>
           </a>
         </li>
@@ -81,7 +81,7 @@
     <div class="row d-flex justify-content-center">
       <div class="d-flex align-items-center w-50 justify-content-between">
         <h2 class="text-center mt-2 ttl">Admin Profile</h2>
-        <a href="{{ url('/admin/edit/profile', Auth::guard('admin')->user()->id) }}"><i
+        <a href="{{ route('admin.profileEdit', Auth::guard('admin')->user()->id) }}"><i
             class="fa-solid fa-user-pen"></i></a>
       </div>
       <div class="info-blk w-75 d-flex flex-column justify-content-center">

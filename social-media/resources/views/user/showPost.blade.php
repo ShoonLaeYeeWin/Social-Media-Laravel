@@ -25,20 +25,20 @@
             @endif
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ url('/user/profile') }}"><i class="fa-solid fa-user me-3"></i>
+            <li><a class="dropdown-item" href="{{ route('user.profile') }}"><i class="fa-solid fa-user me-3"></i>
                 Profile</a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('user/list/post') }}"><i
+            <li><a class="dropdown-item" href="{{ route('post.listPost') }}"><i
                   class="fa-solid fa-pen-to-square me-3"></i>
                 My Post</a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('/auth/logout') }}"><i
+            <li><a class="dropdown-item" href="{{ route('user.logout') }}"><i
                   class="fa-solid fa-right-from-bracket me-3"></i> Log Out</a>
             </li>
           </ul>
@@ -50,7 +50,7 @@
 <div class="container-fluid mt-5">
   <div class="row d-flex justify-content-center">
     <div class="col-md-8 mb-3 mt-5">
-      <a href="{{ url('/user/dashboard') }}"><i class="fa-solid fa-arrow-left mb-3"></i></a>
+      <a href="{{ route('user.dashboard') }}"><i class="fa-solid fa-arrow-left mb-3"></i></a>
       <div class="p-5 post-detail rounded-3">
         <div class="card-body">
           <div class="d-flex justify-content-center align-items-center mb-3">
@@ -71,7 +71,7 @@
   <div class="row d-flex justify-content-center">
     <div class="col-md-6 mb-3 mt-3">
       <div class="card-body">
-        <form action="{{ url('/user/create/comment',$post->id) }}" method="POST"
+        <form action="{{ route('comment.createComment',$post->id) }}" method="POST"
           class="d-flex justify-content-between align-items-center">
           @csrf
           <input type="text" name="comment" id="" placeholder="Enter Comment Here! ..." value="{{ old('comment') }}"

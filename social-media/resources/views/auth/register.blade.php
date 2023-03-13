@@ -4,7 +4,7 @@
 <div class="container inner con-reg">
   <a href="{{ url('/') }}"><i class="fa-solid fa-arrow-left"></i></a>
   <h2 class="ttl text-white">Register</h2>
-  <form action="{{ url('auth/create/register') }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('user.actionRegister') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="input-gp">
       <label for="">Name:</label>

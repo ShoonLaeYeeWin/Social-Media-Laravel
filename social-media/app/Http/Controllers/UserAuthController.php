@@ -7,9 +7,8 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
-class AuthController extends Controller
+class UserAuthController extends Controller
 {
     public function index()
     {
@@ -20,7 +19,10 @@ class AuthController extends Controller
     {
         $data = $this->data($request);
         User::create($data);
-        return redirect('/auth/login')->with(['registerSuccess' => 'Your Account registeration is successfully!']);
+        return redirect()->route('user.showLogin')
+            ->with([
+                'registerSuccess' => 'Your Account registeration is successfully!',
+            ]);
     }
 
     public function login()
@@ -30,18 +32,22 @@ class AuthController extends Controller
 
     public function save(LoginRequest $request)
     {
-        $input_data = Auth::guard('web')->attempt(['email' => $request->email, 'password' =>
-        $request->password, 'status' => '1']);
+        $input_data = Auth::attempt([
+            'email' => $request->email, 'password' => $request->password, 'status' => '1',
+        ]);
         if ($input_data) {
-            return redirect('/user/dashboard');
+            return redirect()->route('user.dashboard');
         } else {
-            return back()->with('loginError', 'Your email and password are incorrect!');
+            return back()
+                ->with([
+                    'loginError', 'Your email and password are incorrect!',
+                ]);
         }
     }
 
     public function logout(Request $request)
     {
-        Auth::guard('web')->logout();
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
@@ -54,7 +60,7 @@ class AuthController extends Controller
         return [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
             'address' => $request->address,
             'photo' => $imageName,
             'dob' => $request->dob,

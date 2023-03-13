@@ -13,15 +13,15 @@ class CommentController extends Controller
     public function show(Post $post)
     {
         $comments = Comment::join('users', 'users.id', '=', 'comments.user_id')
-            ->select(['users.name', 'users.photo', 'comments.*'])
-            ->where('post_id', '=', $post->id)->get();
+                            ->select(['users.name', 'users.photo', 'comments.*'])
+                            ->where('post_id', '=', $post->id)->get();
         return view('user.showPost', compact('post', 'comments'));
     }
 
     public function create(CommentRequest $request, $id)
     {
         $data = $this->commentData($request);
-        $post = Post::where('id', $id)->where('status', 1)->first();
+        $post = Post::where('id', $id)->where('status', 1)->firstOrFail();
         if ($post) {
             Comment::create($data);
         } else {

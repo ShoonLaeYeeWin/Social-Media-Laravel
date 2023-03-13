@@ -25,19 +25,19 @@
             @endif
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ url('/user/profile') }}">
+            <li><a class="dropdown-item" href="{{ route('user.profile') }}">
                 <i class="fa-solid fa-user me-3"></i>Profile</a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('user/list/post') }}">
+            <li><a class="dropdown-item" href="{{ route('post.listPost') }}">
                 <i class="fa-solid fa-pen-to-square me-3"></i>My Post</a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('/auth/logout') }}">
+            <li><a class="dropdown-item" href="{{ route('user.logout') }}">
                 <i class="fa-solid fa-right-from-bracket me-3"></i> Log Out</a>
             </li>
           </ul>
@@ -58,8 +58,8 @@
     @endif
     <div class="row d-flex justify-content-center">
       <div class="d-flex justify-content-between align-items-center">
-        <a href="{{ url('/user/dashboard') }}" class="m-3"><i class="fa-solid fa-arrow-left ps-4"></i></a>
-        <a href="{{ url('/user/edit/profile', Auth::user()->id) }}"><i class="fa-solid fa-user-pen pe-4"></i></a>
+        <a href="{{ route('user.dashboard') }}" class="m-3"><i class="fa-solid fa-arrow-left ps-4"></i></a>
+        <a href="{{ route('user.profileEdit', Auth::user()->id) }}"><i class="fa-solid fa-user-pen pe-4"></i></a>
       </div>
       <h2 class="text-center mt-4 ttl">User Profile</h2>
       <div class="info-blk w-75 d-flex flex-column justify-content-center">

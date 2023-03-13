@@ -13,31 +13,31 @@
       id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-between align-items-center w-75">
         <li class="nav-item w-100">
-          <h4 class="pt-1">{{ Auth::guard('web')->user()->name }}</h4>
+          <h4 class="pt-1">{{ Auth::user()->name }}</h4>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            @if (Auth::guard('web')->user()->photo == null)
+            @if (Auth::user()->photo == null)
             <img src="{{ asset('img/img_emptyProfile.png') }}" alt="Profile" class="rounded-circle mw-100"
               style="width: 25px; height: 25px; object-fit: cover;">
             @else
-            <img src="{{ asset('storage/' . Auth::guard('web')->user()->photo) }}" alt="Profile"
+            <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Profile"
               class="rounded-circle mw-100" style="width: 25px; height: 25px; object-fit: cover;">
             @endif
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ url('/user/profile') }}"><i class="fa-solid fa-user me-3"></i>
+            <li><a class="dropdown-item" href="{{ route('user.profile') }}"><i class="fa-solid fa-user me-3"></i>
                 Profile</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('user/list/post') }}"><i
+            <li><a class="dropdown-item" href="{{ route('post.listPost') }}"><i
                   class="fa-solid fa-pen-to-square me-3"></i>
                 My Post</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{ url('/auth/logout') }}"><i
+            <li><a class="dropdown-item" href="{{ route('user.logout') }}"><i
                   class="fa-solid fa-right-from-bracket me-3"></i> Log Out</a></li>
           </ul>
         </li>
@@ -49,7 +49,7 @@
   <div class="row">
     <div class="col-md-3 px-4 rounded">
       <h3 class="ms-4 my-3">Create Post</h3>
-      <form action="{{ url('user/create/dashboard/post') }}" method="POST">
+      <form action="{{ route('dashboard.createPost') }}" method="POST">
         @csrf
         <div class="input-gp">
           <label for="">Post Title:</label>
@@ -80,7 +80,7 @@
               <h3 class="card-title mb-3 d-inline-block text-truncate w-100">
                 {{ $post->title }}</h3>
               @else
-              <a href="{{ url('/user/posts', $post->id) }}">
+              <a href="{{ route('comment.showComment', $post->id) }}">
                 <h3 class="card-title text-success mb-3 d-inline-block text-truncate w-100">
                   {{ $post->title }}</h3>
               </a>

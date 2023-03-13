@@ -2,9 +2,9 @@
 <title>PostCreate | User</title>
 @section('head')
 <div class="container  inner con-reg">
-  <a href="{{ url('/user/list/post') }}"><i class="fa-solid fa-arrow-left"></i></a>
+  <a href="{{ route('post.listPost') }}"><i class="fa-solid fa-arrow-left"></i></a>
   <h2 class="ttl text-white">Post Create</h2>
-  <form action="{{ url('user/create/post') }}" method="POST">
+  <form action="{{ route('post.createPost') }}" method="POST">
     @csrf
     <div class="input-gp">
       <label for="">Post Title:</label>

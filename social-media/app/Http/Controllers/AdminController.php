@@ -16,21 +16,6 @@ use Illuminate\Support\Facades\Response;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        return view('admin.login');
-    }
-
-    public function login(LoginRequest $request)
-    {
-        $input_data = Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]);
-        if ($input_data) {
-            return redirect('/admin/dashboard');
-        } else {
-            return back()->with('loginError', 'Your email and password are incorrect!');
-        }
-    }
-
     public function view()
     {
         $userCount = User::all()->count();
@@ -45,33 +30,30 @@ class AdminController extends Controller
 
     public function edit($id)
     {
-        $user = Admin::where('id', $id)->first();
+        $user = Admin::where('id', $id)->firstOrFail();
         $userCount = User::all()->count();
         return view('admin.profileEdit', compact('user', 'userCount'));
     }
 
     public function upgrade(ProfileUpdateRequest $request, $id)
     {
-        $data = $this->data($request);
-        Admin::where('id', $id)->update($data);
+        $data = [
+            'name' => $request->editName,
+            'email' => $request->editEmail,
+            'Address' => $request->editAddress,
+            'dob' => $request->editDob,
+            'phone' => $request->editPhone,
+        ];
         if ($request->hasFile('editPhoto')) {
             $imageName = uniqid() . $request->file('editPhoto')->getClientOriginalName();
             $request->file('editPhoto')->storeAs('public/', $imageName);
-            $data = Admin::find($id);
-            if ($data) {
-                $data->photo = $imageName;
-            }
+            $data['photo'] = $imageName;
         }
-        $data->update();
-        return redirect('/admin/profile')->with(['updateSuccess' => 'Your Profile Has Been Updated Successfully!']);
-    }
-
-    public function logout(Request $request)
-    {
-        Auth::guard('admin')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/');
+        Admin::where('id', $id)->update($data);
+        return redirect()->route('admin.profile')
+            ->with([
+                'updateSuccess' => 'Your Profile Has Been Updated Successfully!'
+            ]);
     }
 
     public function listUser(Request $request)
@@ -79,33 +61,33 @@ class AdminController extends Controller
         $users = User::when(request('name'), function ($query) {
             $query->where('name', 'like', '%' . request('name') . '%');
         })
-            ->when(request('email'), function ($query) {
-                $query->where('email', 'like', '%' . request('email') . '%');
-            })
-            ->when(in_array(request('userStatus'), [0, 1]), function ($query) {
-                $query->where('status', 'like', '%' . request('userStatus') . '%');
-            })
-            ->withTrashed()
-            ->orderBy('id', 'desc')->paginate(5);
+        ->when(request('email'), function ($query) {
+            $query->where('email', 'like', '%' . request('email') . '%');
+        })
+        ->when(in_array(request('userStatus'), [0, 1]), function ($query) {
+            $query->where('status', 'like', '%' . request('userStatus') . '%');
+        })
+        ->withTrashed()
+        ->orderBy('id', 'desc')->paginate(5);
         $userCount = User::all()->count();
         return view('admin.userList', compact('users', 'userCount'));
     }
 
     public function statusUpdate($id)
     {
-        $userList = User::where('id', $id)->select('status')->get()->toArray();
-        if ($userList[0]['status'] == '1') {
+        $userList = User::where('id', $id)->select('status')->firstOrFail();
+        if ($userList['status'] == '1') {
             $status = 0;
         } else {
             $status = 1;
         }
         $userStatus = User::where('id', $id)->update(['status' => $status]);
         if ($status == '0') {
-            $user = User::where('id', $id)->first();
+            $user = User::where('id', $id)->firstOrFail();
             Mail::to($user->email)
                 ->send(new NoticeMail());
         } else {
-            $user = User::where('id', $id)->first();
+            $user = User::where('id', $id)->firstOrFail();
             Mail::to($user->email)
                 ->send(new InformMail());
         }
@@ -115,7 +97,10 @@ class AdminController extends Controller
     public function deleteUser($id)
     {
         User::where('id', $id)->delete();
-        return back()->with(['deleteSuccess' => 'Your Account User Has Been Deleted Successfully!']);
+        return back()
+            ->with([
+                'deleteSuccess' => 'Your Account User Has Been Deleted Successfully!'
+            ]);
     }
 
     public function exportCsv()
@@ -149,17 +134,5 @@ class AdminController extends Controller
             fclose($file);
         };
         return Response::stream($callback, 200, $headers);
-    }
-
-    private function data(ProfileUpdateRequest $request)
-    {
-        return [
-            'name' => $request->editName,
-            'email' => $request->editEmail,
-            'Address' => $request->editAddress,
-            'photo' => $request->editPhoto,
-            'dob' => $request->editDob,
-            'phone' => $request->editPhone,
-        ];
     }
 }

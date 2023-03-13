@@ -12,7 +12,7 @@
   @endif
   <a href="{{ url('/') }}"><i class="fa-solid fa-arrow-left"></i></a>
   <h2 class="ttl">Admin Login</h2>
-  <form action="{{ url('create/login') }}" method="POST">
+  <form action="{{ route('admin.actionLogin') }}" method="POST">
     @csrf
     <div class="input-gp">
       <label for="">Email:</label>
