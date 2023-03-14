@@ -13,7 +13,7 @@
         <li class="nav-item w-25">
           <a class="nav-link nav-icon" href="{{ route('admin.dashboard') }}">
             <i class="fa-solid fa-bell"></i>
-            <span class="badge bg-primary badge-number">{{ $userCount }}</span>
+            <span class="badge bg-primary badge-number">{{ $user['userCount'] }}</span>
           </a>
         </li>
         <li class="nav-item w-50">
@@ -71,18 +71,18 @@
 <div class="container admin-profile-blk px-5 py-3 w-50 border border-dark rounded-2">
   <a href="{{ route('admin.profile') }}"><i class="fa-solid fa-arrow-left"></i></a>
   <h2 class="ttl">Profile Edit</h2>
-  <form action="{{ route('admin.profileUpdate', $user->id) }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('admin.profileUpdate', $user['user']->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="input-gp">
       <label for="">Name:</label>
-      <input type="text" name="editName" id="" value="{{ old('name', $user->name) }}" placeholder="Enter Your Name...">
+      <input type="text" name="editName" id="" value="{{ old('name', $user['user']->name) }}" placeholder="Enter Your Name...">
       @error('editName')
       <span class="text-danger text-sm"><b>{{ $message }}</b></span>
       @enderror
     </div>
     <div class="input-gp">
       <label for="">Email:</label>
-      <input type="email" name="editEmail" id="" value="{{ old('email', $user->email) }}"
+      <input type="email" name="editEmail" id="" value="{{ old('email', $user['user']->email) }}"
         placeholder="Enter Your Email...">
       @error('editEmail')
       <span class="text-danger text-sm"><b>{{ $message }}</b></span>
@@ -91,14 +91,14 @@
     <div class="input-gp">
       <label for="">Address:</label>
       <textarea name="editAddress" id="" rows="5"
-        placeholder="Enter Your Address...">{{ old('address', $user->address) }}</textarea>
+        placeholder="Enter Your Address...">{{ old('address', $user['user']->address) }}</textarea>
       @error('editAddress')
       <span class="text-danger text-sm"><b>{{ $message }}</b></span>
       @enderror
     </div>
     <div class="input-gp">
       <label for="">Date Of Birth:</label>
-      <input type="date" name="editDob" id="" value="{{ old('dob', $user->dob) }}">
+      <input type="date" name="editDob" id="" value="{{ old('dob', $user['user']->dob) }}">
       @error('editDob')
       <span class="text-danger text-sm"><b>{{ $message }}</b></span>
       @enderror
@@ -106,7 +106,7 @@
     <div class="input-gp">
       <label for="">Phone Number:</label>
       <input type="text" name="editPhone" id="" placeholder="Enter Your Phone Number..."
-        value="{{ old('phone', $user->phone) }}">
+        value="{{ old('phone', $user['user']->phone) }}">
       @error('editPhone')
       <span class="text-danger text-sm"><b>{{ $message }}</b></span>
       @enderror

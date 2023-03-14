@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contract\Service\User\UserServiceInterface;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,62 +17,80 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    /**
+     * User Service Interface
+     */
+    private $userServiceInterface;
+
+    /**
+     * class constructor
+     */
+    public function __construct(UserServiceInterface $userServiceInterface)
+    {
+        $this->userServiceInterface = $userServiceInterface;
+    }
+
+    /**
+     * User Dashboard View
+     *
+     *@return mixed
+     */
     public function dashboard()
     {
-        $posts = User::join('posts', 'posts.user_id', '=', 'users.id')
-                    ->select(['users.id', 'users.name', 'users.photo', 'posts.*',])
-                    ->orderBy('posts.id', 'desc')->paginate(9);
-        $userCount = User::all()->count();
-        return view('user.dashboard', compact('posts', 'userCount'));
+        $posts = $this->userServiceInterface->userView();
+        return view('user.dashboard', compact('posts'));
     }
 
+    /**
+     * User Show Profile
+     *
+     * @return view
+     */
     public function index()
     {
-        $userCount = User::all()->count();
-        return view('user.profile', compact('userCount'));
+        return view('user.profile');
     }
 
+    /**
+     *User Edit Profile
+     *
+     * @param integer $id
+     *
+     * @return mixed
+     */
     public function edit($id)
     {
-        $user = User::where('id', $id)->firstOrFail();
-        $userCount = User::all()->count();
-        return view('user.profileEdit', compact('user', 'userCount'));
+        $user = $this->userServiceInterface->editProfile($id);
+        return view('user.profileEdit', compact('user'));
     }
 
+    /**
+     * User Update Profile
+     *
+     * @param UserProfileRequest $request,
+     * @param integer $id
+     *
+     * @return mixed
+     */
     public function update(UserProfileRequest $request, $id)
     {
-        $data = [
-            'name' => $request->editName,
-            'email' => $request->editEmail,
-            'Address' => $request->editAddress,
-            'dob' => $request->editDob,
-            'phone' => $request->editPhone,
-        ];
-        if ($request->hasFile('editPhoto')) {
-            $imageName = uniqid() . $request->file('editPhoto')->getClientOriginalName();
-            $request->file('editPhoto')->storeAs('public/', $imageName);
-            $data['photo'] = $imageName;
-        }
-        User::where('id', $id)->update($data);
+        $this->userServiceInterface->updateProfile($request, $id);
         return redirect()->route('user.profile')
             ->with([
                 'updateSuccess' => 'Your Profile Has Been Updated Successfully!'
             ]);
     }
 
+    /**
+     * User Post List
+     *
+     * @param PostRequest $request
+     *
+     * @return array
+     */
     public function createPost(PostRequest $request)
     {
-        $data = $this->postData($request);
-        Post::create($data);
+        $this->userServiceInterface->postList($request);
         return back();
-    }
-
-    private function postData($request)
-    {
-        return [
-            'title' => $request->title,
-            'content' => $request->content,
-            'user_id' => Auth::user()->id,
-        ];
     }
 }

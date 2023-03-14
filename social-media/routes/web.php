@@ -22,7 +22,7 @@ use App\Http\Controllers\AdminAuthController;
 /* Auth */
 Route::get('/', function () {
     return view('auth.dashboard');
-});
+})->name('view');
 Route::prefix('auth')->group(function () {
     Route::controller(UserAuthController::class)->group(function () {
         Route::middleware('user.redirect')->get('/register', 'index')->name('user.showRegister');

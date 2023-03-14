@@ -145,7 +145,7 @@
             <td>
               <div class="d-flex justify-content-center">
                 @if ($user->deleted_at == null)
-                @if ($user->status == 1)
+                @if ($user['status'] == 1)
                 <a href="{{ route('admin.status', $user->id) }}" class="btn btn-success">Activate</a>
                 @else
                 <a href="{{ route('admin.status', $user->id) }}" class="btn btn-danger">Deactivate</a>

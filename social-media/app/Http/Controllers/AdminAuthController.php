@@ -6,13 +6,28 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * This is AdminAuth Controller.
+ */
 class AdminAuthController extends Controller
 {
+    /**
+     * Admin Show Login
+     *
+     * @return view
+     */
     public function index()
     {
         return view('admin.login');
     }
 
+    /**
+     * Admin Action Login
+     *
+     *@param LoginRequest $request
+     *
+     *@return back with loginError
+     */
     public function login(LoginRequest $request)
     {
         $input_data = Auth::guard('admin')
@@ -29,11 +44,18 @@ class AdminAuthController extends Controller
         }
     }
 
+    /**
+     *Admin logout
+     *
+     *@param Request $request
+     *
+     *@return redirect
+     */
     public function logout(Request $request)
     {
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect()->route('view');
     }
 }
